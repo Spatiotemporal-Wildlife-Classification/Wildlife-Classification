@@ -113,10 +113,12 @@ def taxonomic_level_modelling(observation_file: str,
                 target_taxon = taxonomic_keys[i + 1]
                 df = df.dropna(subset=[target_taxon])
 
+                # Taxonomic level clean-up to determine number of classes (with restriction)
+                df = df.dropna(subset=['public_positional_accuracy'])  # Remove n/a entries
+                df = df[df['public_positional_accuracy'] <= 40000]  # Remove entries with inadequate accuracy
+                df = df[df.groupby(target_taxon).common_name.transform('count') >= 10].copy()  # Enforce at least 10 observations
+
                 # Check at least two classes present with restriction
-                df = df.dropna(subset=['public_positional_accuracy'])
-                df = df[df['public_positional_accuracy'] <= 40000]
-                df = df[df.groupby(target_taxon).common_name.transform('count') >= 10].copy()
                 if df[target_taxon].nunique() <= 1:
                     continue
 
