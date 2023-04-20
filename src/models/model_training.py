@@ -8,6 +8,7 @@ import xgboost_model
 import adaboost_model
 from pipelines import sub_species_detection
 
+# Dictionaries to aid in file name creation
 model_abbreviations = {'Neural network': 'nn',
                        'Decision tree': 'dt',
                        'Random forest': 'rf',
@@ -26,20 +27,24 @@ file_name_taxon = {'taxon_family_name': '_family',
                    'sub_species': '_subspecies'}
 
 
+# Method to iterate through provided datasets, in order to train models accross entire datasets scope
 def dataset_iterations(observation_files: list, metadata_files: list, k_centroids: list):
     for (observation_file, metadata_file, k_centroid) in zip(observation_files, metadata_files, k_centroids):
         models, model_name_collection, taxon_target_collection, abbreviations_collection = model_iteration(
             observation_file, metadata_file, k_centroid)
 
+    # Information to be used in the model_comparison.ipynb notebook
     print('Models: ', models)
     print('File names: ', model_name_collection)
     print('Taxon targets: ', taxon_target_collection)
     print('Model abbreviations: ', abbreviations_collection)
 
 
+# Train all models on the provided dataset.
 def model_iteration(observation_file: str,
                     metadata_file: str,
                     k_centroids: int):
+
     # Multi-model collections
     models = list(model_abbreviations.keys())
     model_name_collection = []
@@ -50,18 +55,21 @@ def model_iteration(observation_file: str,
     taxon_models = []
     taxon_targets = []
 
+    # Iterate through all models
     for model in models:
+        # Models through all taxonomic levels for the model
         taxon_models, taxon_targets = taxonomic_level_modelling(observation_file,
                                                                 metadata_file,
                                                                 model,
                                                                 k_centroids)
 
+        # Collect essential information regarding file names for future use
         abbreviations_collection.append(model_abbreviations[model])
 
     model_name_collection.append(taxon_models)
     taxon_target_collection.append(taxon_targets)
 
-    # Essential information
+    # Return gathered file information
     return models, model_name_collection, taxon_target_collection, abbreviations_collection
 
 
@@ -69,7 +77,8 @@ def taxonomic_level_modelling(observation_file: str,
                               metadata_file: str,
                               model: str,
                               k_centroids: int):
-    # Collection of info for Notebook
+
+    # Collection of taxon level information for notebook use
     models = []
     taxon_targets = []
 
@@ -129,6 +138,8 @@ def taxonomic_level_modelling(observation_file: str,
                                      model_save_type=model_save_types[model],
                                      file_name_start=file_start)
                 models.append(file_start)
+
+                # Taxonomic information for notebook
                 taxon_targets.append(target_taxon)
     return models, taxon_targets
 
@@ -138,18 +149,21 @@ def taxonomic_analysis(df: pd.DataFrame):
     taxonomy_list = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
     taxon_breakdown = dict()
 
+    # Identify each unique taxon level mammal
     for taxon in taxonomy_list:
-        df = df.dropna(subset=[taxon])
-        taxon_breakdown[taxon] = df[taxon].unique().tolist()
+        df = df.dropna(subset=[taxon])  # Remove all n/a labels
+        taxon_breakdown[taxon] = df[taxon].unique().tolist()  # Find unique taxon level genus names
     return taxon_breakdown
 
 
+# Method generates unique file name that can be referenced for evaluation in the notebook
 def generate_file_name_start(parent_taxon: str, restriction: str):
     taxon = file_name_taxon[parent_taxon]
     restriction = restriction.replace(" ", "_")
     return restriction + taxon
 
 
+# Method simplifies model training, model saving, and data collection
 def model_simplification(df: pd.DataFrame,
                          model: str,
                          target_taxon,
@@ -164,9 +178,11 @@ def model_simplification(df: pd.DataFrame,
     training_history = file_name_start + "_" + model_abbr + '_training_accuracy.csv'
     validation_file = file_name_start + "_" + model_abbr + '_validation.csv'
 
+    # Select model, and execute the required process (data pipeline, model training, and evaluation)
     model_selection_execution(model, df, target_taxon, k_centroids, model_name, training_history, validation_file)
 
 
+# Method allows for multiple model selection, training, evaluation, and saving
 def model_selection_execution(model: str,
                               df: pd.DataFrame,
                               target_taxon: str,
@@ -192,6 +208,7 @@ def model_selection_execution(model: str,
                                                    validation_file)
 
 
+# Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
     dataset_iterations(observation_files=['proboscidia_final.csv', 'felids_final.csv'],
                        metadata_files=['proboscidia_meta.csv', 'felids_meta.csv'],
