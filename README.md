@@ -1,28 +1,51 @@
-# spatiotemporal_classification
-Bachelor's thesis investigating global wildlife classification using spatio-temporal contextual information.
+# Spatiotemporal Wildlife Image Classification
+Bachelor's thesis investigating **if** and **how** observation **spatiotemporal metadata** can be used to improve 
+existing **wildlife image classification** processes. 
 
 ## Summary
-Automated wildlife classification is essential within ecological studies, wildlife conservation and management, specifically fulfilling the roles of species population estimates, individual identification, and behavioural patterns.
+Automated wildlife classification is essential within ecological studies, wildlife conservation and management, 
+specifically fulfilling the roles of species population estimates, individual identification, and behavioural patterns.
 
-Current classification methods make use of deep Convolutional Neural Networks (CNN) in order to accurately classify wildlife species.
-Wildlife sightings are prone to various forms of imbalance and noise, ranging from tourism bias (sighting time and species), through to weather and orientation requiring additional information to support CNN classification.
+Observation metadata includes features such as location, time of observation, date, and multiple environmental features 
+gathered from [open-meteo](https://open-meteo.com/). For a full list of features please review: ..... 
 
-In summary, AlexNet or VGG-16 CNN architectures will be utilized with pre-trained models in order to reduce training time. 
-Multiple methods of contextual information inclusion are considered including:
-1. Decision-level fusion of two streams
-2. Feature concatenation
-3. Layer concatenation
-4. Model-level fusion
+A novel approach combines metadata classification and existing wildlife classification methodologies, within the 
+taxonomic hierarchical structure, to accurate classify images down to the sub-species taxonomic level.
 
-More information on the proposed methods can be found within the [Methods](#methods) section and [Thesis document](#external-links).
 
-A proposed use-case utilizes tourist's public social media postings in order to support wildlife park's population estimates and tracking. 
-Two considerations are kept in mind. Firstly, this information must be kept confidential in order to eliminate the threat of granting poachers additional knowledge. 
-Secondly, the immediacy of social media posting and the staggering quantity of historical resources make it the largest potential source of wildlife historical and current data.
+More information on the proposed methods can be found within the [Methods](#methods) 
+section and [Thesis document](#external-links).
 
-## Training Data
+##### Proposed use-case
+A proposed use-case utilizes tourist's public social media postings in order to support wildlife park's population 
+estimates and tracking. 
+Two considerations are kept in mind. Firstly, this information must be kept confidential in order to eliminate 
+the threat of granting poachers additional knowledge. 
+Secondly, the immediacy of social media posting and the staggering quantity of historical resources make it 
+the largest potential source of wildlife historical and current data.
+
+## Issues in Wildlife Image Classification
+#### Modelling 
+Image classification relies on labelled images, forming the dataset. 
+However, most wildlife image datasets are comprised of images of **varying quality**, and quantity, 
+creating **unbalanced** datasets, where some species have very few observations. 
+Current wildlife classification processes experience a decreasing classification performance going down 
+the taxonomic tree. 
+
+#### Data Subject
+The data subject itself, wildlife species, make the classification process difficult, largely due to similar looking 
+species, and sub-species, in addition to sympatric species (species found in the same geographic area). 
+
+| ![](http://static.inaturalist.org/photos/88383/medium.jpg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/9581740/medium.jpg) |
+|------------------------------------------------------------|-------------------------------------------------------------------------------|
+| Panthera pardus                                            | Panthera Onca                                                                 |
+
+## Data
 The training data is obtained from [iNaturalist](https://www.inaturalist.org/), a citizen-science based platform tasked with generating global research-grade, annotated flora and fauna images to facilitate computer vision developement. 
-This thesis focuses exclusively on a subgroup of mammalian species, of which examples are below followed by the dataset characteristics:
+This thesis focuses exclusively on a subgroup of mammalian families, Elephantidae and Felids. 
+The below images serve as sample images from [iNaturalist](https://www.inaturalist.org/)
+
+The link to the used dataset is provided [here]() (inactive)
 
 | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254323960/large.jpeg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254318111/large.jpeg) |
 |--------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
@@ -30,20 +53,23 @@ This thesis focuses exclusively on a subgroup of mammalian species, of which exa
 
 
 ### Data Characteristics
-Still to be determined
+##### Geographic Distribution
+![](resources/readme_resources/geographic_distribution.png)
+
+##### Example Precipitation Profile for Elephantidae Family
+![](resources/readme_resources/elephant_precipitation_profile.png)
+
+For a further look at basic exploratory dataset analysis please preview the available `notebooks`
 
 ## Methods
-Still to be completed
-1. ##### Decision Level Fusion of Two Stream
-Two streams of information characterize this methodology. The CNN will be utilized to classify the wildlife species, outputting a softmax layer containing each species probability within the image. 
-A separate Support Vector Machine (SVG) will be trained on spatio-temporal information in order to classify each specie, outputting a softmax output containing the same features as the CNN.
-The combination of these two decision level feature vectors will be conducted through statistical mean still to be decided.
-2. ##### Feature Concatenation
-3. ##### Layer Concatenation
-Utilizing existing CNN architectures, a concatenation layer will be placed before the softmax output layer. 
-This concatenation layer will serve to fuse higher levels of semantic information between what was detected within the image, 
-and the provided spatio-temporal information. Utilisation of pre-concatenation layers will be experimented upon.[1]
-4. ##### Model Fusion
+The novel approach, makes use of a dual taxonomic tree approach. 
+The taxonomic trees will be specialized within image classification, and metadata classification respectively. 
+At each node of each tree, the node will contain a classifier, capable of classifying the children nodes, and restricted
+by its parent node. The nodes at each respective taxonomic level are capable of communicating, in order to effectively
+agree on a classification, leaning into their respective strengths.
+
+![](resources/readme_resources/dual_dt.png)
+
 
 ## Results
 Still to be completed
@@ -53,4 +79,3 @@ Still to be completed
 - [iNaturalist](https://www.inaturalist.org/)
 
 ### Scientific Papers
-[1] K. Tang, M. Paluri, L. Fei-Fei, R. Fergus, and L. Bourdev, “Improving Image Classification with Location Context,” 2015 IEEE International Conference on Computer Vision (ICCV), Dec. 2015, doi: 10.1109/iccv.2015.121.‌
