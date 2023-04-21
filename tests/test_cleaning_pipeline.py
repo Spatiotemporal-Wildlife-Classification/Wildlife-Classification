@@ -22,42 +22,45 @@ test_data = [
      'open',
      'Phascolarctos cinereus',
      'Koala',
-     42983],
+     42983, '', '', '', '', '', '', ''],
     [129051266, '2022-08-02', 43.1196234274, -7.6788841188, '2022-08-01 22:20:13 UTC', 'Madrid', 'research', 'CC-BY',
      'https://www.inaturalist.org/observations/129051266',
      'https://inaturalist-open-data.s3.amazonaws.com/photos/219262307/medium.jpeg', '', 8, 8, '', 'open',
-     'Plecotus auritus', 'Brown Big-eared Bat', 40416],
+     'Plecotus auritus', 'Brown Big-eared Bat', 40416, '', '', '', '', '', '', ''],
     [129054418, '2022-08/02', 50.6864393301, 7.1697807312, '2022-08-01 22:26:13 UTC', 'Berlin', 'research', 'CC-BY-NC',
      'https://www.inaturalist.org/observations/129054418',
      'https://inaturalist-open-data.s3.amazonaws.com/photos/219268423/medium.jpeg',
-     '', 6, 6, '', '', 'Erinaceus europaeus', 'Common Hedgehog', 43042],
+     '', 6, 6, '', '', 'Erinaceus europaeus', 'Common Hedgehog', 43042, '', '', '', '', '', '', ''],
     [129076855, '2022-08-02', -40.9498116654, 174.9710916171, '2022-08-02 01:32:23 UTC', 'Wellington', 'research', '',
      'https://www.inaturalist.org/observations/129076855',
      'https://inaturalist-open-data.s3.amazonaws.com/photos/219311061/medium.jpg',
-     '', 5, 5, '', 'open', 'Arctocephalus forsteri', 'New Zealand Fur Seal', 41752],
+     '', 5, 5, '', 'open', 'Arctocephalus forsteri', 'New Zealand Fur Seal', 41752, '', '', '', '', '', '', ''],
     [129076855, '2022-08-02', -40.9498116654, 174.9710916171, '2022-08-02 01:32:23 UTC', 'Wellington', 'research', '',
      'https://www.inaturalist.org/observations/129076855',
      'https://inaturalist-open-data.s3.amazonaws.com/photos/219311061/medium.jpg',
      'Really bad picture but there’s one in there ', 5, 5, '', 'open', 'Arctocephalus forsteri', 'New Zealand Fur Seal',
-     41752],
+     41752, '', '', '', '', '', '', ''],
     [129107609, '202g-08-02', 43.952764223, -110.6115040714, '2022-08-02 07:14:59 UTC', 'Mountain Time (US & Canada)',
      'research', 'CC-BY-NC', 'https://www.inaturalist.org/observations/129107609',
      'https://inaturalist-open-data.s3.amazonaws.com/photos/219366763/medium.jpg',
-     '', 11690, 27411, '', 'obscured', 'Ovis canadensis', 'Bighorn Sheep', '42391'],
+     '', 11690, 27411, '', 'obscured', 'Ovis canadensis', 'Bighorn Sheep', '42391', '', '', '', '', '', '', ''],
     [129120635, '2022-08-02', -18.83915, 16.9536, '2022-08-02 08:11:57 UTC', 'Africa/Windhoek', 'research', 'CC-BY-NC',
      'https://www.inaturalist.org/observations/129120635',
      'https://inaturalist-open-data.s3.amazonaws.com/photos/219634047/medium.jpg',
-     '', 4, 4, '', '', 'Madoqua damarensis', 'Damara Dik-dik', 1430934],
+     '', 4, 4, '', '', 'Madoqua damarensis', 'Damara Dik-dik', 1430934, '', '', '', '', '', '', ''],
     [38197744, '2020-02-02', -38.1974245434, 145.4793232007, '2020-02-01 23:04:35 UTC', 'Asia/Magadan', 'research',
      'CC-BY-NC',
      'https://www.inaturalist.org/observations/38197744',
      'https://inaturalist-open-data.s3.amazonaws.com/photos/60672001/medium.jpg',
      'Caught in pitfall trap, guided by drift fence. Field techniques', 22, 22, '', 'open', 'Pseudocheirus peregrinus',
-     'Common Ringtail Possum', 42775]]
+     'Common Ringtail Possum', 42775, '', '', '', '', '', '', '']]
 
 raw_data_columns = ['id', 'observed_on', 'latitude', 'longitude', 'time_observed_at', 'time_zone', 'quality_grade',
                     'license', 'url', 'image_url', 'description', 'positional_accuracy', 'public_positional_accuracy',
-                    'geoprivacy', 'taxon_geoprivacy', 'scientific_name', 'common_name', 'taxon_id']
+                    'geoprivacy', 'taxon_geoprivacy', 'scientific_name', 'common_name', 'taxon_id',
+                    'taxon_kingdom_name', 'taxon_phylum_name', 'taxon_class_name', 'taxon_order_name',
+                    'taxon_family_name', 'taxon_genus_name', 'taxon_species_name'
+                    ]
 
 test_df = pd.DataFrame(test_data, columns=raw_data_columns)
 
@@ -192,11 +195,14 @@ class TestCleaningPipeline(unittest.TestCase):
         pipeline = Pipeline(test_df=test_df)
         pipeline.activate_flow()
         df_columns = pipeline.df.columns.tolist()
+        print(df_columns)
 
         # Testing
         correct_columns = ['observed_on', 'local_time_observed_at', 'latitude', 'longitude',
                            'positional_accuracy', 'public_positional_accuracy', 'image_url', 'license', 'geoprivacy',
-                           'taxon_geoprivacy', 'scientific_name', 'common_name', 'taxon_id']
+                           'taxon_geoprivacy', 'scientific_name', 'common_name', 'taxon_id',
+                           'taxon_kingdom_name', 'taxon_phylum_name', 'taxon_class_name', 'taxon_order_name',
+                           'taxon_family_name', 'taxon_genus_name', 'taxon_species_name']
         self.assertTrue(set(df_columns) == set(correct_columns))
 
 
