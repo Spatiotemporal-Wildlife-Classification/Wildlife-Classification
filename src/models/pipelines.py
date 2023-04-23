@@ -1,4 +1,5 @@
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
 from imblearn.over_sampling import RandomOverSampler
 
@@ -19,6 +20,11 @@ root_path = root_dir()
 data_path = '/data/processed/'
 data_destination = '/notebooks/model_comparison_cache/'
 
+# K-means information
+k_max = 100
+k_interval = 2
+k_init = 4
+
 
 def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
     obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)
@@ -32,19 +38,19 @@ def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
 
 
 def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df, k_cluster)
+    k_means = train_kmeans(df)
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df, k_cluster)
+    k_means = train_kmeans(df)
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def neural_network_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df, k_cluster)
+    k_means = train_kmeans(df)
     X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
     return X, y, lb, classes
 
@@ -348,13 +354,34 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
 
 
 ## KMEANS ##
-def train_kmeans(df: pd.DataFrame, clusters: int):
+def train_kmeans(df: pd.DataFrame):
     location_df = df[['latitude', 'longitude']]
-    location_matrix = location_df.to_numpy()
 
-    k_means = KMeans(n_clusters=clusters, n_init=10)
-    k_means.fit(location_matrix)
+    sil_scores = calculate_optimal_k(location_df)
+    k_values = range(k_init, k_max + k_interval, k_interval)
+
+    silhouette_optimal = np.argmax(sil_scores)
+    k_value = (k_values[silhouette_optimal])
+    print("K-value: ", k_value)
+
+    k_means = KMeans(n_clusters=k_value, n_init=10)
+    k_means.fit(location_df)
     return k_means
+
+
+# Use the Silhouette score to determine an optimal k
+def calculate_optimal_k(data):
+    sil = []
+
+    k = k_init
+    while k <= k_max:
+        k_means = KMeans(n_clusters=k, n_init=10).fit(data)
+        labels = k_means.labels_
+
+        sil.append(silhouette_score(data, labels))
+
+        k += k_interval
+    return sil
 
 
 ## VALIDATION SET ##
