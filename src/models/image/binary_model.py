@@ -52,20 +52,21 @@ def build_efficientnet():
 
 
 def import_dataset(file_path: str):
-    # labels = df['label'].tolist()
 
     train_ds = image_dataset_from_directory(directory=file_path,
                                             validation_split=0.2,
                                             subset='training',
                                             seed=123,
                                             image_size=(img_size, img_size),
-                                            batch_size=batch_size)
+                                            batch_size=batch_size,
+                                            labels='inferred')
     val_ds = image_dataset_from_directory(directory=file_path,
                                           validation_split=0.2,
                                           subset='validation',
                                           seed=123,
                                           image_size=(img_size, img_size),
-                                          batch_size=batch_size)
+                                          batch_size=batch_size,
+                                          labels='inferred')
     return train_ds, val_ds
 
 
