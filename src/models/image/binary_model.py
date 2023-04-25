@@ -7,6 +7,9 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import image_dataset_from_directory
+from tensorflow.data import AUTOTUNE
+
+import matplotlib.pyplot as plt
 
 from src.structure.Config import root_dir
 
@@ -46,7 +49,7 @@ def build_efficientnet():
     optimizer = Adam(learning_rate=1e-2)
     model.compile(optimizer=optimizer,
                   loss='binary_crossentropy',
-                  metrics=['balanced_accuracy'])
+                  metrics=['accuracy'])
 
     return model
 
@@ -59,21 +62,46 @@ def import_dataset(file_path: str):
                                             seed=123,
                                             image_size=(img_size, img_size),
                                             batch_size=batch_size,
-                                            labels='inferred')
+                                            labels='inferred',
+                                            label_mode='categorical')
     val_ds = image_dataset_from_directory(directory=file_path,
                                           validation_split=0.2,
                                           subset='validation',
                                           seed=123,
                                           image_size=(img_size, img_size),
                                           batch_size=batch_size,
-                                          labels='inferred')
+                                          labels='inferred',
+                                          label_mode='categorical')
+
+    print(train_ds.class_names)
     return train_ds, val_ds
 
 
-if __name__ == "__main__":
+def train_top_weights(train_ds, test_ds):
     model = build_efficientnet()
+    epochs = 25
+    hist = model.fit(train_ds, epochs=epochs, validation_data = test_ds, verbose=2)
+    return model, hist
 
+
+def plot_hist(hist):
+    plt.plot(hist.history["accuracy"])
+    plt.plot(hist.history['val_accuracy'])
+    plt.title("Wildlife Presence Accuracy")
+    plt.ylabel("Accuracy (%)")
+    plt.xlabel("Epoch")
+    plt.legend(["Train", "Validation"], loc="upper_left")
+    plt.show
+
+
+if __name__ == "__main__":
+    # Generate dataset and pre-tune
     train_ds, eval_ds = import_dataset(img_path)
+    train_ds = train_ds.prefetch(AUTOTUNE)
+
+    model, hist = train_top_weights(train_ds, eval_ds)
+    plot_hist(hist)
+
 
 
 
