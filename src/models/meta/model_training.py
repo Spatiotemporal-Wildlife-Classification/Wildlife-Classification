@@ -212,6 +212,6 @@ def model_selection_execution(model: str,
 
 # Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
-    dataset_iterations(observation_files=['felids_final.csv'],
-                       metadata_files=['felids_meta.csv'],
+    dataset_iterations(observation_files=['proboscidia_final.csv'],
+                       metadata_files=['proboscidia_meta.csv'],
                        k_centroids=[40])

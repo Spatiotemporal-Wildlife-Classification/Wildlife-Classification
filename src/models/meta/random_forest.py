@@ -5,8 +5,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.utils import compute_class_weight
 
-from src.models import pipelines
-from src.models.decision_tree import write_scores_to_file
+from src.models.meta import pipelines
+from src.models.meta.decision_tree import write_scores_to_file
 
 import numpy as np
 
