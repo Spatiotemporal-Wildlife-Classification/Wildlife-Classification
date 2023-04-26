@@ -19,6 +19,7 @@ import pandas as pd
 # File path
 root_path = root_dir()
 img_path = root_path + '/data/wildlife_presence'
+test_path = root_path + 'data/wildlife_presence_test/'
 label_path = root_path + '/data/wildlife_presence.csv'
 
 # Model Information
