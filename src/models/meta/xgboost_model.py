@@ -2,12 +2,11 @@ import numpy as np
 import xgboost as xgb
 import pandas as pd
 
-from decision_tree import write_scores_to_file
 import pipelines
 from src.structure import Config
 
-from sklearn.utils.class_weight import compute_class_weight, compute_sample_weight
-from sklearn.model_selection import cross_val_score, cross_validate, KFold
+from sklearn.utils.class_weight import compute_sample_weight
+from sklearn.model_selection import KFold
 from sklearn.metrics import balanced_accuracy_score
 
 root_path = Config.root_dir()

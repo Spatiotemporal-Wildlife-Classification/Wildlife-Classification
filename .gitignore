@@ -151,3 +151,5 @@ notebooks/oversample_data_cache
 .idea/.gitignore
 
 notebooks/model_comparison_cache
+
+*.jpg
