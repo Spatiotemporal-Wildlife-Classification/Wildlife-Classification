@@ -5,3 +5,4 @@ tensorflow==2.9.1
 matplotlib
 tensorflow-hub
 protobuf==3.19.6
+timezonefinder
