@@ -5,7 +5,7 @@ import tensorflow as tf
 from keras.utils import image_dataset_from_directory
 from tensorflow.data import AUTOTUNE
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
-from src.models.image.binary_model import ohe_to_label, get_image_labels
+from src.models.image.imagenet.binary_model import ohe_to_label, get_image_labels
 
 root_path = sys.path[1]
 model_path = root_path + '/models/'
@@ -46,10 +46,11 @@ def plot_hist(hist, title):
 
 if __name__ == "__main__":
     # Load trained model
-    model = load_model('wildlife_presence_model_01')
+    model = load_model('wildlife_presence_model_03')
 
     # Generate test set
     test_ds = generate_test_set()
+
 
     # Pre-fetch test set
     test_ds = test_ds.prefetch(AUTOTUNE)
@@ -64,7 +65,7 @@ if __name__ == "__main__":
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot()
 
-    plt.title('Wildlife Presence Model 1 Confusion Matrix')
+    plt.title('Wildlife Presence ILSVCR 3')
     plt.show()
 
     report = classification_report(true_labels, predicted_labels)
