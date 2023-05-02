@@ -11,11 +11,11 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Paper Title\\
-\thanks{This thesis was prepared in partial fulfilment of the requirements for the Degree of Bachelor of Science in Data Science and Artificial Intelligence, Maastricht University. Supervisor(s): [name of your supervisor(s)]}
+\title{A Novel use of Spatio-temporal Metadata to Bolster Wildlife Classification\\
+\thanks{This thesis was prepared in partial fulfilment of the requirements for the Degree of Bachelor of Science in Data Science and Artificial Intelligence, Maastricht University. Supervisor(s): Christof Sieler, Mirela Popa}
 }
 
-\author{\IEEEauthorblockN{Given Name Surname}
+\author{\IEEEauthorblockN{Travis Dawson}
 \IEEEauthorblockA{\textit{Department of Advanced Computing Sciences} \\
 \textit{Faculty of Science and Engineering}\\
 \textit{Maastricht University}\\
@@ -25,18 +25,15 @@ Maastricht, The Netherlands}
 \maketitle
 
 \begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-or Math in Paper Title or Abstract.
+
 \end{abstract}
 
 \begin{IEEEkeywords}
-component, formatting, style, styling, insert
+Wildlife Classification, Convolutional Neural Network (CNN), Meta-data, Spatio-temporal, 
 \end{IEEEkeywords}
 
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. 
+    Test use of bibtext file \cite{gomez-donoso_escalona_pérez-esteve_cazorla_2021} 
 
 \section{Ease of Use}
 
@@ -197,7 +194,7 @@ copy& More table copy$^{\mathrm{a}}$& &  \\
 \end{table}
 
 \begin{figure}[htbp]
-\centerline{\includegraphics[width=0.49\textwidth]{UMlogo.jpg}}
+\centerline{\includegraphics[width=0.49\textwidth]{images/UMlogo.jpg}}
 \caption{Example of a figure caption.}
 \label{fig}
 \end{figure}
@@ -240,17 +237,7 @@ element symbols.
 For papers published in translation journals, please give the English 
 citation first, followed by the original foreign-language citation \cite{b6}.
 
-\begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
-\end{thebibliography}
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your version prior to submission to the relevant assignment. 
+\bibliographystyle{plain}
+\bibliography{report/bibliography}
 
 \end{document}
