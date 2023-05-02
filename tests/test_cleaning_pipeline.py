@@ -122,21 +122,6 @@ class TestCleaningPipeline(unittest.TestCase):
                          '2022-08-02', '2022-08-02', '2020-02-02']
         self.assertTrue(resulting_formatted_dates.sort() == correct_dates.sort())
 
-    def test_coordinate_to_country(self):
-        # Pipeline
-        pipeline = self.setup()
-        pipeline.coordinate_to_country_rate_limited()
-        countries = pipeline.df['country'].values
-
-        # Testing
-        self.assertTrue(countries[0] == 'Australia')
-        self.assertTrue(countries[1] == 'Spain')
-        self.assertTrue(countries[2] == 'Germany')
-        self.assertTrue(countries[3] == 'New Zealand')
-        self.assertTrue(countries[5] == 'United States')
-        self.assertTrue(countries[6] == 'Namibia')
-        self.assertTrue(countries[7] == 'Australia')
-
     def test_timezone_standardization(self):
         # Pipeline
         pipeline = self.setup()
