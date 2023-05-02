@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.utils import compute_class_weight
 from tensorflow.keras.applications.efficientnet import EfficientNetB6
 from tensorflow.keras.applications.efficientnet import preprocess_input, decode_predictions
 from tensorflow.keras.preprocessing import image
@@ -16,7 +17,7 @@ import csv
 import sys
 import os
 
-model_name = 'wildlife_presence_model_01'
+model_name = 'wildlife_presence_model_03'
 
 # File path
 root_path = sys.path[1]
@@ -71,14 +72,14 @@ def build_efficientnet_02():
     x = GlobalAveragePooling2D()(x)
     x = BatchNormalization()(x)
 
-    top_dropout_rate = 0.5
+    top_dropout_rate = 0.8
     x = Dropout(top_dropout_rate, name='top_dropout')(x)
     predictions = Dense(classes, activation='softmax')(x)
 
     # Initialize model
     model = Model(inputs=model.input, outputs=predictions, name='EfficientNet')
-    optimizer = Adam(learning_rate=1e-4)
-    model.compile(optimizer=optimizer,
+    # optimizer = Adam(learning_rate=1e-4)
+    model.compile(optimizer=tf.keras.optimizers.Adam(),
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
 
@@ -113,13 +114,22 @@ def train_top_weights(train_ds, eval_ds, model_type: int = 1):
     if model_type == 2:
         model = build_efficientnet_02()
 
+    # Create dataset weighting
+    classes = train_ds.class_names
+    weight_values = compute_class_weight(class_weight='balanced',
+                                         classes=classes,
+                                         y=get_image_labels(train_ds))
+    print(weight_values)
+    weights = dict(zip([0, 1], weight_values))
+
     train_ds = train_ds.prefetch(AUTOTUNE)
 
-    epochs = 10
+    epochs = 15
     hist = model.fit(train_ds,
                      epochs=epochs,
                      validation_data=eval_ds,
-                     verbose=2)
+                     verbose=2,
+                     class_weight=weights)
     return model, hist
 
 
@@ -177,6 +187,7 @@ if __name__ == "__main__":
     # Generate dataset and pre-tune
     train_ds, eval_ds = import_dataset(img_path)
 
+
     # Train the top weights of the model
     model, hist = train_top_weights(train_ds, eval_ds, 2)
 
@@ -188,7 +199,7 @@ if __name__ == "__main__":
 
     # Write training history
     print(hist.history['accuracy'])
-    write_training_history('top_weight_model_01_training.csv', [hist.history['accuracy']])
+    write_training_history('top_weight_model_02_training.csv', [hist.history['accuracy']])
 
     # Save model
     model.save(save_path)
