@@ -11,4 +11,4 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 # Set the default command to run when the container starts
-CMD ["python", "/app/src/models/image/imagenet/binary_model.py"]
+CMD ["python", "/app/src/models/image/taxonomic/taxonomic_modelling.py"]

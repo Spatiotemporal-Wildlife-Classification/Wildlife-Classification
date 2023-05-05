@@ -7,3 +7,4 @@ tensorflow-hub
 protobuf==3.19.6
 geopy==2.3.0
 timezonefinder==6.0.2
+h5py

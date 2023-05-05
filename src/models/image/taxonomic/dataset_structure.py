@@ -1,6 +1,6 @@
 import sys
 from datetime import datetime
-
+import random
 import numpy as np
 import requests
 from keras.utils import image_dataset_from_directory
@@ -9,12 +9,12 @@ from src.models.meta.pipelines import sub_species_detection
 import pandas as pd
 import os
 
-# img_path = os.path.join(os.getcwd(), 'data', 'taxon')
 img_path = Config.root_dir() + '/data/taxon/'
+test_path = Config.root_dir() + '/data/taxon_test/'
 data_path = Config.root_dir() + '/data/processed/'
 img_size = 528
 batch_size = 32
-
+test_split = 0.15
 
 taxonomy_list = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
 count = 0
@@ -58,6 +58,10 @@ def taxonomic_analysis(df: pd.DataFrame):
 def image_download(x):
     global count
     path = img_path
+    set_decider = random.uniform(0, 1)
+    if set_decider < test_split:
+        path = test_path
+
     for level in taxonomy_list:
         taxon_level = x[level]
 
@@ -97,7 +101,7 @@ def status_bar_update():
 
 
 if __name__ == "__main__":
-    observations = 'proboscidia_final.csv'
+    observations = 'felids_final.csv'
     df = create_datasets(observations)
 
     # Generate sub_species
@@ -105,4 +109,4 @@ if __name__ == "__main__":
 
     taxon_breakdown = taxonomic_analysis(df.copy())
 
-    df.head(15000).apply(lambda x: image_download(x), axis=1)
+    df.head(12000).apply(lambda x: image_download(x), axis=1)
