@@ -1,17 +1,18 @@
 import sys
-from datetime import datetime
 import random
 import numpy as np
-import requests
-from keras.utils import image_dataset_from_directory
 from src.structure import Config
 from src.models.meta.pipelines import sub_species_detection
 import pandas as pd
 import os
+import shutil
 
+raw_img_path = Config.root_dir() + '/data/taxon_raw/'
 img_path = Config.root_dir() + '/data/taxon/'
 test_path = Config.root_dir() + '/data/taxon_test/'
 data_path = Config.root_dir() + '/data/processed/'
+multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
+
 img_size = 528
 batch_size = 32
 test_split = 0.15
@@ -21,9 +22,12 @@ count = 0
 length = 0
 
 
-def create_datasets(observations: str):
+def create_dataset(observations: list):
     global length
-    df_obs = pd.read_csv(data_path + observations)
+    df_obs = pd.DataFrame()
+
+    for observation in observations:
+        df_obs = pd.concat([df_obs, pd.read_csv(data_path + observation)])
 
     df_obs = df_obs.dropna(subset=['image_url'])
 
@@ -73,20 +77,21 @@ def image_download(x):
         taxon_level = taxon_level.lower()
         path = path + taxon_level + "/"
 
-    # Download image
-    file_name = path + str(x['id']) + '.jpg'
-    if not os.path.exists(file_name):
-        try:
-            img_data = requests.get(x['image_url'], timeout=3).content
-
-            os.makedirs(os.path.dirname(file_name), exist_ok=True)
-            with open(file_name, "wb") as f:
-                f.write(img_data)
-        except:
-            print('Error in retrieving image')
+    multiple_obs(x['id'], path)
 
     count = count + 1
     status_bar_update()
+
+
+def multiple_obs(id, path):
+    for suffix in multiple_detections_id:
+        raw_path = raw_img_path + str(id) + '_' + suffix + '.jpg'
+        if os.path.exists(raw_path):
+            file_name = path + str(id) + '_' + suffix + '.jpg'
+            os.makedirs(os.path.dirname(file_name), exist_ok=True)
+            shutil.move(raw_path, file_name)
+        else:
+            break
 
 
 def status_bar_update():
@@ -101,12 +106,12 @@ def status_bar_update():
 
 
 if __name__ == "__main__":
-    observations = 'felids_final.csv'
-    df = create_datasets(observations)
+    observations = ['proboscidia_final.csv', 'felids_final.csv']
+    df = create_dataset(observations)
 
     # Generate sub_species
     df = df.apply(lambda x: sub_species_detection(x), axis=1)
 
     taxon_breakdown = taxonomic_analysis(df.copy())
 
-    df.head(12000).apply(lambda x: image_download(x), axis=1)
+    df.head(24000).apply(lambda x: image_download(x), axis=1)
