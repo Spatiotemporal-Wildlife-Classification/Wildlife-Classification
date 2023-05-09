@@ -137,7 +137,7 @@ notebooks/felid_data_cache
 notebooks/global_data_cache
 notebooks/local_data_cache
 notebooks/oversample_data_cache
-
+models/
 # Produced models
 *.sav
 *.json
@@ -151,5 +151,10 @@ notebooks/oversample_data_cache
 .idea/.gitignore
 
 notebooks/model_comparison_cache
+
 models/
 *.jpg
+
+
+data/
+
