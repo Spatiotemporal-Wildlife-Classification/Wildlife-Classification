@@ -158,7 +158,7 @@ def unfreeze_model(model):
 
     optimizer = Adam(learning_rate=1e-5)
     model.compile(optimizer=optimizer,
-                  loss='binary_crossentropy',
+                  loss='catagorical_crossentropy',
                   metrics='accuracy')
     return model
 

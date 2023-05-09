@@ -152,4 +152,9 @@ models/
 
 notebooks/model_comparison_cache
 
+models/
+*.jpg
+
+
 data/
+
