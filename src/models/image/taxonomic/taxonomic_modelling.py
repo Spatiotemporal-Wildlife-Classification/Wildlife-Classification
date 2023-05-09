@@ -13,10 +13,10 @@ from tensorflow.python.data import AUTOTUNE
 from tensorflow.keras import layers
 import tensorflow as tf
 
-model_name = 'family_taxon_classifier'
-img_path = os.path.join(os.getcwd(), 'data', 'taxon')
+model_name = 'elephantidae_taxon_classifier'
+img_path = os.path.join(os.getcwd(), 'data', 'taxon/elephantidae/')
 save_path = os.path.join(os.getcwd(), 'models', model_name)
-checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/family_level')
+checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/genus')
 
 img_size = 528
 batch_size = 32
@@ -40,8 +40,8 @@ def import_dataset(file_path: str):
                                           batch_size=batch_size,
                                           labels='inferred',
                                           label_mode='categorical')
-
     print(train_ds.class_names)
+
     return train_ds, val_ds
 
 
@@ -84,12 +84,11 @@ def get_image_labels(ds, classes):
 def train_model_top_weights(model, train_ds, val_ds):
     # Create dataset weighting
     classes = train_ds.class_names
-    print(classes)
-    # weight_values = compute_class_weight(class_weight='balanced',
-    #                                      classes=classes,
-    #                                      y=get_image_labels(train_ds, classes))
-    # print(weight_values)
-    # weights = dict(zip([0, 1], weight_values))
+    weight_values = compute_class_weight(class_weight='balanced',
+                                         classes=classes,
+                                         y=get_image_labels(train_ds, classes))
+    class_labels = list(range(0, len(classes)))
+    weights = dict(zip(class_labels, weight_values))
 
     cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
                                                      save_weights_only=True,
@@ -104,7 +103,8 @@ def train_model_top_weights(model, train_ds, val_ds):
                      verbose=2,
                      callbacks=[cp_callback],
                      validation_steps=int(0.05 * len(train_ds)),
-                     steps_per_epoch=25)
+                     steps_per_epoch=25,
+                     class_weight=weights)
     return model, hist
 
 
@@ -131,10 +131,9 @@ if __name__ == "__main__":
 
     # Construct the model
     model = construct_model(classes)
-    print(model.summary())
 
     # Train the model's top weights
     model, hist = train_model_top_weights(model, train_ds, val_ds)
 
-    plot_hist(hist, "Taxon Family Level Classification Training")
+    plot_hist(hist, "Genus Elephantidae Classification Training")
     model.save(save_path)
