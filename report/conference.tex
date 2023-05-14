@@ -37,8 +37,8 @@ Wildlife Classification, Convolutional Neural Network (CNN), Meta-data, Spatio-t
     Advances in classification, allow researchers to ask the questions, "what are they doing?", "where are they?", "who are they with?", amongst others \cite{Gomez_Villa_Salazar_Vargas_2017}. These questions can be tailored to the taxonomic level, or to an individual level, whereby each individual contains its own unique identifying pattern/ visual representation used to identify it \cite{Clapham_Miller_Nguyen_Van_Horn_2022}. 
     \\
 
-    Classification utilizes images in order to learn the unique visual traits of animals, in order to accurately classify them. Images are sourced primarily from Camera-traps, and Citizen-Science platforms. Camera-traps are fixed-location staregically placed camera's that capture a burst of images, when a motion sensor is tripped, indicating an animal's presence \cite{Schneider_Greenberg_Taylor_Kremer_2020}. Prominent camera-trap networks include the Snapshot-safari project \cite{snapshot_safari}. Citizen Science platforms, such as iNaturalist \cite{iNaturalist} and Zooniverse \cite{zooniverse.org}, allow for individuals to upload captured images, and through group consensus decide on the species present in the image. 
-    The quality and quantity of images within these sources, present a challenge to classification methods, due to the harsh-conditions in which they are captured, the varied quality of captured images, and the unbalanced quantity of species captured \cite{Van_Horn_Mac_Aodha_Song_Cui_Sun_Shepard_Adam_Perona_Belongie_2018b}. 
+    Classification utilizes images in order to learn the unique visual traits of animals, in order to accurately classify them. Images are sourced primarily from Camera-traps, and Citizen-Science platforms. Camera-traps are fixed-location strategically placed camera's that capture a burst of images, when a motion sensor is tripped, indicating an animal's presence \cite{Schneider_Greenberg_Taylor_Kremer_2020}. Prominent camera-trap networks include the Snapshot-safari project \cite{snapshot_safari}. Citizen Science platforms, such as iNaturalist \cite{iNaturalist} and Zooniverse \cite{zooniverse.org}, allow for individuals to upload captured images, and through group consensus decide on the species present in the image. 
+    The quality and quantity of images within these sources, present a challenge to classification methods, due to the harsh-conditions in which they are captured, the varied quality of captured images, and the unbalanced quantity of species captured (a long-tailed distribution) \cite{Van_Horn_Mac_Aodha_Song_Cui_Sun_Shepard_Adam_Perona_Belongie_2018b}. 
     \\
 
     Datasets such as ImageNet \cite{ImageNet}, and the iNaturalist challenges \cite{Van_Horn_Mac_Aodha_Song_Cui_Sun_Shepard_Adam_Perona_Belongie_2018b} provide a historical comparison of state-of-the-art image classifiers. Two Convolutional Neural Network (CNN) models, AlexNet \cite{Krizhevsky_Sutskever_Hinton_2017a} and VGG-16 \cite{Simonyan2014-ww} provided the initial success of image classification between 2013-2014 beating human recall levels \cite{Wäldchen_Mäder_2018}, achieving a $39.7\%$ top-1\% error rate and a $24.7\%$ error rate on the ImageNet dataset. Modern comparisons and their variants include, ResNet \cite{He_Zhang_Ren_Sun_2016} and EfficientNet \cite{Tan2019} CNN's of which the latter, achieved a $88.4\%$ top-1\% accuracy on ImageNet. Deviations from the CNN models to Vision Transfer models, such as ViT-G/14 \cite{Zhai_Kolesnikov_Houlsby_Beyer_2022} achieved as high as $90.45\%$ top-1\% accuracy.
@@ -48,15 +48,37 @@ Wildlife Classification, Convolutional Neural Network (CNN), Meta-data, Spatio-t
     Terry et al. \cite{Terry_Roy_August_2019}, determined a $9.1\%$ top-1\% accuracy improvement, in the classification of Ladybird records when meta-data methods were included in image classification. Similarly, Tang et al. \cite{tang_paluri_fei-fei_fergus_bourdev_2015} discovered an almost 7\% gain in mean average precision. The use of meta-data is considered to be a critical factor in animal classification going forward \cite{Wäldchen_Mäder_2018}. 
     \\
 
-    This paper, extends the use of image meta-data to include that of the sighting's immediate environmental conditions including temperature, rainfall, humidity, amongst others. In order to build a comprehensive meta-model of species sightings. Additionally branching from the concept of a hierarchical taxonomic classifier introduced by Gomez-Donoso et al. \cite{gomez-donoso_escalona_pérez-esteve_cazorla_2021}, this paper introduces a novel parallel method of classification and meta-data cohesion, in order to achieve accurate classification to the sub-species taxonomic level.
+    This paper, proposes a novel methodology in order to bolster the accuracy and taxonomic depth of prediction of existing wildlife classification methods, through the use of meta-data modelling. 
+    The use of image meta-data to extended extensively to include the sighting's immediate environmental conditions (temperature, rainfall, wind, etc), the geographic conditions, and temporal aspect of the sighting (season, time of day, dark/light, etc). In order to build a comprehensive meta-model capable of capturing the relationship between the environmental and geographic conditions of a sighting and the wildlife present. 
+    Additionally branching from the concept of a hierarchical taxonomic classifier introduced by Gomez-Donoso et al. \cite{gomez-donoso_escalona_pérez-esteve_cazorla_2021}, this paper introduces a novel ensemble method of classification and meta-data cohesion, whereby classification occurs at each taxonomic level, allowing differing levels of classification abstraction. 
+    We examine if the proposed novel approach is capable of the following: 
+    \\
     
+    \begin{enumerate}
+        \item Improving the overall and long-tail accuracy of wildlife classification against known baseline methods. 
+        \item Extend the taxonomic depth of classification prediction to the Sub-species taxonomic level.
+    \end{enumerate}
+
+
     
+\section{Methods and Materials}
+    \subsection{Data}
+    Observations were sourced from the Citizen Science platform iNaturalist \cite{iNaturalist}. Specifically targeting a subset of the Animalia kingdom, the \textit{Elephantidae} and \textit{Felidae} orders. These chosen subsets, were selected due to the diverse and global nature of their observations, the elusive and remote destinations they inhabit, as well as the resulting characteristic long-tailed distribution they possess, such that they serve as generic representatives of the issues within wildlife classification. 
+
+    TODO Insert table here with counts per taxonomic level.
+    TODO Continue data description with Open Meteo and weather information
     
+    \subsection{Methods}
 
-\section{Ease of Use}
+\section{Implementation}
 
-\subsection{Maintaining the Integrity of the Specifications}
+\section{Experimentation}
 
+\section{Results}
+
+\section{Discussion}
+
+\section{Conclusion}
 
 
 \bibliographystyle{plain}
