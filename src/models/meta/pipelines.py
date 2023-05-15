@@ -374,7 +374,7 @@ def calculate_optimal_k(data):
     sil = []
 
     k = k_init
-    while k <= k_max:
+    while k <= k_max and k <= len(data):
         k_means = KMeans(n_clusters=k, n_init=10).fit(data)
         labels = k_means.labels_
 

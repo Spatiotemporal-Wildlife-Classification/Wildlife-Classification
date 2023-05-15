@@ -9,17 +9,20 @@ import adaboost_model
 from pipelines import sub_species_detection
 
 # Dictionaries to aid in file name creation
-model_abbreviations = {'Neural network': 'nn',
-                       'Decision tree': 'dt',
-                       'Random forest': 'rf',
-                       'Xgboost': 'xgb',
-                       'AdaBoost': 'ada'}
+# model_abbreviations = {'Neural network': 'nn',
+#                        'Decision tree': 'dt',
+#                        'Random forest': 'rf',
+#                        'Xgboost': 'xgb',
+#                        'AdaBoost': 'ada'}
+model_abbreviations = {'Decision tree': 'dt'}
 
-model_save_types = {'Neural network': '',
-                    'Decision tree': '.sav',
-                    'Random forest': '.sav',
-                    'Xgboost': '.json',
-                    'AdaBoost': '.sav'}
+# model_save_types = {'Neural network': '',
+#                     'Decision tree': '.sav',
+#                     'Random forest': '.sav',
+#                     'Xgboost': '.json',
+#                     'AdaBoost': '.sav'}
+
+model_save_types = {'Decision tree': '.sav'}
 
 file_name_taxon = {'taxon_family_name': '_family',
                    'taxon_genus_name': '_genus',
@@ -212,6 +215,6 @@ def model_selection_execution(model: str,
 
 # Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
-    dataset_iterations(observation_files=['proboscidia_final.csv'],
-                       metadata_files=['proboscidia_meta.csv'],
+    dataset_iterations(observation_files=['felids_final.csv'],
+                       metadata_files=['felids_meta.csv'],
                        k_centroids=[40])
