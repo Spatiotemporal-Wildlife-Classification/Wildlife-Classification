@@ -6,7 +6,7 @@
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -63,12 +63,71 @@ Wildlife Classification, Convolutional Neural Network (CNN), Meta-data, Spatio-t
     
 \section{Methods and Materials}
     \subsection{Data}
-    Observations were sourced from the Citizen Science platform iNaturalist \cite{iNaturalist}. Specifically targeting a subset of the Animalia kingdom, the \textit{Elephantidae} and \textit{Felidae} orders. These chosen subsets, were selected due to the diverse and global nature of their observations, the elusive and remote destinations they inhabit, as well as the resulting characteristic long-tailed distribution they possess, such that they serve as generic representatives of the issues within wildlife classification. 
+        \subsubsection{Observations}
+        Observations were sourced from the Citizen Science platform iNaturalist \cite{iNaturalist}. Specifically targeting a subset of the Animalia kingdom, the \textit{Elephantidae} and \textit{Felidae} taxonomic orders. These chosen subsets, were selected due to the diverse and global nature of their observations, the elusive and remote destinations the individual's inhabit, as well as the resulting characteristic long-tailed distribution they possess, such that they serve as generic representatives of common issues within wildlife classification. Each observation contains an image, labels, taxonomic information, geographic coordinate, date, and time of the observation.
+    
+        \begin{table}[htbp]
+        \caption{Dataset Taxonomic Breakdown}
+        \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        Taxonomic Name & Dataset Count & Taxonomic Level \\
+        \hline
+        Felidae & 44710 & Order \\
+        Elephantidae & 11291 & Order \\
+        \hline
+        Lynx & 20139 & Genus \\
+        Panthera & 12411 & Genus \\
+        Puma & 5239 & Genus \\
+        Leopardus & 2220 & Genus \\
+        Acinonyx & 1872 & Genus \\
+        Felis & 991 & Genus \\
+        Caracal & 595 & Genus \\
+        Herpailurus & 448 & Genus \\
+        Leptailurus & 442 & Genus \\
+        Prionailurus & 291 & Genus \\
+        Neofelis & 24 & Genus \\
+        Otocolobus & 20 & Genus \\
+        Pardofelis & 11 & Genus \\
+        Catopuma & 7 & Genus \\
+        Loxodonta & 9407 & Genus \\
+        Elephas & 1885 & Genus \\
+        \hline
+        \end{tabular}
+        \label{table: taxonomic_breakdown}
+        \end{center}
+        \end{table}
 
-    TODO Insert table here with counts per taxonomic level.
-    TODO Continue data description with Open Meteo and weather information
+        Table \ref{table: taxonomic_breakdown} displays the long tailed distribution found even within the high level order and genus taxonomic levels. This long-tailed distribution is exacerbated in lower taxonomic levels. For a complete taxonomic breakdown, please view Table ... in the Appendix. 
+
+        \subsubsection{Environmental Data}
+        Each wildlife observation's meta-data is limited to the coordinates, date, and time of observation. In order to supplement the meta-data with the immediate environmental, geographic, and temporal conditions, the Open-Meteo \cite{openmeteo} open-source weather API us utilized. Open-Meteo sources information directly from Copernicus satellite data \cite{era5}. The weather API allows for the collection of daily aggregate information, and hourly data, with a resolution of $11.0$ kilometers, providing a snapshot of the environmental conditions of the observation.
+
+        \begin{table}[htbp]
+        \caption{Meta-data Features}
+        \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        Feature & Description & Unit \\
+        \hline
+        Coordinates & World Geodetic System (WGS84) & (latitude, longitude) \\
+        Elevation & Meters above sea level & Meters \\
+        Ground temperature & Air temperature 2 meters above ground & Celsius \\
+        Relative humidity & Humidity 2 meters above ground & \% \\
+        Hourly precipitation & Hourly precipitation sum & Milimeters \\
+        Hourly snowfall & Hourly snowfall sum & Centimeters \\
+        Cloudcover & Cloudcover within the immediate area & \% of area covered \\
+        \hline
+        \end{tabular}
+        \label{table: open_meteo_summary}
+        \end{center}
+        \end{table}
+
+        Table \ref{table: open_meteo_summary} provides a brief look at the included meta-data features. For a comprehensive list, please review Table ... in the Appendix.
     
     \subsection{Methods}
+    Questions for the Language center:
+    I have two long tables that I would like to include in the appendix, but would like to show a short description of those tables in the Data section as above. Any advise as to the correct format for achieving this would be greatly appreciated. Many thanks!
 
 \section{Implementation}
 
