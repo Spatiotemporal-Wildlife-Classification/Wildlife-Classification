@@ -17,6 +17,7 @@ base_image_classifier = tf.keras.models.load_model(base_image_classifier_path)
 multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
 img_size = 528
 
+
 def multiple_image_detections(index):
     images = []
     for possibility in multiple_detections_id:
