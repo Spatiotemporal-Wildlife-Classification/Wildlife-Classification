@@ -19,9 +19,6 @@ image_model_path = model_path + 'image/'
 meta_model_path = model_path + 'meta/'
 cluster_model_path = model_path + 'k_clusters/'
 
-tf.autograph.set_verbosity(2)
-tf.get_logger().setLevel('ERROR')
-
 # Load base image classifier
 base_image_classifier_path = image_model_path + 'family_taxon_classifier'
 base_image_classifier = tf.keras.models.load_model(base_image_classifier_path)
