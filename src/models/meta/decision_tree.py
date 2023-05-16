@@ -13,7 +13,7 @@ import pickle
 
 
 root_path = Config.root_dir()
-data_destination = '/notebooks/model_comparison_cache/'
+data_destination = '/models/meta/'
 
 
 def write_scores_to_file(mean_scores: list, depth_range: list, filename: str):

@@ -213,8 +213,28 @@ def model_selection_execution(model: str,
                                                    validation_file)
 
 
+def train_base_model():
+    # Generate entire dataset
+    df_felids = pipelines.aggregate_data('felids_final.csv', 'felids_meta.csv')
+    df_proboscidia = pipelines.aggregate_data('proboscidia_final.csv', 'proboscidia_meta.csv')
+    df = pd.concat([df_felids, df_proboscidia])
+
+    # Train model
+    model_selection_execution('Decision tree',
+                              df,
+                              'taxon_family_name',
+                              0,
+                              'base_meta_model.sav',
+                              'base_meta_training_accuracy',
+                              'base_meta_validation.csv')
+
+
+
 # Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
-    dataset_iterations(observation_files=['felids_final.csv'],
+    dataset_iterations(observation_files=['felids_train.csv'],
                        metadata_files=['felids_meta.csv'],
                        k_centroids=[40])
+    # train_base_model()
+
+
