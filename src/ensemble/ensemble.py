@@ -19,6 +19,9 @@ image_model_path = model_path + 'image/'
 meta_model_path = model_path + 'meta/'
 cluster_model_path = model_path + 'k_clusters/'
 
+tf.autograph.set_verbosity(2)
+tf.get_logger().setLevel('ERROR')
+
 # Load base image classifier
 base_image_classifier_path = image_model_path + 'family_taxon_classifier'
 base_image_classifier = tf.keras.models.load_model(base_image_classifier_path)
@@ -34,23 +37,41 @@ base_meta_cluster = pickle.load(open(base_cluster_path, 'rb'))
 multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
 img_size = 528
 
-taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
-hierarchy = {'base': ['Elephantidae', 'Felidae']}
+# taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
+taxonomic_levels = ['taxon_family_name', 'taxon_genus_name']
+hierarchy = {'base':
+                 {'Elephantidae': {'Elephas': '',
+                                   'Loxodonta': ''},
+                  'Felidae': {'Acinonyx': '',
+                              'Caracal': '',
+                              'Catopuma': '',
+                              'Felus': '',
+                              'Herpailurus': '',
+                              'Leopardus': '',
+                              'Leptailurus': '',
+                              'Lynx': '',
+                              'Neofelis': '',
+                              'Otocolobus': '',
+                              'Panthera': '',
+                              'Pardofelis': '',
+                              'Prionailurus': '',
+                              'Puma': ''}}}
 
-taxon_weighting = {0: 0.1,
-                   1: 0.2,
-                   2: 0.5,
-                   3: 0.9}
+# Meta data prediction weighting by taxonomic level
+taxon_weighting = {'taxon_family_name': 0.1,
+                   'taxon_genus_name': 0.2,
+                   'taxon_species_name': 0.5,
+                   'sub_species': 0.9}
 
-
+# Method to identify multiple wildlife instances detected within a single image
 def multiple_image_detections(index):
     images = []
     for possibility in multiple_detections_id:
-        name = str(index) + '_' + possibility + '.jpg'
+        name = str(index) + '_' + possibility + '.jpg'  # Generate a possible image name and path
         file_path = image_path + name
-        if os.path.exists(file_path):
+        if os.path.exists(file_path):  # If the file exists, add it to images
             images.append(name)
-        else:
+        else:  # If no file exists, exit the loop no further images will be found
             break
     return images
 
@@ -126,37 +147,86 @@ def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
     weighting = taxon_weighting[taxon_level]
     weighted_meta = meta_prediction * weighting
     combined = weighted_meta + image_prediction
-    print(combined)
     return combined
 
 
-def avg_multi_image_predictions(images):
-    mean_predictions = [0, 0]
+def avg_multi_image_predictions(images, model):
+    output_shape = model.output_shape[1:]
+    mean_predictions = [0] * output_shape[0]
     for i in images:
         img = tf.keras.utils.load_img(image_path + i, target_size=(img_size, img_size))
         img = tf.keras.utils.img_to_array(img)
         input_arr = np.array([img])
 
-        prediction = base_image_classifier.predict(input_arr)
+        prediction = model.predict(input_arr, verbose=0)
         mean_predictions = mean_predictions + prediction
-    return (mean_predictions / len(images))
+    return mean_predictions / len(images)
+
+
+def load_next_meta_model(decision):
+    name = decision.replace(" ", "_")
+    name = name.lower()
+    name = meta_model_path + name + '_dt_model.sav'
+    model = pickle.load(open(name, 'rb'))
+    return model
+
+
+def load_next_cluster_model(decision):
+    name = decision.replace(" ", "_")
+    name = name.lower()
+    name = cluster_model_path + name + '_dt_k_means.sav'
+    model = pickle.load(open(name, 'rb'))
+    return model
+
+
+def load_next_image_model(decision):
+    name = decision.replace(" ", "_")
+    name = name.lower()
+    name = image_model_path + name + '_taxon_classifier'
+    model = tf.keras.models.load_model(name)
+    return model
 
 
 if __name__ == "__main__":
     data = pd.read_csv(data_path, index_col=0)
 
     X, y = preprocess_meta_data(data, base_meta_cluster, 'taxon_family_name')
+    meta_model = base_meta_classifier
+    image_model = base_image_classifier
+    cluster_model = base_meta_cluster
 
     for index, obs in X.iterrows():
-        current_taxon = 'base'
-        obs = obs.to_numpy()
-        print(index)
-        meta_prediction = base_meta_classifier.predict_proba(obs.reshape(1, -1))
-        print(meta_prediction)
+        print('---Image index: ', index, ' ---')
 
-        images = multiple_image_detections(index)
-        mean_img_prediction = avg_multi_image_predictions(images)
-        print(mean_img_prediction)
+        current_level = hierarchy['base']  # Generate base hierarchy level
+        obs = obs.to_numpy()  # Convert meta-data sample to numpy array
 
-        decision = taxon_weighted_decision(meta_prediction, mean_img_prediction, 0)
-        print(decision)
+        for level in taxonomic_levels:
+            print('-> ', level)
+
+            # Image prediction
+            images = multiple_image_detections(index)
+            mean_img_prediction = avg_multi_image_predictions(images, image_model)
+            print('Mean image prediction: ', mean_img_prediction)
+
+            # Meta prediction
+            X, y = preprocess_meta_data(data, cluster_model, level)
+            meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
+            print('Meta image prediction: ', meta_prediction)
+
+            # Decision
+            joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)
+            print('Joint prediction: ', joint_prediction)
+            labels = (list(current_level.keys()))
+            label = (labels[np.argmax(joint_prediction)])
+            print('Predicted label: ', label)
+
+            # Update hierarchy level
+            current_level = current_level[labels[np.argmax(joint_prediction)]]
+
+            # Update models based on next model
+            meta_model = load_next_meta_model(label)
+            image_model = load_next_image_model(label)
+            cluster_model = load_next_cluster_model(label)
+
+    print('--------------------------')
