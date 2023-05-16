@@ -34,7 +34,13 @@ base_meta_cluster = pickle.load(open(base_cluster_path, 'rb'))
 multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
 img_size = 528
 
+taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
 hierarchy = {'base': ['Elephantidae', 'Felidae']}
+
+taxon_weighting = {0: 0.1,
+                   1: 0.2,
+                   2: 0.5,
+                   3: 0.9}
 
 
 def multiple_image_detections(index):
@@ -116,6 +122,24 @@ def preprocess_meta_data(df, k_means, taxon_target):
     return X, y
 
 
+def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
+    weighting = taxon_weighting[taxon_level]
+    weighted_meta = meta_prediction * weighting
+    combined = weighted_meta + image_prediction
+    print(combined)
+    return combined
+
+
+def avg_multi_image_predictions(images):
+    mean_predictions = [0, 0]
+    for i in images:
+        img = tf.keras.utils.load_img(image_path + i, target_size=(img_size, img_size))
+        img = tf.keras.utils.img_to_array(img)
+        input_arr = np.array([img])
+
+        prediction = base_image_classifier.predict(input_arr)
+        mean_predictions = mean_predictions + prediction
+    return (mean_predictions / len(images))
 
 
 if __name__ == "__main__":
@@ -131,12 +155,8 @@ if __name__ == "__main__":
         print(meta_prediction)
 
         images = multiple_image_detections(index)
-        for i in images:
-            img = tf.keras.utils.load_img(image_path + i, target_size=(img_size, img_size))
-            img = tf.keras.utils.img_to_array(img)
-            input_arr = np.array([img])
+        mean_img_prediction = avg_multi_image_predictions(images)
+        print(mean_img_prediction)
 
-            prediction = base_image_classifier.predict(input_arr)
-            print(prediction)
-            next_taxon = hierarchy[current_taxon][np.argmax(prediction)]
-            print(next_taxon)
+        decision = taxon_weighted_decision(meta_prediction, mean_img_prediction, 0)
+        print(decision)
