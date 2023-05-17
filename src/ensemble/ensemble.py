@@ -1,4 +1,5 @@
 import pickle
+import time
 
 import pandas as pd
 import numpy as np
@@ -6,13 +7,17 @@ import tensorflow as tf
 
 import pytz
 
+from csv import DictWriter
+
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
     sub_species_detection
 from src.structure.Config import root_dir
 
+import gc
 import os
 
 data_path = root_dir() + '/data/processed/final_test_observations.csv'
+results_path = root_dir() + '/notebooks/ensemble_cache/'
 image_path = root_dir() + '/data/final_images/'
 model_path = root_dir() + '/models/'
 image_model_path = model_path + 'image/'
@@ -21,41 +26,55 @@ cluster_model_path = model_path + 'k_clusters/'
 
 # Load base image classifier
 base_image_classifier_path = image_model_path + 'family_taxon_classifier'
-base_image_classifier = tf.keras.models.load_model(base_image_classifier_path)
 
 # Load base meta-classifier
 base_meta_classifier_path = meta_model_path + 'base_meta_model.sav'
-base_meta_classifier = pickle.load(open(base_meta_classifier_path, 'rb'))
 
 # Load base k_cluster
 base_cluster_path = cluster_model_path + 'base_meta_k_means.sav'
-base_meta_cluster = pickle.load(open(base_cluster_path, 'rb'))
 
 multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
 img_size = 528
 
-# taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
-taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name']
+taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
 hierarchy = {'base':
                  {'Elephantidae': {'Elephas':
-                                       {'Elephas maximus': ''},
+                                       {'Elephas maximus':
+                                            {'Elephas maximus borneensis': '',
+                                             'Elephas maximus indicus': '',
+                                             'Elephas maximus maximus': '',
+                                             'Elephas maximus sumatranus': ''}},
                                    'Loxodonta':
                                        {'Loxodonta africana': '',
                                         'Loxodonta cyclotis': ''}},
                   'Felidae': {'Acinonyx':
-                                  {'Acinonyx jubatus': ''},
+                                  {'Acinonyx jubatus':
+                                       {'Acinonyx jubatus hecki': '',
+                                        'Acinonyx jubatus jubatu': ''}},
                               'Caracal':
-                                  {'Caracal aurata': '',
-                                   'Caracal caracal': ''},
+                                  {'Caracal aurata':
+                                       {'Caracal aurata aurata': ''},
+                                   'Caracal caracal':
+                                       {'Caracal caracal caracal': '',
+                                        'Caracal caracal nubicus': '',
+                                        'Caracal caracal schmitzi': ''}},
                               'Catopuma':
-                                  {'Catopuma temminckii': ''},
+                                  {'Catopuma temminckii':
+                                       {'Catopuma temminckii moormensis': ''}},
                               'Felis':
                                   {'Felis bieti': '',
-                                   'Felis chaus': '',
-                                   'Felis lybica': '',
+                                   'Felis chaus':
+                                       {'Felis chaus affinis': '',
+                                        'Felis chaus chaus': ''},
+                                   'Felis lybica':
+                                       {'Felis lybica cafra': '',
+                                        'Felis lybica lybica': '',
+                                        'Felis lybica ornata': ''},
                                    'Felis margarita': '',
                                    'Felis nigripes': '',
-                                   'Felis silvestris': ''},
+                                   'Felis silvestris':
+                                       {'Felis silvestris caucasica': '',
+                                        'Felis silvestris silvestris': ''}},
                               'Herpailurus':
                                   {'Herpailurus yagouaroundi': ''},
                               'Leopardus':
@@ -63,47 +82,82 @@ hierarchy = {'base':
                                    'Leopardus colocola': '',
                                    'Leopardus emiliae': '',
                                    'Leopardus geoffroyi': '',
-                                   'Leopardus guigna': '',
+                                   'Leopardus guigna':
+                                       {'Leopardus guigna guigna': '',
+                                        'Leopardus guigna tigrillo': ''},
                                    'Leopardus guttulus': '',
                                    'Leopardus jacobita': '',
                                    'Leopardus pajeros': '',
-                                   'Leopardus pardalis': '',
+                                   'Leopardus pardalis':
+                                       {'Leopardus pardalis mitis': '',
+                                        'Leopardus pardalis pardalis': ''},
                                    'Leopardus tigrinus': '',
                                    'Leopardus wiedii': ''},
                               'Leptailurus':
-                                  {'Leptailurus serval': ''},
+                                  {'Leptailurus serval':
+                                       {'Leptailurus serval constantina': '',
+                                        'Leptailurus serval lipostictus': '',
+                                        'Leptailurus serval serval': ''}},
                               'Lynx':
                                   {'Lynx canadensis': '',
-                                   'Lynx lynx': '',
+                                   'Lynx lynx':
+                                       {'Lynx lynx carpathicus': '',
+                                        'Lynx lynx dinniki': '',
+                                        'Lynx lynx isabellinus': '',
+                                        'Lynx lynx lynx': '',
+                                        'Lynx lynx wrangeli': ''},
                                    'Lynx pardinus': '',
-                                   'Lynx rufus': ''},
+                                   'Lynx rufus':
+                                       {'Lynx rufus escuinapae': '',
+                                        'Lynx rufus fasciatus': '',
+                                        'Lynx rufus rufus': ''}},
                               'Neofelis':
-                                  {'Neofelis diardi': '',
+                                  {'Neofelis diardi':
+                                       {'Neofelis diardi borneensis': ''},
                                    'Neofelis nebulosa': ''},
                               'Otocolobus':
-                                  {'Otocolumbus manul': ''},
+                                  {'Otocolumbus manul':
+                                       {'Otocolumbus manul nigripectus': ''}},
                               'Panthera':
-                                  {'Panthera leo': '',
+                                  {'Panthera leo':
+                                       {'Panthera leo leo': '',
+                                        'Panthera leo melanochaita': ''},
                                    'Panthera onca': '',
-                                   'Panthera pardus': '',
-                                   'Panthera tigris': '',
+                                   'Panthera pardus':
+                                       {'Panthera pardus delacouri': '',
+                                        'Panthera pardus fusca': '',
+                                        'Panthera pardus kotiya': '',
+                                        'Panthera pardus melas': '',
+                                        'Panthera pardus orientalis': '',
+                                        'Panthera pardus pardus': '',
+                                        'Panthera pardus tulliana': ''},
+                                   'Panthera tigris':
+                                       {'Panthera tigris tigris': ''},
                                    'Panthera uncia': ''},
                               'Pardofelis':
                                   {'Pardofelis marmorata': ''},
                               'Prionailurus':
-                                  {'Prionailurus bengalensis': '',
-                                   'Prionailurus javanensis': '',
+                                  {'Prionailurus bengalensis':
+                                       {'Prionailurus bengalensis bengalensis': '',
+                                        'Prionailurus bengalensis euptilurus': ''},
+                                   'Prionailurus javanensis':
+                                       {'Prionailurus javanensis javanensis': '',
+                                        'Prionailurus javanensis sumatranus': ''},
                                    'Prionailurus planiceps': '',
                                    'Prionailurus rubiginosus': '',
-                                   'Prionailurus viverrinus': ''},
+                                   'Prionailurus viverrinus':
+                                       {'Prionailurus viverrinus viverrinus': ''}},
                               'Puma':
-                                  {'Puma concolor': ''}}}}
+                                  {'Puma concolor':
+                                       {'Puma concolor concolor': '',
+                                        'Puma concolor couguar': ''}}}}}
 
 # Meta data prediction weighting by taxonomic level
 taxon_weighting = {'taxon_family_name': 0.1,
                    'taxon_genus_name': 0.2,
                    'taxon_species_name': 0.5,
                    'sub_species': 0.9}
+
 
 # Method to identify multiple wildlife instances detected within a single image
 def multiple_image_detections(index):
@@ -175,9 +229,6 @@ def preprocess_meta_data(df, k_means, taxon_target):
     # Retrieve labels
     taxon_y = df[taxon_target]
 
-    # Sub-specie contains null values, if selected as target taxon. Remove
-    if taxon_y.isnull().any():
-        df = df.dropna(subset=[taxon_target])
     y = df[taxon_target]
     X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
                          'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
@@ -200,15 +251,17 @@ def avg_multi_image_predictions(images, model):
         img = tf.keras.utils.load_img(image_path + i, target_size=(img_size, img_size))
         img = tf.keras.utils.img_to_array(img)
         input_arr = np.array([img])
+        del img
 
         prediction = model.predict(input_arr, verbose=0)
         mean_predictions = mean_predictions + prediction
+    gc.collect()
     return mean_predictions / len(images)
 
 
 def load_next_meta_model(decision):
     if decision == 'base':
-        model = base_meta_classifier
+        model = pickle.load(open(base_meta_classifier_path, 'rb'))
         return model
     name = decision.replace(" ", "_")
     name = name.lower()
@@ -219,7 +272,7 @@ def load_next_meta_model(decision):
 
 def load_next_cluster_model(decision):
     if decision == 'base':
-        model = base_meta_cluster
+        model = pickle.load(open(base_cluster_path, 'rb'))
         return model
     name = decision.replace(" ", "_")
     name = name.lower()
@@ -230,7 +283,7 @@ def load_next_cluster_model(decision):
 
 def load_next_image_model(decision):
     if decision == 'base':
-        model = base_image_classifier
+        model = tf.keras.models.load_model(base_image_classifier_path)
         return model
     name = decision.replace(" ", "_")
     name = name.lower()
@@ -239,14 +292,26 @@ def load_next_image_model(decision):
     return model
 
 
+def instantiate_save_file():
+    headings = ['id', 'taxonomic_level', 'joint_prediction', 'image_prediction', 'meta_prediction', 'true_label']
+    f = open(results_path + 'ensemble_results.csv', 'a')
+    dictwriter = DictWriter(f, fieldnames=headings)
+    return dictwriter, f
+
+
 if __name__ == "__main__":
     data = pd.read_csv(data_path, index_col=0)  # Read in the final test dataset
-    data = data.sample(frac=1, random_state=123)  # Shuffle the dataset randomly
+    # data = data.sample(frac=1, random_state=123)  # Shuffle the dataset randomly
+    data = data.iloc[5:10, :]
 
+    base_meta_cluster = pickle.load(open(base_cluster_path, 'rb'))
     X, y = preprocess_meta_data(data, base_meta_cluster, 'taxon_family_name')
+    del base_meta_cluster
 
-    for index, _ in X.iterrows():
+    for index, obs in X.iterrows():
         print('---Image index: ', index, ' ---')
+
+        # writer, f = instantiate_save_file()
 
         current_level = hierarchy['base']  # Generate base hierarchy level
 
@@ -254,8 +319,12 @@ if __name__ == "__main__":
 
         for level in taxonomic_levels:
             print('-> ', level)
+            try:
+                labels = (list(current_level.keys()))  # Prepare prediction labels
+            except:
+                print(f"No {level} to be predicted")
+                break
 
-            labels = (list(current_level.keys()))  # Prepare prediction labels
             if len(labels) == 1:
                 label = labels[0]
                 print('Single possibility: ', label)
@@ -267,34 +336,49 @@ if __name__ == "__main__":
             image_model = load_next_image_model(label)
             cluster_model = load_next_cluster_model(label)
 
+            time.sleep(1)
+            gc.collect()
+
             # Image prediction
             images = multiple_image_detections(index)
             mean_img_prediction = avg_multi_image_predictions(images, image_model)
-            print('Mean image prediction: ', mean_img_prediction)
 
             # Meta prediction
             X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each level
             obs = X.loc[index]  # Access current row
             obs = obs.to_numpy()  # Convert meta-data sample to numpy array
             meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
-            print('Meta image prediction: ', meta_prediction)
 
             # Decision
             joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)
-            print('Joint prediction: ', joint_prediction)
             label = (labels[np.argmax(joint_prediction)])
-            print('Predicted label: ', label)
-
-            # True label
-            print('True label: ', y[index])
 
             # Update hierarchy level
             current_level = current_level[labels[np.argmax(joint_prediction)]]
 
-            if y[index] != label:
-                print('Classification Mismatch')
+            # True label
+            true_label = y[index]
+            if pd.isnull(true_label):
+                print(f"No label provided at {level}")
                 break
 
+            # Display
+            print('Mean image prediction: ', mean_img_prediction)
+            print('Meta image prediction: ', meta_prediction)
+            print('Joint prediction: ', joint_prediction)
+            print('Predicted label: ', label)
+            print('True label: ', true_label)
 
+            results = {'id': index,
+                       'taxonomic_level': level,
+                       'joint_prediction': label,
+                       'image_prediction': labels[np.argmax(mean_img_prediction)],
+                       'meta_prediction': labels[np.argmax(meta_prediction)],
+                       'true_label': true_label}
+            # writer.writerow(results)
 
-    print('--------------------------')
+            if true_label != label:
+                print('Classification Mismatch')
+                break
+        # f.close()
+        print('--------------------------')
