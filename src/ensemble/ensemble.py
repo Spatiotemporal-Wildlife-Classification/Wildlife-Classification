@@ -35,7 +35,7 @@ multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
 img_size = 528
 
 # taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
-taxonomic_levels = ['taxon_family_name', 'taxon_genus_name']
+taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name']
 hierarchy = {'base':
                  {'Elephantidae': {'Elephas':
                                        {'Elephas maximus': ''},
