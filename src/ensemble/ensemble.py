@@ -250,9 +250,6 @@ if __name__ == "__main__":
         current_level = hierarchy['base']  # Generate base hierarchy level
 
         label = 'base'
-        # meta_model = load_next_meta_model('base')  # Load base models for observation
-        # image_model = load_next_image_model('base')
-        # cluster_model = load_next_cluster_model('base')
 
         for level in taxonomic_levels:
             print('-> ', level)
