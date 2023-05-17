@@ -37,22 +37,67 @@ img_size = 528
 # taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
 taxonomic_levels = ['taxon_family_name', 'taxon_genus_name']
 hierarchy = {'base':
-                 {'Elephantidae': {'Elephas': '',
-                                   'Loxodonta': ''},
-                  'Felidae': {'Acinonyx': '',
-                              'Caracal': '',
-                              'Catopuma': '',
-                              'Felus': '',
-                              'Herpailurus': '',
-                              'Leopardus': '',
-                              'Leptailurus': '',
-                              'Lynx': '',
-                              'Neofelis': '',
-                              'Otocolobus': '',
-                              'Panthera': '',
-                              'Pardofelis': '',
-                              'Prionailurus': '',
-                              'Puma': ''}}}
+                 {'Elephantidae': {'Elephas':
+                                       {'Elephas maximus': ''},
+                                   'Loxodonta':
+                                       {'Loxodonta africana': '',
+                                        'Loxodonta cyclotis': ''}},
+                  'Felidae': {'Acinonyx':
+                                  {'Acinonyx jubatus': ''},
+                              'Caracal':
+                                  {'Caracal aurata': '',
+                                   'Caracal caracal': ''},
+                              'Catopuma':
+                                  {'Catopuma temminckii': ''},
+                              'Felis':
+                                  {'Felis bieti': '',
+                                   'Felis chaus': '',
+                                   'Felis lybica': '',
+                                   'Felis margarita': '',
+                                   'Felis nigripes': '',
+                                   'Felis silvestris': ''},
+                              'Herpailurus':
+                                  {'Herpailurus yagouaroundi': ''},
+                              'Leopardus':
+                                  {'Leopardus braccatus': '',
+                                   'Leopardus colocola': '',
+                                   'Leopardus emiliae': '',
+                                   'Leopardus geoffroyi': '',
+                                   'Leopardus guigna': '',
+                                   'Leopardus guttulus': '',
+                                   'Leopardus jacobita': '',
+                                   'Leopardus pajeros': '',
+                                   'Leopardus pardalis': '',
+                                   'Leopardus tigrinus': '',
+                                   'Leopardus wiedii': ''},
+                              'Leptailurus':
+                                  {'Leptailurus serval': ''},
+                              'Lynx':
+                                  {'Lynx canadensis': '',
+                                   'Lynx lynx': '',
+                                   'Lynx pardinus': '',
+                                   'Lynx rufus': ''},
+                              'Neofelis':
+                                  {'Neofelis diardi': '',
+                                   'Neofelis nebulosa': ''},
+                              'Otocolobus':
+                                  {'Otocolumbus manul': ''},
+                              'Panthera':
+                                  {'Panthera leo': '',
+                                   'Panthera onca': '',
+                                   'Panthera pardus': '',
+                                   'Panthera tigris': '',
+                                   'Panthera uncia': ''},
+                              'Pardofelis':
+                                  {'Pardofelis marmorata': ''},
+                              'Prionailurus':
+                                  {'Prionailurus bengalensis': '',
+                                   'Prionailurus javanensis': '',
+                                   'Prionailurus planiceps': '',
+                                   'Prionailurus rubiginosus': '',
+                                   'Prionailurus viverrinus': ''},
+                              'Puma':
+                                  {'Puma concolor': ''}}}}
 
 # Meta data prediction weighting by taxonomic level
 taxon_weighting = {'taxon_family_name': 0.1,
@@ -161,6 +206,9 @@ def avg_multi_image_predictions(images, model):
 
 
 def load_next_meta_model(decision):
+    if decision == 'base':
+        model = base_meta_classifier
+        return model
     name = decision.replace(" ", "_")
     name = name.lower()
     name = meta_model_path + name + '_dt_model.sav'
@@ -169,6 +217,9 @@ def load_next_meta_model(decision):
 
 
 def load_next_cluster_model(decision):
+    if decision == 'base':
+        model = base_meta_cluster
+        return model
     name = decision.replace(" ", "_")
     name = name.lower()
     name = cluster_model_path + name + '_dt_k_means.sav'
@@ -177,6 +228,9 @@ def load_next_cluster_model(decision):
 
 
 def load_next_image_model(decision):
+    if decision == 'base':
+        model = base_image_classifier
+        return model
     name = decision.replace(" ", "_")
     name = name.lower()
     name = image_model_path + name + '_taxon_classifier'
@@ -185,21 +239,35 @@ def load_next_image_model(decision):
 
 
 if __name__ == "__main__":
-    data = pd.read_csv(data_path, index_col=0)
+    data = pd.read_csv(data_path, index_col=0)  # Read in the final test dataset
+    data = data.sample(frac=1, random_state=123)  # Shuffle the dataset randomly
 
     X, y = preprocess_meta_data(data, base_meta_cluster, 'taxon_family_name')
-    meta_model = base_meta_classifier
-    image_model = base_image_classifier
-    cluster_model = base_meta_cluster
 
-    for index, obs in X.iterrows():
+    for index, _ in X.iterrows():
         print('---Image index: ', index, ' ---')
 
         current_level = hierarchy['base']  # Generate base hierarchy level
-        obs = obs.to_numpy()  # Convert meta-data sample to numpy array
+
+        label = 'base'
+        # meta_model = load_next_meta_model('base')  # Load base models for observation
+        # image_model = load_next_image_model('base')
+        # cluster_model = load_next_cluster_model('base')
 
         for level in taxonomic_levels:
             print('-> ', level)
+
+            labels = (list(current_level.keys()))  # Prepare prediction labels
+            if len(labels) == 1:
+                label = labels[0]
+                print('Single possibility: ', label)
+                current_level = current_level[label]  # Update the current level based on the label
+                continue
+
+            # Update models based on next model
+            meta_model = load_next_meta_model(label)
+            image_model = load_next_image_model(label)
+            cluster_model = load_next_cluster_model(label)
 
             # Image prediction
             images = multiple_image_detections(index)
@@ -207,23 +275,24 @@ if __name__ == "__main__":
             print('Mean image prediction: ', mean_img_prediction)
 
             # Meta prediction
-            X, y = preprocess_meta_data(data, cluster_model, level)
+            X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each level
+            obs = X.loc[index]  # Access current row
+            obs = obs.to_numpy()  # Convert meta-data sample to numpy array
             meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
             print('Meta image prediction: ', meta_prediction)
 
             # Decision
             joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)
             print('Joint prediction: ', joint_prediction)
-            labels = (list(current_level.keys()))
             label = (labels[np.argmax(joint_prediction)])
             print('Predicted label: ', label)
+
+            # True label
+            print('True label: ', y[index])
 
             # Update hierarchy level
             current_level = current_level[labels[np.argmax(joint_prediction)]]
 
-            # Update models based on next model
-            meta_model = load_next_meta_model(label)
-            image_model = load_next_image_model(label)
-            cluster_model = load_next_cluster_model(label)
+
 
     print('--------------------------')
