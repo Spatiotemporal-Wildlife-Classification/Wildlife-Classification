@@ -189,6 +189,7 @@ def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
     weighting = taxon_weighting[taxon_level]
     weighted_meta = meta_prediction * weighting
     combined = weighted_meta + image_prediction
+    combined = combined / np.sum(combined)  # Ensure a valid probability distribution
     return combined
 
 
@@ -289,6 +290,10 @@ if __name__ == "__main__":
 
             # Update hierarchy level
             current_level = current_level[labels[np.argmax(joint_prediction)]]
+
+            if y[index] != label:
+                print('Classification Mismatch')
+                break
 
 
 
