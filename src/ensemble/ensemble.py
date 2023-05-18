@@ -1,13 +1,19 @@
+#!/usr/bin/env python3
+
 import pickle
+import sys
 import time
 
 import pandas as pd
 import numpy as np
+import schedule
 import tensorflow as tf
 
 import pytz
 
 from csv import DictWriter
+
+from memory_profiler import profile
 
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
     sub_species_detection
@@ -81,6 +87,7 @@ hierarchy = {'base':
                                   {'Leopardus braccatus': '',
                                    'Leopardus colocola': '',
                                    'Leopardus emiliae': '',
+                                   'Leopardus fasciatus': '',
                                    'Leopardus geoffroyi': '',
                                    'Leopardus guigna':
                                        {'Leopardus guigna guigna': '',
@@ -177,14 +184,7 @@ def preprocess_meta_data(df, k_means, taxon_target):
     df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'lat', 'long', 'time', 'observed_on_y',
                           'license', 'image_url', 'local_time_observed_at', 'positional_accuracy'])
 
-    # Remove null species names
-    df = df.dropna(subset=['taxon_species_name'])
-
-    # Drop null positional accuracies
-    df = df.dropna(subset=['public_positional_accuracy'])
-
     # Positional Accuracy Restriction
-    df = df[df['public_positional_accuracy'] <= 40000]
     df = df.drop(columns=['public_positional_accuracy'])
 
     # Generate sub-species and drop scientific name
@@ -299,86 +299,115 @@ def instantiate_save_file():
     return dictwriter, f
 
 
-if __name__ == "__main__":
+def predict(index, data):
+    print('---Image index: ', index, ' ---')
+
+    writer, f = instantiate_save_file()
+
+    current_level = hierarchy['base']  # Generate base hierarchy level
+
+    label = 'base'
+
+    for level in taxonomic_levels:
+        print('-> ', level)
+        try:
+            labels = (list(current_level.keys()))  # Prepare prediction labels
+        except:
+            print(f"No {level} to be predicted")
+            break
+
+        if len(labels) == 1:
+            label = labels[0]
+            print('Single possibility: ', label)
+            current_level = current_level[label]  # Update the current level based on the label
+            continue
+
+        # Update models based on next model
+        meta_model = load_next_meta_model(label)
+        image_model = load_next_image_model(label)
+        cluster_model = load_next_cluster_model(label)
+
+        # Image prediction
+        images = multiple_image_detections(index)
+        mean_img_prediction = avg_multi_image_predictions(images, image_model)
+
+        # Meta prediction
+        X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each level
+        if X.isnull().values.any():
+            print("Meta data contains null values")
+            break
+        obs = X.loc[index]  # Access current row
+        obs = obs.to_numpy()  # Convert meta-data sample to numpy array
+        meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
+
+        # Decision
+        joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)
+        label = (labels[np.argmax(joint_prediction)])
+
+        # Update hierarchy level
+        current_level = current_level[labels[np.argmax(joint_prediction)]]
+
+        # True label
+
+        if pd.isnull(y[index]):
+            print(f"No label provided at {level}")
+            break
+
+        true_label = y[index]
+
+        # Display
+        print('Mean image prediction: ', mean_img_prediction)
+        print('Meta image prediction: ', meta_prediction)
+        print('Joint prediction: ', joint_prediction)
+        print('Predicted label: ', label)
+        print('True label: ', true_label)
+
+        results = {'id': index,
+                   'taxonomic_level': level,
+                   'joint_prediction': label,
+                   'image_prediction': labels[np.argmax(mean_img_prediction)],
+                   'meta_prediction': labels[np.argmax(meta_prediction)],
+                   'true_label': true_label}
+        writer.writerow(results)
+
+        del meta_model
+        del cluster_model
+        del image_model
+        gc.collect()
+        tf.keras.backend.clear_session()
+
+        if true_label != label:
+            print('Classification Mismatch')
+            break
+    f.close()
+    print('--------------------------')
+
+
+def read_position():
+    with open('position.csv', 'r') as f:
+        data = f.read()
+        return int(data)
+
+def update_position(prev_position):
+    with open('position.csv', 'w') as f:
+        f.write(str(prev_position + 1))
+        f.close()
+
+
+def ensemble_iteration():
+    observation_no = read_position()
+
     data = pd.read_csv(data_path, index_col=0)  # Read in the final test dataset
-    # data = data.sample(frac=1, random_state=123)  # Shuffle the dataset randomly
-    data = data.iloc[5:10, :]
+    data = data.dropna(subset=['latitude', 'longitude', 'taxon_species_name'])
+    data = data.iloc[observation_no: observation_no + 1, :]
 
-    base_meta_cluster = pickle.load(open(base_cluster_path, 'rb'))
-    X, y = preprocess_meta_data(data, base_meta_cluster, 'taxon_family_name')
-    del base_meta_cluster
+    for index, obs in data.iterrows():
+        predict(index, data)
 
-    for index, obs in X.iterrows():
-        print('---Image index: ', index, ' ---')
+    update_position(observation_no)
+    os.execv(sys.executable, [sys.executable] + sys.argv)
 
-        # writer, f = instantiate_save_file()
 
-        current_level = hierarchy['base']  # Generate base hierarchy level
-
-        label = 'base'
-
-        for level in taxonomic_levels:
-            print('-> ', level)
-            try:
-                labels = (list(current_level.keys()))  # Prepare prediction labels
-            except:
-                print(f"No {level} to be predicted")
-                break
-
-            if len(labels) == 1:
-                label = labels[0]
-                print('Single possibility: ', label)
-                current_level = current_level[label]  # Update the current level based on the label
-                continue
-
-            # Update models based on next model
-            meta_model = load_next_meta_model(label)
-            image_model = load_next_image_model(label)
-            cluster_model = load_next_cluster_model(label)
-
-            time.sleep(1)
-            gc.collect()
-
-            # Image prediction
-            images = multiple_image_detections(index)
-            mean_img_prediction = avg_multi_image_predictions(images, image_model)
-
-            # Meta prediction
-            X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each level
-            obs = X.loc[index]  # Access current row
-            obs = obs.to_numpy()  # Convert meta-data sample to numpy array
-            meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
-
-            # Decision
-            joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)
-            label = (labels[np.argmax(joint_prediction)])
-
-            # Update hierarchy level
-            current_level = current_level[labels[np.argmax(joint_prediction)]]
-
-            # True label
-            true_label = y[index]
-            if pd.isnull(true_label):
-                print(f"No label provided at {level}")
-                break
-
-            # Display
-            print('Mean image prediction: ', mean_img_prediction)
-            print('Meta image prediction: ', meta_prediction)
-            print('Joint prediction: ', joint_prediction)
-            print('Predicted label: ', label)
-            print('True label: ', true_label)
-
-            results = {'id': index,
-                       'taxonomic_level': level,
-                       'joint_prediction': label,
-                       'image_prediction': labels[np.argmax(mean_img_prediction)],
-                       'meta_prediction': labels[np.argmax(meta_prediction)],
-                       'true_label': true_label}
-            # writer.writerow(results)
-
-            if true_label != label:
-                print('Classification Mismatch')
-                break
-        # f.close()
-        print('--------------------------')
+if __name__ == "__main__":
+    while True:
+        ensemble_iteration()
