@@ -13,7 +13,8 @@ import pickle
 
 
 root_path = Config.root_dir()
-data_destination = '/models/meta/'
+data_destination = '/notebooks/model_comparison_cache/'
+# data_destination = '/models/meta/'  # File save destination for use in ensemble
 
 
 def write_scores_to_file(mean_scores: list, depth_range: list, filename: str):
@@ -50,7 +51,7 @@ def train_decision_tree(X, y, model_name: str, score_file: str):
         # Average the scores
         score_mean = np.mean(score)
 
-        clf.fit(X, y)
+        clf.fit(X.values, y)
 
         scores.append(score_mean)
         print(f"Depth {depth} out of {depth_limit}, generates {score_mean} accuracy")
