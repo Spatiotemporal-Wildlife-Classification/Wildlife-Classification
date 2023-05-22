@@ -1,3 +1,5 @@
+import pickle
+
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
@@ -19,9 +21,10 @@ from global_land_mask import globe
 root_path = root_dir()
 data_path = '/data/processed/'
 data_destination = '/notebooks/model_comparison_cache/'
+model_destination = data_destination
 
 # K-means information
-k_max = 100
+k_max = 60
 k_interval = 2
 k_init = 4
 
@@ -39,18 +42,24 @@ def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
 
 def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
     k_means = train_kmeans(df)
+    model_name = validation_file[:-14]
+    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
     k_means = train_kmeans(df)
+    model_name = validation_file[:-14]
+    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def neural_network_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
     k_means = train_kmeans(df)
+    model_name = validation_file[:-14]
+    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
     X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
     return X, y, lb, classes
 
@@ -79,7 +88,7 @@ def tree_pipeline(df, k_means, taxon_target, validation_file: str):
     df = df.drop(columns=['scientific_name'])
 
     # Remove species with less than 5 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 10].copy()
+    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
 
     # Location Centroid Feature
     df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
@@ -162,7 +171,7 @@ def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
     df = df.drop(columns=['scientific_name'])
 
     # Remove species with less than 5 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 10].copy()
+    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
 
     # Location Centroid Feature
     df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
@@ -253,7 +262,7 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
     df = df.drop(columns=['scientific_name'])
 
     # Remove species with less than 10 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 10].copy()
+    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
 
     # Location Centroid Feature
     df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
@@ -374,7 +383,7 @@ def calculate_optimal_k(data):
     sil = []
 
     k = k_init
-    while k <= k_max and k <= len(data):
+    while k <= k_max and k < len(data):
         k_means = KMeans(n_clusters=k, n_init=10).fit(data)
         labels = k_means.labels_
 
@@ -387,7 +396,7 @@ def calculate_optimal_k(data):
 ## VALIDATION SET ##
 def validation_set(df: pd.DataFrame, target_taxon: str, file_name: str):
     # Ensure at least 4 of each species are present in evaluation dataset
-    grouped = df.groupby([target_taxon]).sample(n=10, random_state=2)
+    grouped = df.groupby([target_taxon]).sample(frac=0.2, random_state=2)
     # Save evaluation dataset
     grouped.to_csv(root_path + data_destination + file_name)
 
