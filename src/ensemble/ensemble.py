@@ -13,8 +13,6 @@ import pytz
 
 from csv import DictWriter
 
-from memory_profiler import profile
-
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
     sub_species_detection
 from src.structure.Config import root_dir
@@ -56,7 +54,7 @@ hierarchy = {'base':
                   'Felidae': {'Acinonyx':
                                   {'Acinonyx jubatus':
                                        {'Acinonyx jubatus hecki': '',
-                                        'Acinonyx jubatus jubatu': ''}},
+                                        'Acinonyx jubatus jubatus': ''}},
                               'Caracal':
                                   {'Caracal aurata':
                                        {'Caracal aurata aurata': ''},
@@ -69,9 +67,7 @@ hierarchy = {'base':
                                        {'Catopuma temminckii moormensis': ''}},
                               'Felis':
                                   {'Felis bieti': '',
-                                   'Felis chaus':
-                                       {'Felis chaus affinis': '',
-                                        'Felis chaus chaus': ''},
+                                   'Felis chaus': '',
                                    'Felis lybica':
                                        {'Felis lybica cafra': '',
                                         'Felis lybica lybica': '',
@@ -88,6 +84,7 @@ hierarchy = {'base':
                                    'Leopardus colocola': '',
                                    'Leopardus emiliae': '',
                                    'Leopardus fasciatus': '',
+                                   'Leopardus garleppi': '',
                                    'Leopardus geoffroyi': '',
                                    'Leopardus guigna':
                                        {'Leopardus guigna guigna': '',
@@ -334,7 +331,7 @@ def predict(index, data):
         # Meta prediction
         X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each level
         if X.isnull().values.any():
-            print("Meta data contains null values")
+            print("Meta data contains null values ")
             break
         obs = X.loc[index]  # Access current row
         obs = obs.to_numpy()  # Convert meta-data sample to numpy array
