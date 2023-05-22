@@ -3,8 +3,7 @@ import os
 import numpy as np
 from keras import Sequential, Model
 from keras.applications import EfficientNetB6
-from tensorflow.keras.applications.vgg16 import VGG16
-from keras.layers import Dense, GlobalAveragePooling2D, BatchNormalization, Dropout
+from keras.layers import Dense, GlobalAveragePooling2D
 from keras.utils import image_dataset_from_directory
 from matplotlib import pyplot as plt
 from sklearn.utils import compute_class_weight
@@ -20,7 +19,7 @@ checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/genus')
 
 img_size = 528
 batch_size = 32
-epochs = 20
+epochs = 25
 
 
 def import_dataset(file_path: str):
@@ -63,7 +62,8 @@ def construct_model(classes: int):
     # Construct the model
     model = Model(inputs=model.input, outputs=predictions, name='EfficientNet_Taxon_Classifier')
 
-    optimizer = tf.keras.optimizers.experimental.SGD(learning_rate=0.001)
+    # optimizer = tf.keras.optimizers.experimental.SGD(learning_rate=0.02)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     model.compile(optimizer=optimizer,
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
@@ -90,20 +90,25 @@ def train_model_top_weights(model, train_ds, val_ds):
     class_labels = list(range(0, len(classes)))
     weights = dict(zip(class_labels, weight_values))
 
-    cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
-                                                     save_weights_only=True,
+    cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=save_path,
+                                                     save_weights_only=False,
+                                                     monitor='val_accuracy',
+                                                     save_best_only=True,
                                                      verbose=1)
 
     train_ds = train_ds.prefetch(AUTOTUNE)
     val_ds = val_ds.prefetch(AUTOTUNE)
-
+    steps = int(len(train_ds) / batch_size)
+    if steps == 0:
+        steps = 1
+    print("Steps per epoch: ", steps)
     hist = model.fit(train_ds,
                      epochs=epochs,
                      validation_data=val_ds,
                      verbose=2,
                      callbacks=[cp_callback],
                      validation_steps=int(0.05 * len(train_ds)),
-                     steps_per_epoch=25,
+                     steps_per_epoch=steps,
                      class_weight=weights)
     return model, hist
 
@@ -135,5 +140,9 @@ if __name__ == "__main__":
     # Train the model's top weights
     model, hist = train_model_top_weights(model, train_ds, val_ds)
 
-    plot_hist(hist, "Genus Elephantidae Classification Training")
-    model.save(save_path)
+    try:
+        plot_hist(hist, "Genus Elephantidae Classification Training")
+    except:
+        print('Not enough training epochs to generate display')
+
+    # model.save(save_path)
