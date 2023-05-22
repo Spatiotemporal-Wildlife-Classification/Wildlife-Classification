@@ -9,26 +9,24 @@ import adaboost_model
 from pipelines import sub_species_detection
 
 # Dictionaries to aid in file name creation
-# model_abbreviations = {'Neural network': 'nn',
-#                        'Decision tree': 'dt',
-#                        'Random forest': 'rf',
-#                        'Xgboost': 'xgb',
-#                        'AdaBoost': 'ada'}
-model_abbreviations = {'Decision tree': 'dt'}
+model_abbreviations = {'Neural network': 'nn',
+                       'Decision tree': 'dt',
+                       'Random forest': 'rf',
+                       'Xgboost': 'xgb',
+                       'AdaBoost': 'ada'}
 
-# model_save_types = {'Neural network': '',
-#                     'Decision tree': '.sav',
-#                     'Random forest': '.sav',
-#                     'Xgboost': '.json',
-#                     'AdaBoost': '.sav'}
 
-model_save_types = {'Decision tree': '.sav'}
+model_save_types = {'Neural network': '',
+                    'Decision tree': '.sav',
+                    'Random forest': '.sav',
+                    'Xgboost': '.json',
+                    'AdaBoost': '.sav'}
+
 
 file_name_taxon = {'taxon_family_name': '_family',
                    'taxon_genus_name': '_genus',
                    'taxon_species_name': '_species',
                    'sub_species': '_subspecies'}
-
 
 # Method to iterate through provided datasets, in order to train models accross entire datasets scope
 def dataset_iterations(observation_files: list, metadata_files: list, k_centroids: list):
@@ -119,7 +117,7 @@ def taxonomic_level_modelling(observation_file: str,
                 # Taxonomic level clean-up to determine number of classes (with restriction)
                 df = df.dropna(subset=['public_positional_accuracy'])  # Remove n/a entries
                 df = df[df['public_positional_accuracy'] <= 40000]  # Remove entries with inadequate accuracy
-                df = df[df.groupby(target_taxon).common_name.transform('count') >= 10].copy()  # Enforce at least 10 observations
+                df = df[df.groupby(target_taxon).common_name.transform('count') >= 5].copy()  # Enforce at least 10 observations
 
                 # Check at least two classes present with restriction
                 if df[target_taxon].nunique() <= 1:
@@ -165,7 +163,8 @@ def taxonomic_analysis(df: pd.DataFrame):
 def generate_file_name_start(parent_taxon: str, restriction: str):
     taxon = file_name_taxon[parent_taxon]
     restriction = restriction.replace(" ", "_")
-    return restriction + taxon
+    restriction = restriction.lower()
+    return restriction
 
 
 # Method simplifies model training, model saving, and data collection
@@ -215,8 +214,8 @@ def model_selection_execution(model: str,
 
 def train_base_model():
     # Generate entire dataset
-    df_felids = pipelines.aggregate_data('felids_final.csv', 'felids_meta.csv')
-    df_proboscidia = pipelines.aggregate_data('proboscidia_final.csv', 'proboscidia_meta.csv')
+    df_felids = pipelines.aggregate_data('felids_train.csv', 'felids_meta.csv')
+    df_proboscidia = pipelines.aggregate_data('proboscidia_train.csv', 'proboscidia_meta.csv')
     df = pd.concat([df_felids, df_proboscidia])
 
     # Train model
@@ -227,7 +226,6 @@ def train_base_model():
                               'base_meta_model.sav',
                               'base_meta_training_accuracy',
                               'base_meta_validation.csv')
-
 
 
 # Execution to train all datasets, at all taxonomic levels, across all models
