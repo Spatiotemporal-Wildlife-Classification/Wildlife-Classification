@@ -13,7 +13,7 @@ import numpy as np
 from src.structure import Config
 
 root_path = Config.root_dir()
-data_destination = '/notebooks/model_comparison_cache/'
+data_destination = '/notebooks/model_comparison_cache_2/'
 
 
 def random_forest_process(df: pd.DataFrame, taxon_target: str, k_cluster, model_name: str, score_file: str, validation_file:str):

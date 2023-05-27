@@ -23,7 +23,7 @@ def adaboost_process(df: pd.DataFrame, taxon_target: str, k_cluster, model_name:
 
 
 def train_adaboost(X, y, model_name: str, score_file: str):
-    estimator_range = range(1, 1000, 100)
+    estimator_range = range(1, 201, 20)
     best_accuracy = 0
     scores = []
 

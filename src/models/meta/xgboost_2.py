@@ -12,6 +12,7 @@ from sklearn.metrics import balanced_accuracy_score
 
 root_path = Config.root_dir()
 data_destination = '/notebooks/model_comparison_cache_2/'
+# data_destination = '/models/meta_2/'
 
 
 def xgboost_process(df: pd.DataFrame, taxon_target: str, k_cluster, model_name: str, score_file: str,
@@ -22,7 +23,7 @@ def xgboost_process(df: pd.DataFrame, taxon_target: str, k_cluster, model_name: 
 
 def train_xgboost(X, y, model_name: str, score_file: str):
     depth_limit = len(X.columns)
-    depth_range = range(1, depth_limit, 2)
+    depth_range = range(1, depth_limit, 10)
     best_accuracy = 0
     scores = []
 
@@ -65,7 +66,7 @@ def train_xgboost(X, y, model_name: str, score_file: str):
             kf_score_container.append(score)
 
         mean_score = np.mean(kf_score_container)
-        print(f'Mean XGBoost score: {mean_score}')
+        print(f'Mean XGBoost score: {mean_score} for depth {depth}')
         scores.append(mean_score)
 
         if best_accuracy < mean_score:
