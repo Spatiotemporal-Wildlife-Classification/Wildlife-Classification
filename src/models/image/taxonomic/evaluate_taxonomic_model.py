@@ -1,22 +1,26 @@
 import os
+import sys
 
 import numpy as np
 import pandas as pd
 from keras.utils import image_dataset_from_directory
 from matplotlib import pyplot as plt
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report, balanced_accuracy_score
 from tensorflow.python.data import AUTOTUNE
 import tensorflow as tf
 
 img_size = 528
-model_name = 'panthera_pardus_taxon_classifier'
+model_name = ''
+test_path = ''
+training_path = ''
+model_path = ''
 
-test_path = os.path.join(os.getcwd(), 'data', 'taxon_test/felidae/panthera/panthera_pardus')
-training_path = os.path.join(os.getcwd(), 'data', 'taxon/felidae/panthera/panthera_pardus/')
-model_path = os.path.join(os.getcwd(), 'models/image/', model_name)
-write_path = os.path.join(os.getcwd(),
+report_path = os.path.join(os.getcwd(),
                           'notebooks',
                           'taxon_image_classification_cache/image_classification_evaluation.csv')
+accuracy_path = os.path.join(os.getcwd(),
+                          'notebooks',
+                          'taxon_image_classification_cache/image_classification_accuracies.csv')
 
 
 def generate_test_set():
@@ -59,10 +63,28 @@ def add_model_report(y_true, y_pred, taxon_level, classes):
     report_df['taxon_level'] = taxon_level
     report_df = report_df.head(len(classes))
 
-    report_df.to_csv(write_path, mode='a', header=False)
+    report_df.to_csv(report_path, mode='a', header=False)
 
 
-if __name__ == "__main__":
+def add_model_accuracy(y_true, y_pred, taxon_level, taxon_name):
+    accuracy_df = pd.DataFrame()
+    accuracy = balanced_accuracy_score(y_true, y_pred)
+    accuracy_df['accuracy'] = [accuracy]
+    accuracy_df['taxon_level'] = [taxon_level]
+    accuracy_df['taxon_name'] = taxon_name
+
+    accuracy_df.to_csv(accuracy_path, mode='a', header=False, index=False)
+
+
+def single_model_evaluation(current_model, path, taxon_level, display=False):
+    global model_name, test_path, training_path, model_path
+    model_name = current_model
+    test_path = os.path.join(os.getcwd(), 'data', 'taxon_test/' + path)
+    training_path = os.path.join(os.getcwd(), 'data', 'taxon/' + path)
+    model_path = os.path.join(os.getcwd(), 'models/image/', model_name)
+    taxon_name = current_model[:-17]
+
+
     # Generate test dataset
     test_ds = generate_test_set()
 
@@ -86,20 +108,27 @@ if __name__ == "__main__":
     preds = np.argmax(preds, axis=1)
     predicted_labels = np.take(classes, preds)
 
+    if display:
+        # Create confusion matrix
+        cm = confusion_matrix(true_labels, predicted_labels)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+        disp.plot()
+        plt.title(taxon_name + taxon_level + ' Level Classification')
+        plt.show()
 
-    # Create confusion matrix
-    cm = confusion_matrix(true_labels, predicted_labels)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-    disp.plot()
-    plt.title('Panthera Pardus Subspecies Level Classification')
-    plt.show()
-    resources_path = os.path.join(os.getcwd(), 'resources', 'panthera_pardus_subspecies_cm.jpg')
-    plt.savefig(resources_path)
+        resources_path = os.path.join(os.getcwd(), 'resources', taxon_name.lower() + taxon_level.lower() + '_cm.jpg')
+        plt.savefig(resources_path)
 
     # Create classification report
     report = classification_report(true_labels, predicted_labels)
     print(report)
 
     # Save results to file
-    add_model_report(true_labels, predicted_labels, "Sub-species", classes)
+    add_model_report(true_labels, predicted_labels, taxon_level, classes)
+    add_model_accuracy(true_labels, predicted_labels, taxon_level, taxon_name)
+
+
+if __name__ == "__main__":
+    single_model_evaluation('puma_concolor_taxon_classifier', 'felidae/puma/puma_concolor', 'Subspecies', False)
+
 
