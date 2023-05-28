@@ -13,6 +13,8 @@ import pytz
 
 from csv import DictWriter
 
+from sklearn.preprocessing import LabelBinarizer
+
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
     sub_species_detection
 from src.structure.Config import root_dir
@@ -20,8 +22,9 @@ from src.structure.Config import root_dir
 import gc
 import os
 
-data_path = root_dir() + '/data/processed/final_test_observations.csv'
-results_path = root_dir() + '/notebooks/ensemble_cache_2/'
+data_path = root_dir() + '/data/processed/ensemble_test.csv'
+# results_path = root_dir() + '/notebooks/ensemble_cache_2/'
+results_path = root_dir() + '/notebooks/ensemble_comparison_cache/'
 image_path = root_dir() + '/data/final_images/'
 model_path = root_dir() + '/models/'
 image_model_path = model_path + 'image/'
@@ -66,8 +69,7 @@ hierarchy = {'base':
                                   {'Catopuma temminckii':
                                        {'Catopuma temminckii moormensis': ''}},
                               'Felis':
-                                  {'Felis bieti': '',
-                                   'Felis chaus': '',
+                                  {'Felis chaus': '',
                                    'Felis lybica':
                                        {'Felis lybica cafra': '',
                                         'Felis lybica lybica': '',
@@ -83,7 +85,6 @@ hierarchy = {'base':
                                   {'Leopardus braccatus': '',
                                    'Leopardus colocola': '',
                                    'Leopardus emiliae': '',
-                                   'Leopardus fasciatus': '',
                                    'Leopardus garleppi': '',
                                    'Leopardus geoffroyi': '',
                                    'Leopardus guigna':
@@ -231,10 +232,6 @@ def preprocess_meta_data(df, k_means, taxon_target):
     return X, y
 
 
-def nn_binary_label_handling(y):
-    return np.hstack((y, 1 - y))
-
-
 def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
     weighting = taxon_weighting[taxon_level]
     weighted_meta = meta_prediction * weighting
@@ -295,7 +292,7 @@ def load_next_image_model(decision):
 
 def instantiate_save_file():
     headings = ['id', 'taxonomic_level', 'joint_prediction', 'image_prediction', 'meta_prediction', 'true_label']
-    f = open(results_path + 'ensemble_results.csv', 'a')
+    f = open(results_path + 'ensemble_results_1.csv', 'a')
     dictwriter = DictWriter(f, fieldnames=headings)
     return dictwriter, f
 
