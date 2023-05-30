@@ -17,10 +17,10 @@ model_path = ''
 
 report_path = os.path.join(os.getcwd(),
                           'notebooks',
-                          'taxon_image_classification_cache/global_image_classification_evaluation.csv')
+                          'taxon_image_classification_cache/image_classification_evaluation.csv')
 accuracy_path = os.path.join(os.getcwd(),
                           'notebooks',
-                          'taxon_image_classification_cache/global_image_classification_accuracies.csv')
+                          'taxon_image_classification_cache/image_classification_accuracies.csv')
 
 
 def generate_test_set():
@@ -129,6 +129,6 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
 
 
 if __name__ == "__main__":
-    single_model_evaluation('global_taxon_classifier', '', 'Global', False)
+    single_model_evaluation('lynx_lynx_taxon_classifier', 'felidae/lynx/lynx_lynx/', 'Subspecies', False)
 
 

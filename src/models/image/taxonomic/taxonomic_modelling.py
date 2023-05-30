@@ -12,10 +12,10 @@ from tensorflow.python.data import AUTOTUNE
 from tensorflow.keras import layers
 import tensorflow as tf
 
-model_name = 'global_taxon_classifier'
-img_path = os.path.join(os.getcwd(), 'data', 'global_taxon/')
-save_path = os.path.join(os.getcwd(), 'models', model_name)
-checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/global')
+model_name = 'lynx_lynx_taxon_classifier'
+img_path = os.path.join(os.getcwd(), 'data', 'taxon/felidae/lynx/lynx_lynx/')
+save_path = os.path.join(os.getcwd(), 'models/image/', model_name)
+checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/sub_species')
 
 img_size = 528
 batch_size = 32
@@ -145,7 +145,7 @@ if __name__ == "__main__":
     model, hist = train_model_top_weights(model, train_ds, val_ds)
 
     try:
-        plot_hist(hist, "Global Classification Training")
+        plot_hist(hist, "Lynx Lynx Classification Training")
     except:
         print('Not enough training epochs to generate display')
 
