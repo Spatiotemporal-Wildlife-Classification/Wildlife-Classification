@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from keras.utils import image_dataset_from_directory
 from matplotlib import pyplot as plt
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report, balanced_accuracy_score
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report, balanced_accuracy_score, accuracy_score
 from tensorflow.python.data import AUTOTUNE
 import tensorflow as tf
 
@@ -17,10 +17,10 @@ model_path = ''
 
 report_path = os.path.join(os.getcwd(),
                           'notebooks',
-                          'taxon_image_classification_cache/image_classification_evaluation.csv')
+                          'taxon_image_classification_cache/global_image_classification_evaluation.csv')
 accuracy_path = os.path.join(os.getcwd(),
                           'notebooks',
-                          'taxon_image_classification_cache/image_classification_accuracies.csv')
+                          'taxon_image_classification_cache/global_image_classification_accuracies.csv')
 
 
 def generate_test_set():
@@ -68,7 +68,7 @@ def add_model_report(y_true, y_pred, taxon_level, classes):
 
 def add_model_accuracy(y_true, y_pred, taxon_level, taxon_name):
     accuracy_df = pd.DataFrame()
-    accuracy = balanced_accuracy_score(y_true, y_pred)
+    accuracy = accuracy_score(y_true, y_pred)
     accuracy_df['accuracy'] = [accuracy]
     accuracy_df['taxon_level'] = [taxon_level]
     accuracy_df['taxon_name'] = taxon_name
@@ -129,6 +129,6 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
 
 
 if __name__ == "__main__":
-    single_model_evaluation('puma_concolor_taxon_classifier', 'felidae/puma/puma_concolor', 'Subspecies', False)
+    single_model_evaluation('global_taxon_classifier', '', 'Global', False)
 
 
