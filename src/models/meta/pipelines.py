@@ -20,8 +20,8 @@ from global_land_mask import globe
 
 root_path = root_dir()
 data_path = '/data/processed/'
-data_destination = '/notebooks/model_comparison_cache_2/'
-# data_destination = '/models/meta_2/'
+# data_destination = '/notebooks/model_comparison_cache_2/'
+data_destination = '/models/meta_2/'
 model_destination = data_destination
 
 # K-means information
@@ -391,7 +391,7 @@ def calculate_optimal_k(data):
         labels = k_means.labels_
 
         sil.append(silhouette_score(data, labels))
-
+        print(k)
         k += k_interval
     return sil
 

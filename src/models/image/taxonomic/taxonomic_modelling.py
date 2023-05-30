@@ -12,10 +12,10 @@ from tensorflow.python.data import AUTOTUNE
 from tensorflow.keras import layers
 import tensorflow as tf
 
-model_name = 'elephantidae_taxon_classifier'
-img_path = os.path.join(os.getcwd(), 'data', 'taxon/elephantidae/')
+model_name = 'global_taxon_classifier'
+img_path = os.path.join(os.getcwd(), 'data', 'global_taxon/')
 save_path = os.path.join(os.getcwd(), 'models', model_name)
-checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/genus')
+checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/global')
 
 img_size = 528
 batch_size = 32
@@ -99,15 +99,19 @@ def train_model_top_weights(model, train_ds, val_ds):
     train_ds = train_ds.prefetch(AUTOTUNE)
     val_ds = val_ds.prefetch(AUTOTUNE)
     steps = int(len(train_ds) / batch_size)
+    validation_steps = int(0.05 * len(train_ds))
+
     if steps == 0:
         steps = 1
+    if validation_steps == 0:
+        validation_steps = 1
     print("Steps per epoch: ", steps)
     hist = model.fit(train_ds,
                      epochs=epochs,
                      validation_data=val_ds,
                      verbose=2,
                      callbacks=[cp_callback],
-                     validation_steps=int(0.05 * len(train_ds)),
+                     validation_steps=validation_steps,
                      steps_per_epoch=steps,
                      class_weight=weights)
     return model, hist
@@ -141,7 +145,7 @@ if __name__ == "__main__":
     model, hist = train_model_top_weights(model, train_ds, val_ds)
 
     try:
-        plot_hist(hist, "Genus Elephantidae Classification Training")
+        plot_hist(hist, "Global Classification Training")
     except:
         print('Not enough training epochs to generate display')
 
