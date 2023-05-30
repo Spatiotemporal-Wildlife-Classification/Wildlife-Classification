@@ -13,8 +13,6 @@ import pytz
 
 from csv import DictWriter
 
-from sklearn.preprocessing import LabelBinarizer
-
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
     sub_species_detection
 from src.structure.Config import root_dir
@@ -22,9 +20,9 @@ from src.structure.Config import root_dir
 import gc
 import os
 
-data_path = root_dir() + '/data/processed/ensemble_test.csv'
-# results_path = root_dir() + '/notebooks/ensemble_cache_2/'
-results_path = root_dir() + '/notebooks/ensemble_comparison_cache/'
+data_path = root_dir() + '/data/processed/final_test_observations.csv'
+results_path = root_dir() + '/notebooks/ensemble_cache_2/'
+# results_path = root_dir() + '/notebooks/ensemble_comparison_cache/'
 image_path = root_dir() + '/data/final_images/'
 model_path = root_dir() + '/models/'
 image_model_path = model_path + 'image/'
@@ -35,10 +33,10 @@ cluster_model_path = model_path + 'meta_2/'
 base_image_classifier_path = image_model_path + 'family_taxon_classifier'
 
 # Load base meta-classifier
-base_meta_classifier_path = meta_model_path + 'base_meta_model.sav'
+base_meta_classifier_path = meta_model_path + 'base_xgb_model.json'
 
 # Load base k_cluster
-base_cluster_path = cluster_model_path + 'base_meta_k_means.sav'
+base_cluster_path = cluster_model_path + 'base_xgb_k_means.sav'
 
 multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
 img_size = 528
@@ -61,10 +59,7 @@ hierarchy = {'base':
                               'Caracal':
                                   {'Caracal aurata':
                                        {'Caracal aurata aurata': ''},
-                                   'Caracal caracal':
-                                       {'Caracal caracal caracal': '',
-                                        'Caracal caracal nubicus': '',
-                                        'Caracal caracal schmitzi': ''}},
+                                   'Caracal caracal': ''},
                               'Catopuma':
                                   {'Catopuma temminckii':
                                        {'Catopuma temminckii moormensis': ''}},
@@ -233,9 +228,11 @@ def preprocess_meta_data(df, k_means, taxon_target):
 
 
 def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
-    weighting = taxon_weighting[taxon_level]
-    weighted_meta = meta_prediction * weighting
-    combined = weighted_meta + image_prediction
+    meta_weighting = taxon_weighting[taxon_level]
+    image_weighting = 1 - meta_weighting
+    weighted_meta = meta_prediction * meta_weighting
+    weighted_image = image_prediction * image_weighting
+    combined = weighted_meta + weighted_image
     combined = combined / np.sum(combined)  # Ensure a valid probability distribution
     return combined
 
@@ -251,8 +248,8 @@ def avg_multi_image_predictions(images, model):
 
         prediction = model.predict(input_arr, verbose=0)
         mean_predictions = mean_predictions + prediction
-    gc.collect()
-    return mean_predictions / len(images)
+    mean_predictions = mean_predictions / len(images)
+    return mean_predictions / np.sum(mean_predictions)
 
 
 def load_next_meta_model(decision):
@@ -292,7 +289,7 @@ def load_next_image_model(decision):
 
 def instantiate_save_file():
     headings = ['id', 'taxonomic_level', 'joint_prediction', 'image_prediction', 'meta_prediction', 'true_label']
-    f = open(results_path + 'ensemble_results_1.csv', 'a')
+    f = open(results_path + 'ensemble_results.csv', 'a')
     dictwriter = DictWriter(f, fieldnames=headings)
     return dictwriter, f
 
@@ -397,6 +394,10 @@ def ensemble_iteration():
 
     data = pd.read_csv(data_path, index_col=0)  # Read in the final test dataset
     data = data.dropna(subset=['latitude', 'longitude', 'taxon_species_name'])
+
+    if observation_no > len(data):
+        quit()
+
     data = data.iloc[observation_no: observation_no + 1, :]
 
     for index, obs in data.iterrows():

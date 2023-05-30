@@ -20,13 +20,16 @@ from src.structure.Config import root_dir
 import gc
 import os
 
-data_path = root_dir() + '/data/processed/final_test_observations.csv'
-results_path = root_dir() + '/notebooks/ensemble_cache/'
+# data_path = root_dir() + '/data/processed/final_test_observations.csv'
+data_path = root_dir() + '/data/processed/ensemble_test.csv'
+# results_path = root_dir() + '/notebooks/ensemble_cache/'
+results_path = root_dir() + '/notebooks/ensemble_comparison_cache/'
 image_path = root_dir() + '/data/final_images/'
 model_path = root_dir() + '/models/'
 image_model_path = model_path + 'image/'
-meta_model_path = model_path + 'meta/'
-cluster_model_path = model_path + 'k_clusters/'
+meta_model_path = model_path + 'meta_4/'
+# cluster_model_path = model_path + 'k_clusters/'
+cluster_model_path = meta_model_path
 
 # Load base image classifier
 base_image_classifier_path = image_model_path + 'family_taxon_classifier'
@@ -291,7 +294,7 @@ def load_next_image_model(decision):
 
 def instantiate_save_file():
     headings = ['id', 'taxonomic_level', 'joint_prediction', 'image_prediction', 'meta_prediction', 'true_label']
-    f = open(results_path + 'ensemble_results.csv', 'a')
+    f = open(results_path + 'ensemble_results_2.csv', 'a')
     dictwriter = DictWriter(f, fieldnames=headings)
     return dictwriter, f
 
