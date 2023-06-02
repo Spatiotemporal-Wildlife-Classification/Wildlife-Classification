@@ -2,13 +2,12 @@ import pandas as pd
 
 import pipelines
 import decision_tree
-import neural_network
 import random_forest
 import xgboost_model
+import neural_network_model
 import adaboost_model
 import adaboost_2
 from pipelines import sub_species_detection
-from src.models.meta import neural_network_2
 
 # Dictionaries to aid in file name creation
 model_abbreviations = {'Neural network': 'nn',
@@ -197,7 +196,7 @@ def model_selection_execution(model: str,
                               validation_file: str):
     match model:
         case 'Neural network':
-            return neural_network_2.neural_network_process(df, target_taxon, k_centroids, model_name, training_history,
+            return neural_network_model.neural_network_process(df, target_taxon, k_centroids, model_name, training_history,
                                                            validation_file)
         case 'Decision tree':
             return decision_tree.decision_tree_process(df, target_taxon, k_centroids, model_name, training_history,
