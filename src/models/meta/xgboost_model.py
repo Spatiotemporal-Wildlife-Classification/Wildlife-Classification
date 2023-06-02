@@ -10,7 +10,7 @@ from sklearn.model_selection import KFold
 from sklearn.metrics import balanced_accuracy_score
 
 root_path = Config.root_dir()
-data_destination = '/notebooks/model_comparison_cache/'
+data_destination = '/notebooks/model_comparison_cache_2/'
 
 
 def xgboost_process(df: pd.DataFrame, taxon_target: str, k_cluster, model_name: str, score_file: str,

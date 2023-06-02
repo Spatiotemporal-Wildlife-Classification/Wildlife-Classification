@@ -5,15 +5,19 @@ import decision_tree
 import neural_network
 import random_forest
 import xgboost_model
+import xgboost_2
 import adaboost_model
+import adaboost_2
 from pipelines import sub_species_detection
+from src.models.meta import neural_network_2
 
 # Dictionaries to aid in file name creation
-model_abbreviations = {'Neural network': 'nn',
-                       'Decision tree': 'dt',
-                       'Random forest': 'rf',
-                       'Xgboost': 'xgb',
-                       'AdaBoost': 'ada'}
+# model_abbreviations = {'Neural network': 'nn',
+#                        'Decision tree': 'dt',
+#                        'Random forest': 'rf',
+#                        'Xgboost': 'xgb',
+#                        'AdaBoost': 'ada'}
+model_abbreviations = {'Xgboost': 'xgb'}
 
 
 model_save_types = {'Neural network': '',
@@ -22,11 +26,11 @@ model_save_types = {'Neural network': '',
                     'Xgboost': '.json',
                     'AdaBoost': '.sav'}
 
-
 file_name_taxon = {'taxon_family_name': '_family',
                    'taxon_genus_name': '_genus',
                    'taxon_species_name': '_species',
                    'sub_species': '_subspecies'}
+
 
 # Method to iterate through provided datasets, in order to train models accross entire datasets scope
 def dataset_iterations(observation_files: list, metadata_files: list, k_centroids: list):
@@ -45,7 +49,6 @@ def dataset_iterations(observation_files: list, metadata_files: list, k_centroid
 def model_iteration(observation_file: str,
                     metadata_file: str,
                     k_centroids: int):
-
     # Multi-model collections
     models = list(model_abbreviations.keys())
     model_name_collection = []
@@ -78,7 +81,6 @@ def taxonomic_level_modelling(observation_file: str,
                               metadata_file: str,
                               model: str,
                               k_centroids: int):
-
     # Collection of taxon level information for notebook use
     models = []
     taxon_targets = []
@@ -117,7 +119,8 @@ def taxonomic_level_modelling(observation_file: str,
                 # Taxonomic level clean-up to determine number of classes (with restriction)
                 df = df.dropna(subset=['public_positional_accuracy'])  # Remove n/a entries
                 df = df[df['public_positional_accuracy'] <= 40000]  # Remove entries with inadequate accuracy
-                df = df[df.groupby(target_taxon).common_name.transform('count') >= 5].copy()  # Enforce at least 10 observations
+                df = df[df.groupby(target_taxon).common_name.transform(
+                    'count') >= 5].copy()  # Enforce at least 10 observations
 
                 # Check at least two classes present with restriction
                 if df[target_taxon].nunique() <= 1:
@@ -196,7 +199,7 @@ def model_selection_execution(model: str,
                               validation_file: str):
     match model:
         case 'Neural network':
-            return neural_network.neural_network_process(df, target_taxon, k_centroids, model_name, training_history,
+            return neural_network_2.neural_network_process(df, target_taxon, k_centroids, model_name, training_history,
                                                          validation_file)
         case 'Decision tree':
             return decision_tree.decision_tree_process(df, target_taxon, k_centroids, model_name, training_history,
@@ -205,11 +208,11 @@ def model_selection_execution(model: str,
             return random_forest.random_forest_process(df, target_taxon, k_centroids, model_name, training_history,
                                                        validation_file)
         case 'Xgboost':
-            return xgboost_model.xgboost_process(df, target_taxon, k_centroids, model_name, training_history,
-                                                 validation_file)
+            return xgboost_2.xgboost_process(df, target_taxon, k_centroids, model_name, training_history,
+                                             validation_file)
         case 'AdaBoost':
-            return adaboost_model.adaboost_process(df, target_taxon, k_centroids, model_name, training_history,
-                                                   validation_file)
+            return adaboost_2.adaboost_process(df, target_taxon, k_centroids, model_name, training_history,
+                                               validation_file)
 
 
 def train_base_model():
@@ -218,21 +221,22 @@ def train_base_model():
     df_proboscidia = pipelines.aggregate_data('proboscidia_train.csv', 'proboscidia_meta.csv')
     df = pd.concat([df_felids, df_proboscidia])
 
+    pipelines.k_max = 84
+    pipelines.k_interval = 20
+
     # Train model
-    model_selection_execution('Decision tree',
+    model_selection_execution('Xgboost',
                               df,
-                              'taxon_family_name',
+                              'taxon_species_name',
                               0,
-                              'base_meta_model.sav',
-                              'base_meta_training_accuracy',
-                              'base_meta_validation.csv')
+                              'global_xgb_model.json',
+                              'global_xgb_training_accuracy',
+                              'global_xgb_validation.csv')
 
 
 # Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
-    dataset_iterations(observation_files=['felids_train.csv'],
-                       metadata_files=['felids_meta.csv'],
-                       k_centroids=[40])
-    # train_base_model()
-
-
+    # dataset_iterations(observation_files=['proboscidia_train.csv'],
+    #                    metadata_files=['proboscidia_meta.csv'],
+    #                    k_centroids=[40])
+    train_base_model()

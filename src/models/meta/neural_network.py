@@ -15,7 +15,7 @@ import pipelines
 
 
 root_path = Config.root_dir()
-data_destination = '/notebooks/model_comparison_cache/'
+data_destination = '/notebooks/model_comparison_cache_2/'
 
 
 def write_training_accuracy(file_name: str, fold_histories: dict):

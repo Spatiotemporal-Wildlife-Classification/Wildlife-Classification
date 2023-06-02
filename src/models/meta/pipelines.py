@@ -20,7 +20,8 @@ from global_land_mask import globe
 
 root_path = root_dir()
 data_path = '/data/processed/'
-data_destination = '/notebooks/model_comparison_cache/'
+# data_destination = '/notebooks/model_comparison_cache_2/'
+data_destination = '/models/meta_2/'
 model_destination = data_destination
 
 # K-means information
@@ -233,9 +234,11 @@ def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
     lb.fit(y)
     y = lb.transform(y)
 
+
     # Binary check
     if classes == 2:
         y = nn_binary_label_handling(y)
+    print(y[0])
 
     return X, y
 
@@ -388,7 +391,7 @@ def calculate_optimal_k(data):
         labels = k_means.labels_
 
         sil.append(silhouette_score(data, labels))
-
+        print(k)
         k += k_interval
     return sil
 
@@ -416,7 +419,7 @@ def over_sample(X, y):
 ## PIPELINE FUNCTIONS ##
 
 def nn_binary_label_handling(y):
-    return np.hstack((y, 1 - y))
+    return np.hstack((1 - y.reshape(-1, 1), y.reshape(-1, 1)))
 
 
 def sub_species_detection(x):
