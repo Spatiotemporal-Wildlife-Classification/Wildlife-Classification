@@ -5,19 +5,17 @@ import decision_tree
 import neural_network
 import random_forest
 import xgboost_model
-import xgboost_2
 import adaboost_model
 import adaboost_2
 from pipelines import sub_species_detection
 from src.models.meta import neural_network_2
 
 # Dictionaries to aid in file name creation
-# model_abbreviations = {'Neural network': 'nn',
-#                        'Decision tree': 'dt',
-#                        'Random forest': 'rf',
-#                        'Xgboost': 'xgb',
-#                        'AdaBoost': 'ada'}
-model_abbreviations = {'Xgboost': 'xgb'}
+model_abbreviations = {'Neural network': 'nn',
+                       'Decision tree': 'dt',
+                       'Random forest': 'rf',
+                       'Xgboost': 'xgb',
+                       'AdaBoost': 'ada'}
 
 
 model_save_types = {'Neural network': '',
@@ -200,7 +198,7 @@ def model_selection_execution(model: str,
     match model:
         case 'Neural network':
             return neural_network_2.neural_network_process(df, target_taxon, k_centroids, model_name, training_history,
-                                                         validation_file)
+                                                           validation_file)
         case 'Decision tree':
             return decision_tree.decision_tree_process(df, target_taxon, k_centroids, model_name, training_history,
                                                        validation_file)
@@ -208,8 +206,8 @@ def model_selection_execution(model: str,
             return random_forest.random_forest_process(df, target_taxon, k_centroids, model_name, training_history,
                                                        validation_file)
         case 'Xgboost':
-            return xgboost_2.xgboost_process(df, target_taxon, k_centroids, model_name, training_history,
-                                             validation_file)
+            return xgboost_model.xgboost_process(df, target_taxon, k_centroids, model_name, training_history,
+                                                 validation_file)
         case 'AdaBoost':
             return adaboost_2.adaboost_process(df, target_taxon, k_centroids, model_name, training_history,
                                                validation_file)

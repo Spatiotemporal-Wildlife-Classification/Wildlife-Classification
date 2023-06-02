@@ -11,5 +11,5 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 # Set the default command to run when the container starts
-#CMD ["python", "/app/src/models/image/taxonomic/taxonomic_modelling.py"]  # Training docker image
-CMD ["python", "/app/src/models/image/taxonomic/evaluate_taxonomic_model.py"]  # Evaluation docker image
+CMD ["python", "/app/src/models/image/taxonomic/taxonomic_modelling.py"]  # Training docker image
+#CMD ["python", "/app/src/models/image/taxonomic/evaluate_taxonomic_model.py"]  # Evaluation docker image
