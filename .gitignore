@@ -132,11 +132,11 @@ dmypy.json
 *.csv
 
 # Notebook data caches
-notebooks/model_comparison_cache
-notebooks/felid_data_cache
-notebooks/global_data_cache
-notebooks/local_data_cache
-notebooks/oversample_data_cache
+notebooks/meta_modelling/model_comparison_cache
+notebooks/meta_modelling/felid_data_cache
+notebooks/exploratory_data_analysis/global_data_cache
+notebooks/exploratory_data_analysis/local_data_cache
+notebooks/meta_modelling/oversample_data_cache
 # Produced models
 *.sav
 *.json
@@ -149,7 +149,7 @@ notebooks/oversample_data_cache
 # Removal of .idea/gitignore
 .idea/.gitignore
 
-notebooks/model_comparison_cache
+notebooks/meta_modelling/model_comparison_cache
 notebooks/model_comparison_cache_2
 
 models/checkpoints
