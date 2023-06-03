@@ -16,7 +16,7 @@ felid_definite_02 = root_dir() + "/data/taxon/felidae/panthera/panthera_leo/2209
 felid_definite_03 = root_dir() + "/data/taxon/felidae/panthera/panthera_leo/2083512_b.jpg"
 
 
-model_path = root_dir() + "/models/family_taxon_classifier"
+model_path = root_dir() + "/models/image/family_taxon_classifier"
 
 if __name__ == "__main__":
     # Load the saved model
