@@ -38,7 +38,39 @@ review [Dataset](dataset.md)
 The dataset comprises two elements: the original observations sourced from iNaturalist, and the metadata sourced from 
 Open-Meteo Weather API.
 
+#### iNaturalist
+[inaturalist](https://www.inaturalist.org/) is a citizen-science platform offering open-source access to up to 139 million
+observations accross all domains of life. 
+
+For the purpose of this study, a subset of the available wildlife, specifically _Felidae_ and _Elephantidae_ taxonomic families.
+The subset contains global observations stretching across the globe and is characterized by a long-tail distribution, fulfilling
+the role of a generic wildlife dataset.
+
+iNaturalist observations include essential metadata such as: date and time of observation, coordinates, positional accuracy, and
+taxonomic labels. 
+
+Below are two example images and their taxonomic species name:
+
+| ![](http://static.inaturalist.org/photos/88383/medium.jpg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/9581740/medium.jpg) |
+|------------------------------------------------------------|-------------------------------------------------------------------------------|
+| Panthera pardus                                            | Panthera Onca                                                                 |
+
+
+#### Open-Meteo
+[Open-Meteo Weather API](https://open-meteo.com/) grants historical weather data access. The API sources 
+data directly from [Copernicus Satellite imagery ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land?tab=overview). 
+The weather data enables the creation of a spatiotemporal environmental snapshot of the observation, through the specification 
+of the date, time, and location of the observation. 
+The snapshot comprises of hourly and daily aggregate information, capturing a set of 53 total environmental descriptors.
+
+#### Resulting Dataset
+The figure below describes the _Felidae_ and _Elephantidae_ geographic distribution within the dataset:
 <img height="545" src="images/dataset_distribution.png" width="1001" alt="dataset distribution" style="display: block; margin: 0 auto"/>
+
+The resulting dataset encompasses approximately 50 000 observations with metadata.
+The taxonomic composition of the dataset is as follows: 2 taxonomic families, 16 taxonomic genera, 
+48 taxonomic species, and 67 taxonomic subspecies. 
+For a complete taxonomic breakdown of the number of observations and images, please review [Dataset](dataset.md)
 
 ### Novel Cascading Ensemble Classifier
 For a comprehensive breakdown of the novel cascading ensemble classifier, please review 
