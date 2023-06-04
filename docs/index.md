@@ -35,6 +35,11 @@ The novel contributions of this study include:
 For a comprehensive breakdown of the dataset including taxonomic observation and image counts, please
 review [Dataset](dataset.md)
 
+The dataset comprises two elements: the original observations sourced from iNaturalist, and the metadata sourced from 
+Open-Meteo Weather API.
+
+<img height="545" src="images/dataset_distribution.png" width="1001" alt="dataset distribution" style="display: block; margin: 0 auto"/>
+
 ### Novel Cascading Ensemble Classifier
 For a comprehensive breakdown of the novel cascading ensemble classifier, please review 
 [Cascading Ensemble Classifier](cascading_ensemble_classifier.md)
