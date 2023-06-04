@@ -1,0 +1,18 @@
+site_name: Spatiotemporal Wildlife Classification Docs
+
+theme:
+  name: "material"
+
+plugins:
+- mkdocstrings:
+    default_handler: python
+
+
+
+
+nav:
+  - Home: index.md
+  - Code Documentation: src.md
+  - Dataset : dataset.md
+  - Results: results.md
+  - Thesis report: thesis.md
