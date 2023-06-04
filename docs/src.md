@@ -1,4 +1,4 @@
-### Code Structure
+# Code Structure
 The code is structured within 5 directories:
 
 1. [Data](src/data.md)
