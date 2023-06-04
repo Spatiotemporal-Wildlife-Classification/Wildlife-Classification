@@ -194,6 +194,33 @@
     Dataset
   </a>
   
+    <nav class="md-nav" aria-label="Dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inaturalist" class="md-nav__link">
+    iNaturalist
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-meteo" class="md-nav__link">
+    Open-Meteo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resulting-dataset" class="md-nav__link">
+    Resulting Dataset
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -331,6 +358,33 @@
     Dataset
   </a>
   
+    <nav class="md-nav" aria-label="Dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inaturalist" class="md-nav__link">
+    iNaturalist
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-meteo" class="md-nav__link">
+    Open-Meteo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resulting-dataset" class="md-nav__link">
+    Resulting Dataset
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -392,6 +446,44 @@ methods.</p>
 <h3 id="dataset">Dataset</h3>
 <p>For a comprehensive breakdown of the dataset including taxonomic observation and image counts, please
 review <a href="dataset/">Dataset</a></p>
+<p>The dataset comprises two elements: the original observations sourced from iNaturalist, and the metadata sourced from 
+Open-Meteo Weather API.</p>
+<h4 id="inaturalist">iNaturalist</h4>
+<p><a href="https://www.inaturalist.org/">inaturalist</a> is a citizen-science platform offering open-source access to up to 139 million
+observations accross all domains of life. </p>
+<p>For the purpose of this study, a subset of the available wildlife, specifically <em>Felidae</em> and <em>Elephantidae</em> taxonomic families.
+The subset contains global observations stretching across the globe and is characterized by a long-tail distribution, fulfilling
+the role of a generic wildlife dataset.</p>
+<p>iNaturalist observations include essential metadata such as: date and time of observation, coordinates, positional accuracy, and
+taxonomic labels. </p>
+<p>Below are two example images and their taxonomic species name:</p>
+<table>
+<thead>
+<tr>
+<th><img alt="" src="http://static.inaturalist.org/photos/88383/medium.jpg" /></th>
+<th><img alt="" src="https://inaturalist-open-data.s3.amazonaws.com/photos/9581740/medium.jpg" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Panthera pardus</td>
+<td>Panthera Onca</td>
+</tr>
+</tbody>
+</table>
+<h4 id="open-meteo">Open-Meteo</h4>
+<p><a href="https://open-meteo.com/">Open-Meteo Weather API</a> grants historical weather data access. The API sources 
+data directly from <a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land?tab=overview">Copernicus Satellite imagery ERA5</a>. 
+The weather data enables the creation of a spatiotemporal environmental snapshot of the observation, through the specification 
+of the date, time, and location of the observation. 
+The snapshot comprises of hourly and daily aggregate information, capturing a set of 53 total environmental descriptors.</p>
+<h4 id="resulting-dataset">Resulting Dataset</h4>
+<p>The figure below describes the <em>Felidae</em> and <em>Elephantidae</em> geographic distribution within the dataset:
+<img height="545" src="images/dataset_distribution.png" width="1001" alt="dataset distribution" style="display: block; margin: 0 auto"/></p>
+<p>The resulting dataset encompasses approximately 50 000 observations with metadata.
+The taxonomic composition of the dataset is as follows: 2 taxonomic families, 16 taxonomic genera, 
+48 taxonomic species, and 67 taxonomic subspecies. 
+For a complete taxonomic breakdown of the number of observations and images, please review <a href="dataset/">Dataset</a></p>
 <h3 id="novel-cascading-ensemble-classifier">Novel Cascading Ensemble Classifier</h3>
 <p>For a comprehensive breakdown of the novel cascading ensemble classifier, please review 
 <a href="cascading_ensemble_classifier/">Cascading Ensemble Classifier</a></p>
