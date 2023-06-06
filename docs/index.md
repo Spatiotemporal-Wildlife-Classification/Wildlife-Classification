@@ -77,6 +77,19 @@ For a complete taxonomic breakdown of the number of observations and images, ple
 For a comprehensive breakdown of the novel cascading ensemble classifier, please review 
 [Cascading Ensemble Classifier](cascading_ensemble_classifier.md)
 
+The novel cascading ensemble classifier capitalizes upon the determined performance trends of image and metadata classification 
+within the taxonomic hierarchy. 
+Specifically, the decreasing performance of image classification as taxonomic levels decrease, and the increasing 
+performance of metadata classification as taxonomic species decrease. 
+The image and metadata classifiers respectively comprise of a cascading selective classifier (classification per parent node). 
+At each parent node, the classifications are combined and weighted based to exploit their relative strengths, jointly deciding 
+on the correct classification. 
+
+The below figure represents the high level concept of the classifier:
+
+<img height="382" src="images/cec_architecture.png" width="595" alt="dataset distribution" style="display: block; margin: 0 auto"/>
+
+
 ### Results
 For a comprehensive breakdown of each experiment, the results, and the final discussion, 
 please review [Results](results.md)
