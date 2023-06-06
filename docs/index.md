@@ -39,7 +39,7 @@ The dataset comprises two elements: the original observations sourced from iNatu
 Open-Meteo Weather API.
 
 #### iNaturalist
-[inaturalist](https://www.inaturalist.org/) is a citizen-science platform offering open-source access to up to 139 million
+[iNaturalist](https://www.inaturalist.org/) is a citizen-science platform offering open-source access to up to 139 million
 observations accross all domains of life. 
 
 For the purpose of this study, a subset of the available wildlife, specifically _Felidae_ and _Elephantidae_ taxonomic families.
@@ -47,7 +47,7 @@ The subset contains global observations stretching across the globe and is chara
 the role of a generic wildlife dataset.
 
 iNaturalist observations include essential metadata such as: date and time of observation, coordinates, positional accuracy, and
-taxonomic labels. 
+taxonomic labels.
 
 Below are two example images and their taxonomic species name:
 
@@ -71,6 +71,7 @@ The resulting dataset encompasses approximately 50 000 observations with metadat
 The taxonomic composition of the dataset is as follows: 2 taxonomic families, 16 taxonomic genera, 
 48 taxonomic species, and 67 taxonomic subspecies. 
 For a complete taxonomic breakdown of the number of observations and images, please review [Dataset](dataset.md)
+
 
 ### Novel Cascading Ensemble Classifier
 For a comprehensive breakdown of the novel cascading ensemble classifier, please review 

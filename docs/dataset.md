@@ -6,10 +6,38 @@ final dataset taxonomic count breakdown for observations and images. Note the di
 as observations may contain erroneous or mislabelled images. 
 
 ## Observations
+The observations are sourced from [iNaturalist](https://www.inaturalist.org/), a citizen-science platform. 
+The images originate from a combination of camera-traps and citizen-science. 
+Due to the time and resource limitations of the study, a subset of the available data is utilized, to form a generic subset, 
+representative of the issues encountered within wildlife classification. The _Felidae_ and _Elephantidae_ 
+mammalian taxonomic families were selected to populate the subset. This is due to the global distribution of the families stretching to
+remote corners of the world and the unbalanced number of sightings.
+
+The resulting dataset spans 2 taxonomic families, 16 taxonomic genera, 48 taxonomic species, 
+and 67 taxonomic subspecies. 
+Note, the common household cat _Felis catus_ was required to be removed from the original dataset, in order to maintain 
+a wildlife only dataset.
+Additionally, iNaturalist offers the download capability to include the taxonomic labels (domain, kingdom, 
+phylum, class, order, family, genus, species, and subspecies). However, the subspecies classification capability became 
+apparent late in the study, hence subspecies labels were extracted from observations specifying the subspecies in the place 
+of the common name. Hence, a greater quantity of subspecies labels may be available from iNaturalist than within the dataset.
+
+## Image Processing
+The raw observation images contained erroneous and mislabelled images, such as images capturing footprints (spoor). 
+Additionally, images may have captured multiple wildlife individuals within the same image, with varying quality. 
+In order to extract images used to train a wildlife classifier, the raw images are pre-processed using 
+[Mega-detector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md).
+Mega-detector is a trained YOLO object detection model, capable of detecting objects from 3 classes (human, vehicle, and wildlife).
+The resulting objects, were cropped based on the object detection bounding box, enhanced to maintain resolution, and used as observation 
+images.
+
+For in-depth explanation, and visual aids please visit the [Animal-detector](https://github.com/Spatiotemporal-Wildlife-Classification/Animal-Detector)
+repository documentation available [here](insert here). The repository contains a working Mega-detector model, and Python scripts performing 
+the image cropping and enhancement from the Mega-detector processing.
 
 ## Spatiotemporal 
-The spatiotemporal data is sourced from [Open-Meteo Weather API](https://open-meteo.com/). 
-The table below details the set of collected spatiotemporal metdata per observation in order to generate the 
+The spatiotemporal data is sourced from [Open-Meteo Weather API](https://open-meteo.com/).
+The table below details the set of collected spatiotemporal metadata per observation in order to generate the 
 spatiotemporal snapshot. 
 
 For more information on the Open-Meteo Historic API please visit
@@ -75,3 +103,4 @@ metadata such as day/ night, light/ dark, terrestrial, etc.
 | Day                           | Sighting occurrence in light/ dark                                                                                      | $\{0, 1\}$                                | Instant   |
 | Season                        | Season of sighting, dependent on hemisphere                                                                             | Season                                    | Instant   |
 
+## Dataset Taxonomic Breakdown
