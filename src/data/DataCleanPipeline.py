@@ -159,7 +159,7 @@ class Pipeline:
         Each batch once generated is removed from df_whole until this dataframe is empty, concluding the batching process.
 
         Returns:
-            Method returns a boolean value. True if there are still observations to be batched and processes. False if df_whole is empty
+            (bool): Method returns a boolean value. True if there are still observations to be batched and processes. False if df_whole is empty
             indicating the batching process has concluded.
         """
         rows_remaining = len(self.df_whole.index)
@@ -277,7 +277,7 @@ class Pipeline:
         Keyword pattern identification is accomplished through the use of regex pattern matching
 
         Returns:
-            A DataFrame containing the identified potentially bad observations from within the current batch (df)
+            (DataFrame): The method returns a DataFrame containing the identified potentially bad observations from within the current batch.
         """
         description_indicators = ['dead', 'road kill', 'road', 'scat', 'poo', 'killed', 'spoor', 'road-kill', 'remains',
                                   'body', 'deceased', 'prey', 'fatality', 'tracks', 'trapped', 'bad', 'roadkilled', 'poop',
@@ -309,7 +309,7 @@ class Pipeline:
             bad_df (DataFrame): DataFrame containing all bad observations filtered from df
 
         Returns:
-            A DataFrame containing only the id, image_url, and image_quality columns (bad_data.csv format)
+            (DataFrame): The method returns a DataFrame containing only the id, image_url, and image_quality columns (bad_data.csv format)
         """
         bad_df = bad_df[['image_url', 'image_quality']]
         return bad_df
