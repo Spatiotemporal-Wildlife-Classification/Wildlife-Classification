@@ -190,9 +190,95 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Dataset
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Dataset
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    Observations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-processing" class="md-nav__link">
+    Image Processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spatiotemporal" class="md-nav__link">
+    Spatiotemporal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-taxonomic-breakdown" class="md-nav__link">
+    Dataset Taxonomic Breakdown
+  </a>
+  
+    <nav class="md-nav" aria-label="Dataset Taxonomic Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-family" class="md-nav__link">
+    Taxonomic Family
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-genus" class="md-nav__link">
+    Taxonomic Genus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-species" class="md-nav__link">
+    Taxonomic Species
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-subspecies" class="md-nav__link">
+    Taxonomic Subspecies
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -263,6 +349,76 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    Observations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-processing" class="md-nav__link">
+    Image Processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spatiotemporal" class="md-nav__link">
+    Spatiotemporal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-taxonomic-breakdown" class="md-nav__link">
+    Dataset Taxonomic Breakdown
+  </a>
+  
+    <nav class="md-nav" aria-label="Dataset Taxonomic Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-family" class="md-nav__link">
+    Taxonomic Family
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-genus" class="md-nav__link">
+    Taxonomic Genus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-species" class="md-nav__link">
+    Taxonomic Species
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomic-subspecies" class="md-nav__link">
+    Taxonomic Subspecies
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -277,6 +433,1124 @@
 
 
 <h1 id="dataset">Dataset</h1>
+<p>The dataset encompasses the observations and the encompassing spatiotemporal snapshot. 
+Each section below details the relevant essential information regarding the components of the dataset, and the 
+final dataset taxonomic count breakdown for observations and images. Note the distinction between observations and images
+as observations may contain erroneous or mislabelled images. </p>
+<p>The dataset is published and publicly available at the following link: ...</p>
+<p>The below figure displays the geographic distribution of the published dataset:
+<img height="545" src="images/dataset_distribution.png" width="1001" alt="dataset distribution" style="display: block; margin: 0 auto"/></p>
+<h2 id="observations">Observations</h2>
+<p>The observations are sourced from <a href="https://www.inaturalist.org/">iNaturalist</a>, a citizen-science platform. 
+The images originate from a combination of camera-traps and citizen-science. 
+Due to the time and resource limitations of the study, a subset of the available data is utilized, to form a generic subset, 
+representative of the issues encountered within wildlife classification. The <em>Felidae</em> and <em>Elephantidae</em> 
+mammalian taxonomic families were selected to populate the subset. This is due to the global distribution of the families stretching to
+remote corners of the world and the unbalanced number of sightings.</p>
+<p>The resulting dataset spans 2 taxonomic families, 16 taxonomic genera, 48 taxonomic species, 
+and 67 taxonomic subspecies. 
+Note, the common household cat <em>Felis catus</em> was required to be removed from the original dataset, in order to maintain 
+a wildlife only dataset.
+Additionally, iNaturalist offers the download capability to include the taxonomic labels (domain, kingdom, 
+phylum, class, order, family, genus, species, and subspecies). However, the subspecies classification capability became 
+apparent late in the study, hence subspecies labels were extracted from observations specifying the subspecies in the place 
+of the common name. Hence, a greater quantity of subspecies labels may be available from iNaturalist than within the dataset.</p>
+<h2 id="image-processing">Image Processing</h2>
+<p>The raw observation images contained erroneous and mislabelled images, such as images capturing footprints (spoor). 
+Additionally, images may have captured multiple wildlife individuals within the same image, with varying quality. 
+In order to extract images used to train a wildlife classifier, the raw images are pre-processed using 
+<a href="https://github.com/microsoft/CameraTraps/blob/main/megadetector.md">Mega-detector</a>.
+Mega-detector is a trained YOLO object detection model, capable of detecting objects from 3 classes (human, vehicle, and wildlife).
+The resulting objects, were cropped based on the object detection bounding box, enhanced to maintain resolution, and used as observation 
+images.</p>
+<p>For in-depth explanation, and visual aids please visit the <a href="https://github.com/Spatiotemporal-Wildlife-Classification/Animal-Detector">Animal-detector</a>
+repository documentation available <a href="insert here">here</a>. The repository contains a working Mega-detector model, and Python scripts performing 
+the image cropping and enhancement from the Mega-detector processing.</p>
+<h2 id="spatiotemporal">Spatiotemporal</h2>
+<p>The spatiotemporal data is sourced from <a href="https://open-meteo.com/">Open-Meteo Weather API</a>.
+The table below details the set of collected spatiotemporal metadata per observation in order to generate the 
+spatiotemporal snapshot. </p>
+<p>For more information on the Open-Meteo Historic API please visit
+<a href="https://open-meteo.com/en/docs/historical-weather-api">Open-Meteo Historic Weather API</a>. The table below uses information 
+from the API documentation to describe some collected features. 
+Additionally, the table details additional information extracted from the 
+metadata such as day/ night, light/ dark, terrestrial, etc. </p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+<th>Unit/ Format</th>
+<th>Timeframe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Observed on</td>
+<td>Time of observation</td>
+<td>ISO8601</td>
+<td>Instant</td>
+</tr>
+<tr>
+<td>Coordinates</td>
+<td>World Geodetic System (WGS84)</td>
+<td>(latitude, longitude)</td>
+<td>Instant</td>
+</tr>
+<tr>
+<td>Positional accuracy</td>
+<td>Publicly available positional accuracy</td>
+<td><span class="arithmatex">\(R\)</span></td>
+<td>Instant</td>
+</tr>
+<tr>
+<td>Elevation</td>
+<td>Meters above sea level</td>
+<td>Meters (m)</td>
+<td>Instant</td>
+</tr>
+<tr>
+<td>Ground temperature (2m)</td>
+<td>Air temperature 2 meters above ground</td>
+<td>Celsius (<span class="arithmatex">\(^{\circ}\)</span> C)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Relative humidity (2m)</td>
+<td>Humidity 2 meters above ground</td>
+<td>Percentage (%)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Dew point (2m)</td>
+<td>Dew point 2 meters above ground</td>
+<td>Celsius (<span class="arithmatex">\(^{\circ}\)</span> C)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Apparent temperature</td>
+<td>Real feel temperature considering additional factors</td>
+<td>Celsius (<span class="arithmatex">\(^{\circ}\)</span> C)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Surface pressure</td>
+<td>Atmospheric air pressure at the surface.</td>
+<td>Hectopascal (hPa)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Cloudcover</td>
+<td>Cloudcover within the immediate area</td>
+<td>% of area covered</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Low cloudcover</td>
+<td>Cloudcover and fog up to an altitude of <span class="arithmatex">\(3\)</span> kilometers</td>
+<td>% of area covered</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Mid cloudcover</td>
+<td>Cloudcover from <span class="arithmatex">\(3-8\)</span> kilometers altitude</td>
+<td>% of area covered</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>High cloudcover</td>
+<td>Cloudcover from <span class="arithmatex">\(8\)</span> kilometers altitude</td>
+<td>% of area covered</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Wind speed (10m)</td>
+<td>Wind speed at 10 meters above ground</td>
+<td>kilometers per hour (km/h)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Wind speed (100m)</td>
+<td>Wind speed at 100 meters above ground</td>
+<td>kilometers per hour (km/h)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Wind direction (10m)</td>
+<td>Wind direction at 10 meters above ground</td>
+<td>Degrees (<span class="arithmatex">\({\circ}\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Wind direction (100m)</td>
+<td>Wind direction at 100 meters above ground</td>
+<td>Degrees (<span class="arithmatex">\(\circ\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Wind gusts (10m)</td>
+<td>Maximum wind speed of the preceding hour</td>
+<td>kilometers per hour (km/h)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Shortwave radiation</td>
+<td>Average shortwave solar radiation of the preceding hour</td>
+<td>Watt per square meter (W/m<span class="arithmatex">\(^2\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Direct radiation</td>
+<td>Average direct solar radiation of the preceding hour</td>
+<td>Watt per square meter (W/m<span class="arithmatex">\(^2\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Diffuse radiation</td>
+<td>Average diffuse solar radiation of the preceding hour</td>
+<td>Watt per square meter (W/m<span class="arithmatex">\(^2\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Vapor pressure dificit</td>
+<td>A high VPD effects the transpiration of plants</td>
+<td>Kilopascal (kPa)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Evapotranspiration</td>
+<td>Water evaporation into the atmosphere</td>
+<td>Millimeters (mm)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>ET0 FAO Evapotranspiration</td>
+<td>Metric estimating required irregation for plants</td>
+<td>Millimeters (mm)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Precipitation</td>
+<td>Hourly precipitation sum (rain, showers, snow)</td>
+<td>Millimeters (mm)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Snowfall</td>
+<td>Hourly snowfall sum</td>
+<td>Centimeters (cm)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Rain</td>
+<td>Large scale weather systems resulting rain</td>
+<td>Millimeters (mm)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Hourly Weather code</td>
+<td><a href="https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM">WMO</a> numeric weather code</td>
+<td>WMO code</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Soil temperature (0cm-7cm)</td>
+<td>Temperature in the soil at 0-7 centimeters</td>
+<td>Celsius (<span class="arithmatex">\(^{\circ}\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Soil temperature (7cm-28cm)</td>
+<td>Temperature in the soil at 7-28 centimeters</td>
+<td>Celsius (<span class="arithmatex">\(^{\circ}\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Soil temperature (28cm-100cm)</td>
+<td>Temperature in the soil at 28-100 centimeters</td>
+<td>Celsius (<span class="arithmatex">\(^{\circ}\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Soil moisture (0cm-7cm)</td>
+<td>Average water content in the soil at 0-7 centimeters</td>
+<td>Meter cubed per meter cubed (m<span class="arithmatex">\(^3\)</span>/m<span class="arithmatex">\(^3\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Soil moisture (7cm-28cm)</td>
+<td>Average water content in the soil at 7-28 centimeters</td>
+<td>Meter cubed per meter cubed (m<span class="arithmatex">\(^3\)</span>/m<span class="arithmatex">\(^3\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Soil moisture (28cm-100cm)</td>
+<td>Average water content in the soil at 28-100 centimeters</td>
+<td>Meter cubed per meter cubed (m<span class="arithmatex">\(^3\)</span>/m<span class="arithmatex">\(^3\)</span>)</td>
+<td>Hourly</td>
+</tr>
+<tr>
+<td>Daily Weather code</td>
+<td><a href="https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM">WMO</a> numeric weather code</td>
+<td>WMO code</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Max temperature (2m)</td>
+<td>Maximum daily temperature at 2 meters above ground</td>
+<td>Degrees (<span class="arithmatex">\(\circ\)</span>)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Min temperature (2m)</td>
+<td>Minimum daily temperature at 2 meters above ground</td>
+<td>Degrees (<span class="arithmatex">\(\circ\)</span>)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Apparent temperature max</td>
+<td>Maximum real-feel temperature at 2 meters above ground</td>
+<td>Degrees (<span class="arithmatex">\(\circ\)</span>)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Apparent temperature min</td>
+<td>Minimum real-feel temperature at 2 meters above ground</td>
+<td>Degrees (<span class="arithmatex">\(\circ\)</span>)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Precipitation sum</td>
+<td>The sum of daily precipitation (rain, showers, snowfall)</td>
+<td>Millimeters (mm)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Rain sum</td>
+<td>Sum of daily rain</td>
+<td>Millimeters (mm)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Snowfall sum</td>
+<td>Sum of daily snowfall</td>
+<td>Centimeters (cm)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Precipitation hours</td>
+<td>The number of hours with rain in a day</td>
+<td><span class="arithmatex">\(Z\)</span></td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Sunrise</td>
+<td>Local sunrise time</td>
+<td>ISO 8601</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Sunset</td>
+<td>Local sunset time</td>
+<td>ISO 8601</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Wind speed max (10m)</td>
+<td>Maximum daily wind speed 10 meters above ground</td>
+<td>Kilometers per hour (km/h)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Wind gusts (10m)</td>
+<td>Maximum daily gust speed at 10 meters above ground</td>
+<td>Kilometers per hour</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Dominant wind direction</td>
+<td>Dominant daily wind direction for winds at 10 meters</td>
+<td>Kilometers per hour (km/h)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Shortwave radiation sum</td>
+<td>The daily sum of short wave radiation</td>
+<td>Megajoules per meter squared (MJ/m<span class="arithmatex">\(^2\)</span>)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Daily evapotranspiration</td>
+<td>Sum of daily evapotranspiration</td>
+<td>Millimeters (mm)</td>
+<td>Daily</td>
+</tr>
+<tr>
+<td>Terrestrial</td>
+<td>Terrestrial or aquatic observation</td>
+<td><span class="arithmatex">\(\{0, 1\}\)</span></td>
+<td>Instant</td>
+</tr>
+<tr>
+<td>Hemisphere</td>
+<td>Location lies in the northern/ southern hemisphere</td>
+<td><span class="arithmatex">\(\{0, 1\}\)</span></td>
+<td>Instant</td>
+</tr>
+<tr>
+<td>Day</td>
+<td>Sighting occurrence in light/ dark</td>
+<td><span class="arithmatex">\(\{0, 1\}\)</span></td>
+<td>Instant</td>
+</tr>
+<tr>
+<td>Season</td>
+<td>Season of sighting, dependent on hemisphere</td>
+<td>Season</td>
+<td>Instant</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dataset-taxonomic-breakdown">Dataset Taxonomic Breakdown</h2>
+<h3 id="taxonomic-family">Taxonomic Family</h3>
+<table>
+<thead>
+<tr>
+<th>Taxonomic Name</th>
+<th>Observation Count</th>
+<th>Image Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Felidae</em></td>
+<td>44710</td>
+<td>26668</td>
+</tr>
+<tr>
+<td><em>Elephantidae</em></td>
+<td>11292</td>
+<td>14831</td>
+</tr>
+</tbody>
+</table>
+<h3 id="taxonomic-genus">Taxonomic Genus</h3>
+<table>
+<thead>
+<tr>
+<th>Taxonomic Name</th>
+<th>Observation Count</th>
+<th>Image Count</th>
+<th>Family</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Lynx</em></td>
+<td>20139</td>
+<td>12121</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera</em></td>
+<td>12411</td>
+<td>7485</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Puma</em></td>
+<td>5239</td>
+<td>2725</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus</em></td>
+<td>2220</td>
+<td>1391</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Acinonyx</em></td>
+<td>1872</td>
+<td>1245</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis</em></td>
+<td>991</td>
+<td>633</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Caracal</em></td>
+<td>595</td>
+<td>323</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Herpailurus</em></td>
+<td>448</td>
+<td>315</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leptailurus</em></td>
+<td>442</td>
+<td>279</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus</em></td>
+<td>291</td>
+<td>124</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Neofelis</em></td>
+<td>24</td>
+<td>11</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Otocolobus</em></td>
+<td>20</td>
+<td>6</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Pardofelis</em></td>
+<td>11</td>
+<td>4</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Catopuma</em></td>
+<td>7</td>
+<td>4</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Loxodonta</em></td>
+<td>9407</td>
+<td>12810</td>
+<td><em>Elephantidae</em></td>
+</tr>
+<tr>
+<td><em>Elephas</em></td>
+<td>1885</td>
+<td>2021</td>
+<td><em>Elephantidae</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="taxonomic-species">Taxonomic Species</h3>
+<table>
+<thead>
+<tr>
+<th>Taxonomic Name</th>
+<th>Observation Count</th>
+<th>Image Count</th>
+<th>Family</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Lynx rufus</em></td>
+<td>19043</td>
+<td>11641</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera leo</em></td>
+<td>6782</td>
+<td>4935</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Puma concolor</em></td>
+<td>5239</td>
+<td>2725</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera pardus</em></td>
+<td>2964</td>
+<td>1360</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Acinonyx jubatus</em></td>
+<td>1872</td>
+<td>1245</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera onca</em></td>
+<td>1831</td>
+<td>745</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus pardalis</em></td>
+<td>1324</td>
+<td>866</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera tigris</em></td>
+<td>788</td>
+<td>433</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx canadensis</em></td>
+<td>727</td>
+<td>355</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Caracal caracal</em></td>
+<td>573</td>
+<td>299</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Herpailurus yagouaroundi</em></td>
+<td>448</td>
+<td>315</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leptailurus serval</em></td>
+<td>442</td>
+<td>279</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis lybica</em></td>
+<td>372</td>
+<td>252</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus weidii</em></td>
+<td>362</td>
+<td>209</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis silvestris</em></td>
+<td>345</td>
+<td>228</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus geoffroyi</em></td>
+<td>288</td>
+<td>174</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx lynx</em></td>
+<td>260</td>
+<td>75</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis chaus</em></td>
+<td>228</td>
+<td>138</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus bengalensis</em></td>
+<td>178</td>
+<td>76</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx pardinus</em></td>
+<td>109</td>
+<td>50</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus javanensis</em></td>
+<td>77</td>
+<td>31</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus tigrinus</em></td>
+<td>67</td>
+<td>36</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus guigna</em></td>
+<td>55</td>
+<td>37</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus guttulus</em></td>
+<td>47</td>
+<td>33</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera uncia</em></td>
+<td>46</td>
+<td>12</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Caracal aurata</em></td>
+<td>22</td>
+<td>24</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Otocolombus manul</em></td>
+<td>20</td>
+<td>6</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Neofelis diardi</em></td>
+<td>19</td>
+<td>8</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis nigripes</em></td>
+<td>17</td>
+<td>4</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus viverrinus</em></td>
+<td>17</td>
+<td>9</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus pajeros</em></td>
+<td>16</td>
+<td>10</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus colocola</em></td>
+<td>16</td>
+<td>7</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus garleppi</em></td>
+<td>12</td>
+<td>6</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus rubiginosus</em></td>
+<td>12</td>
+<td>5</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Pardofelis marmorata</em></td>
+<td>11</td>
+<td>3</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus emiliae</em></td>
+<td>10</td>
+<td>5</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis margarita</em></td>
+<td>10</td>
+<td>1</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus braccatus</em></td>
+<td>9</td>
+<td>5</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus jacobita</em></td>
+<td>7</td>
+<td>2</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus planiceps</em></td>
+<td>7</td>
+<td>3</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Catopuma temminckii</em></td>
+<td>6</td>
+<td>2</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Neofelis nebulosa</em></td>
+<td>5</td>
+<td>2</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis bieti</em></td>
+<td>4</td>
+<td>0</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus fasciatus</em></td>
+<td>2</td>
+<td>0</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Catopuma badia</em></td>
+<td>1</td>
+<td>0</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Loxodonta africana</em></td>
+<td>8939</td>
+<td>12313</td>
+<td><em>Elephantidae</em></td>
+</tr>
+<tr>
+<td><em>Elephas maximus</em></td>
+<td>1885</td>
+<td>2021</td>
+<td><em>Elephantidae</em></td>
+</tr>
+<tr>
+<td><em>Loxodonta cyclotis</em></td>
+<td>222</td>
+<td>214</td>
+<td><em>Elephantidae</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="taxonomic-subspecies">Taxonomic Subspecies</h3>
+<table>
+<thead>
+<tr>
+<th>Taxonomic Name</th>
+<th>Observation Count</th>
+<th>Image Count</th>
+<th>Family</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Panthera leo melanochaita</em></td>
+<td>5587</td>
+<td>4035</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera pardus pardus</em></td>
+<td>2449</td>
+<td>1160</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Acinonyx jubatus jubatus</em></td>
+<td>1642</td>
+<td>1079</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera leo leo</em></td>
+<td>786</td>
+<td>672</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera tigris tigris</em></td>
+<td>710</td>
+<td>430</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx rufus fasciatus</em></td>
+<td>410</td>
+<td>263</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Puma concolor couguar</em></td>
+<td>357</td>
+<td>172</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Caracal caracal caracal</em></td>
+<td>349</td>
+<td>163</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx rufus rufus</em></td>
+<td>262</td>
+<td>163</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera pardus fusca</em></td>
+<td>222</td>
+<td>107</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Puma concolor concolor</em></td>
+<td>167</td>
+<td>99</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis lybica cafra</em></td>
+<td>167</td>
+<td>112</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera pardus kotiya</em></td>
+<td>164</td>
+<td>77</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leptailurus serval lipostictus</em></td>
+<td>152</td>
+<td>96</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis silvestris silvestris</em></td>
+<td>144</td>
+<td>98</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis chaus affinis</em></td>
+<td>105</td>
+<td>69</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leptailurus serval serval</em></td>
+<td>87</td>
+<td>54</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis lybica lybica</em></td>
+<td>81</td>
+<td>74</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus pardalis mitis</em></td>
+<td>58</td>
+<td>44</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leptailurus serval constantina</em></td>
+<td>57</td>
+<td>46</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Acinonyx jubatus hecki</em></td>
+<td>46</td>
+<td>37</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus javanensis sumatranus</em></td>
+<td>38</td>
+<td>16</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus bengalensis euptilurus</em></td>
+<td>32</td>
+<td>16</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx rufus escuinapae</em></td>
+<td>27</td>
+<td>16</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis lybica ornata</em></td>
+<td>26</td>
+<td>16</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus bengalensis bengalensis</em></td>
+<td>22</td>
+<td>13</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Neofelis diardi borneensis</em></td>
+<td>16</td>
+<td>8</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera tigris sondaica</em></td>
+<td>15</td>
+<td>0</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera pardus delacouri</em></td>
+<td>15</td>
+<td>10</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx lynx lynx</em></td>
+<td>14</td>
+<td>6</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus guigna guigna</em></td>
+<td>13</td>
+<td>9</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus pardalis pardalis</em></td>
+<td>11</td>
+<td>8</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera pardus tulliana</em></td>
+<td>11</td>
+<td>5</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera tigris altaica</em></td>
+<td>11</td>
+<td>0</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Panthera pardus melas</em></td>
+<td>10</td>
+<td>1</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Caracal caracal nubicus</em></td>
+<td>10</td>
+<td>9</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Felis silvestris caucasica</em></td>
+<td>9</td>
+<td>7</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus javanensis javanensis</em></td>
+<td>8</td>
+<td>1</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Prionailurus viverrinus viverrinus</em></td>
+<td>8</td>
+<td>5</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx lynx dinniki</em></td>
+<td>8</td>
+<td>7</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus guigna tigrillo</em></td>
+<td>5</td>
+<td>4</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx lynx isabellinus</em></td>
+<td>5</td>
+<td>0</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Lynx lynx carpathicus</em></td>
+<td>5</td>
+<td>4</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Leopardus tigrinus oncilla</em></td>
+<td>4</td>
+<td>0</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Pardofelis marmorata marmorata</em></td>
+<td>4</td>
+<td>2</td>
+<td><em>Felidae</em></td>
+</tr>
+<tr>
+<td><em>Elephas maximus indicus</em></td>
+<td>877</td>
+<td>920</td>
+<td><em>Elephantidae</em></td>
+</tr>
+<tr>
+<td><em>Elephas maximus maximus</em></td>
+<td>567</td>
+<td>740</td>
+<td><em>Elephantidae</em></td>
+</tr>
+<tr>
+<td><em>Elephas maximus borneensis</em></td>
+<td>180</td>
+<td>146</td>
+<td><em>Elephantidae</em></td>
+</tr>
+<tr>
+<td><em>Elephas maximus sumatranus</em></td>
+<td>18</td>
+<td>12</td>
+<td><em>Elephantidae</em></td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -318,6 +1592,12 @@
     
     
       <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

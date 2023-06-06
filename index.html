@@ -449,13 +449,13 @@ review <a href="dataset/">Dataset</a></p>
 <p>The dataset comprises two elements: the original observations sourced from iNaturalist, and the metadata sourced from 
 Open-Meteo Weather API.</p>
 <h4 id="inaturalist">iNaturalist</h4>
-<p><a href="https://www.inaturalist.org/">inaturalist</a> is a citizen-science platform offering open-source access to up to 139 million
+<p><a href="https://www.inaturalist.org/">iNaturalist</a> is a citizen-science platform offering open-source access to up to 139 million
 observations accross all domains of life. </p>
 <p>For the purpose of this study, a subset of the available wildlife, specifically <em>Felidae</em> and <em>Elephantidae</em> taxonomic families.
 The subset contains global observations stretching across the globe and is characterized by a long-tail distribution, fulfilling
 the role of a generic wildlife dataset.</p>
 <p>iNaturalist observations include essential metadata such as: date and time of observation, coordinates, positional accuracy, and
-taxonomic labels. </p>
+taxonomic labels.</p>
 <p>Below are two example images and their taxonomic species name:</p>
 <table>
 <thead>
@@ -487,9 +487,43 @@ For a complete taxonomic breakdown of the number of observations and images, ple
 <h3 id="novel-cascading-ensemble-classifier">Novel Cascading Ensemble Classifier</h3>
 <p>For a comprehensive breakdown of the novel cascading ensemble classifier, please review 
 <a href="cascading_ensemble_classifier/">Cascading Ensemble Classifier</a></p>
+<p>The novel cascading ensemble classifier capitalizes upon the determined performance trends of image and metadata classification 
+within the taxonomic hierarchy. 
+Specifically, the decreasing performance of image classification as taxonomic levels decrease, and the increasing 
+performance of metadata classification as taxonomic species decrease. 
+The image and metadata classifiers respectively comprise of a cascading selective classifier (classification per parent node). 
+At each parent node, the classifications are combined and weighted based to exploit their relative strengths, jointly deciding 
+on the correct classification. </p>
+<p>The below figure represents the high level concept of the classifier:</p>
+<p><img height="382" src="images/cec_architecture.png" width="595" alt="dataset distribution" style="display: block; margin: 0 auto"/></p>
 <h3 id="results">Results</h3>
 <p>For a comprehensive breakdown of each experiment, the results, and the final discussion, 
 please review <a href="results/">Results</a></p>
+<p>The study, investigated three proposed research questions: </p>
+<ol>
+<li>
+<p>How does taxonomic level influence the performance of metadata classification?</p>
+</li>
+<li>
+<p>How does taxonomic level influence the performance of image classification?</p>
+</li>
+<li>
+<p>How does the proposed novel classification method improve upon baseline classifiers?</p>
+</li>
+</ol>
+<p>The study determined the following in response to the research questions: </p>
+<ol>
+<li>
+<p>Metadata classifier performance increases with decreasing taxonomic level, showcasing a nearly 92% balanced accuracy at the subspecies taxonomy.</p>
+</li>
+<li>
+<p>Image classification performance decreases with decreasing taxonomic level, showcasing a nearly 85% balanced accuracy at the genus taxonomy. </p>
+</li>
+<li>
+<p>The novel ensemble classifier outperforms baseline image classification models by 20 times. </p>
+</li>
+</ol>
+<p>Please review the <a href="thesis/">thesis report</a> for full insight into the study. </p>
 
 
 
@@ -531,6 +565,12 @@ please review <a href="results/">Results</a></p>
     
     
       <script src="assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
