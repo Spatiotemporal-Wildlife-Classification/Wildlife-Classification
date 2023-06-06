@@ -13,7 +13,7 @@ from datetime import datetime
 class Pipeline:
     """ Pipeline to clean raw data into interim data source.
 
-    Args:
+    Attributes:
         df_whole (DataFrame): Contains all aggregated observations
         df (DataFrame): Dataframe containing the current batch of observations
         datasets (list): A list of individual observation csv files to be aggregated as raw data
@@ -24,15 +24,25 @@ class Pipeline:
         start_time (DateTime): Records the start time of pipeline processing
         TEST (bool): A flag indicating values should be initialized for testing purposes.
         test_df (DataFrame): A direct dataframe insert for pipeline testing purposes
+        interim_file (str): Specification of the file to write data to after cleaning process.
+        bad_file (str): Specification of the file to write identified potentially bad observation images to.
+        batch_size (int): Size of individual batches that aggregate observations are broken down into.
     """
 
     interim_file = "felids_final.csv"
-    """string: Specification of the file to write data to after cleaning process."""
     bad_file = 'bad_quality.csv'
     batch_size = 1000
-    """int: Size of individual batches that aggregate observations are broken down into."""
 
     def __init__(self, datasets=['observations_sample.csv'], test_df=None):
+        """ Initializes the observation pipeline.
+
+        Note, it is recommended to process each data file one-by-one, but the pipeline has the capability to process several if required.
+
+        Args:
+            datasets (list): The list of datasets to process. The list should contain csv file names pointing to the dataset files.
+            test_df (DataFrame): The capability to pass a pre-generated dataframe for pipeline testing purposes
+
+        """
         if test_df is None:
             self.df_whole = pd.DataFrame()
             self.df = pd.DataFrame()
@@ -100,8 +110,8 @@ class Pipeline:
         current cleaning proces.
 
         Args:
-            test_interim_df (DataFrame): This dataframe is None during Pipeline cleaning process, however it allows for the creation
-            of an interim dataframe for testing purposes (Not running the entire pipeline.
+            test_interim_df (DataFrame): This dataframe is None during Pipeline cleaning process, however it allows for the creation of an interim dataframe for testing purposes (Not running the entire pipeline.
+            test_bad_df (DataFrame): This dataframe is None during the Pipeline process cleaning process, however is allows for the creation of a test_bad_df for testing purposes.
         """
         self.df_whole.set_index('id', inplace=True)
 
@@ -149,7 +159,7 @@ class Pipeline:
         Each batch once generated is removed from df_whole until this dataframe is empty, concluding the batching process.
 
         Returns:
-            Method returns a boolean value. True if there are still observations to be batched and processes. False if df_whole is empty
+            (bool): Method returns a boolean value. True if there are still observations to be batched and processes. False if df_whole is empty
             indicating the batching process has concluded.
         """
         rows_remaining = len(self.df_whole.index)
@@ -203,17 +213,21 @@ class Pipeline:
     def coordinate_to_country_rate_limited(self):
         """ Method takes data coordinates, and identifies the country of origin, creating a Country column within Interim data
 
+        Note, this method is currently left out of the pipeline due to Nominitim rate limits.
+
         The Nomanitim geocoding API is utilized.
         Due to rate limiting of 1 request per second, a rate limiter has been introduced in order to respect the limits.
+
+        This method modifies the current batch to include a country column with the country of observation specified for each observation.
         """
         # Set up the geolocation library
         geolocator = Nominatim(user_agent="Spatio_Tempt_Class")
         geocode = RateLimiter(geolocator.reverse, min_delay_seconds=2)
 
         # Combine lat and long into coordinates
-        latitudes = pd.Series(self.df.latitude.values.astype(str))
-        longitudes = pd.Series(self.df.longitude.values.astype(str))
-        coordinates = latitudes + ', ' + longitudes
+        latitudes = pd.Series(self.df.latitude.values.astype(str))  # Generate a Series of latitude values as strings
+        longitudes = pd.Series(self.df.longitude.values.astype(str))  # Generate a Series of longitude values as strings
+        coordinates = latitudes + ', ' + longitudes  # Combined the latitudes and longitude values into a single coordinate Series
 
         # Retrieve countries from coordinates (rate limiting requests)
         locations = coordinates.apply(partial(geocode, language='en', exactly_one=True))
@@ -249,15 +263,21 @@ class Pipeline:
             lambda x: finder.timezone_at(lat=x['latitude'], lng=x['longitude']), axis=1)
 
     def bad_data_separation(self):
-        """Method performs the sub-process of bad data separation, formatting, and writing to file"""
+        """Method performs the sub-process of bad data separation, formatting, and writing to the bad_data file"""
         bad_df = self.identify_bad_observations()
         bad_df = self.format_bad_data(bad_df)
         self.write_bad_data(bad_df)
 
     def identify_bad_observations(self):
-        """Method identifies probable bad quality images based on keyword extraction from the descriptions
+        """Method identifies probable bad quality images based on keyword extraction from the descriptions.
+
+        The observations with identified keywords are excluded from the interim data, and instead written to the bad_data.csv file for manual filtering.
+        Keywords list is created based on inspection of observation images and the descriptions of each observation.
 
         Keyword pattern identification is accomplished through the use of regex pattern matching
+
+        Returns:
+            (DataFrame): The method returns a DataFrame containing the identified potentially bad observations from within the current batch.
         """
         description_indicators = ['dead', 'road kill', 'road', 'scat', 'poo', 'killed', 'spoor', 'road-kill', 'remains',
                                   'body', 'deceased', 'prey', 'fatality', 'tracks', 'trapped', 'bad', 'roadkilled', 'poop',
@@ -287,6 +307,9 @@ class Pipeline:
 
         Args:
             bad_df (DataFrame): DataFrame containing all bad observations filtered from df
+
+        Returns:
+            (DataFrame): The method returns a DataFrame containing only the id, image_url, and image_quality columns (bad_data.csv format)
         """
         bad_df = bad_df[['image_url', 'image_quality']]
         return bad_df
@@ -299,11 +322,11 @@ class Pipeline:
         Args:
             bad_df (DataFrame): DataFrame containing the sub-dataframe of only id, image_url, and image_quality columns
         """
-        if not self.TEST:
+        if not self.TEST:  # Identifies not in testing conditions
             self.bad_data_exists = os.path.isfile(self.write_path + self.bad_file)
-            if self.bad_data_exists:
+            if self.bad_data_exists:  # If the file already exists, append the next batch   of bad data
                 bad_df.to_csv(self.write_path + self.bad_file, mode='a', index=True, header=False)
-            else:
+            else:  # Write bad_data file as no file exists
                 bad_df.to_csv(self.write_path + self.bad_file, mode='w', index=True, header=True)
 
     def write_interim_data(self):
