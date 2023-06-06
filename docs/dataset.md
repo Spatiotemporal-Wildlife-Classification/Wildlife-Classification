@@ -7,6 +7,9 @@ as observations may contain erroneous or mislabelled images.
 
 The dataset is published and publicly available at the following link: ...
 
+The below figure displays the geographic distribution of the published dataset:
+<img height="545" src="images/dataset_distribution.png" width="1001" alt="dataset distribution" style="display: block; margin: 0 auto"/>
+
 ## Observations
 The observations are sourced from [iNaturalist](https://www.inaturalist.org/), a citizen-science platform. 
 The images originate from a combination of camera-traps and citizen-science. 

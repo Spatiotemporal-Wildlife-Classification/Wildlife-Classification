@@ -93,3 +93,22 @@ The below figure represents the high level concept of the classifier:
 ### Results
 For a comprehensive breakdown of each experiment, the results, and the final discussion, 
 please review [Results](results.md)
+
+The study, investigated three proposed research questions: 
+
+1. How does taxonomic level influence the performance of metadata classification?
+
+2. How does taxonomic level influence the performance of image classification?
+
+3. How does the proposed novel classification method improve upon baseline classifiers?
+
+
+The study determined the following in response to the research questions: 
+
+1. Metadata classifier performance increases with decreasing taxonomic level, showcasing a nearly 92% balanced accuracy at the subspecies taxonomy.
+
+2. Image classification performance decreases with decreasing taxonomic level, showcasing a nearly 85% balanced accuracy at the genus taxonomy. 
+
+3. The novel ensemble classifier outperforms baseline image classification models by 20 times. 
+
+Please review the [thesis report](thesis.md) for full insight into the study. 
