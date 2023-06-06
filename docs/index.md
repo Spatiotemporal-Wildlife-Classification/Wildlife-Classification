@@ -39,7 +39,7 @@ The dataset comprises two elements: the original observations sourced from iNatu
 Open-Meteo Weather API.
 
 #### iNaturalist
-[inaturalist](https://www.inaturalist.org/) is a citizen-science platform offering open-source access to up to 139 million
+[iNaturalist](https://www.inaturalist.org/) is a citizen-science platform offering open-source access to up to 139 million
 observations accross all domains of life. 
 
 For the purpose of this study, a subset of the available wildlife, specifically _Felidae_ and _Elephantidae_ taxonomic families.
@@ -47,7 +47,7 @@ The subset contains global observations stretching across the globe and is chara
 the role of a generic wildlife dataset.
 
 iNaturalist observations include essential metadata such as: date and time of observation, coordinates, positional accuracy, and
-taxonomic labels. 
+taxonomic labels.
 
 Below are two example images and their taxonomic species name:
 
@@ -72,10 +72,43 @@ The taxonomic composition of the dataset is as follows: 2 taxonomic families, 16
 48 taxonomic species, and 67 taxonomic subspecies. 
 For a complete taxonomic breakdown of the number of observations and images, please review [Dataset](dataset.md)
 
+
 ### Novel Cascading Ensemble Classifier
 For a comprehensive breakdown of the novel cascading ensemble classifier, please review 
 [Cascading Ensemble Classifier](cascading_ensemble_classifier.md)
 
+The novel cascading ensemble classifier capitalizes upon the determined performance trends of image and metadata classification 
+within the taxonomic hierarchy. 
+Specifically, the decreasing performance of image classification as taxonomic levels decrease, and the increasing 
+performance of metadata classification as taxonomic species decrease. 
+The image and metadata classifiers respectively comprise of a cascading selective classifier (classification per parent node). 
+At each parent node, the classifications are combined and weighted based to exploit their relative strengths, jointly deciding 
+on the correct classification. 
+
+The below figure represents the high level concept of the classifier:
+
+<img height="382" src="images/cec_architecture.png" width="595" alt="dataset distribution" style="display: block; margin: 0 auto"/>
+
+
 ### Results
 For a comprehensive breakdown of each experiment, the results, and the final discussion, 
 please review [Results](results.md)
+
+The study, investigated three proposed research questions: 
+
+1. How does taxonomic level influence the performance of metadata classification?
+
+2. How does taxonomic level influence the performance of image classification?
+
+3. How does the proposed novel classification method improve upon baseline classifiers?
+
+
+The study determined the following in response to the research questions: 
+
+1. Metadata classifier performance increases with decreasing taxonomic level, showcasing a nearly 92% balanced accuracy at the subspecies taxonomy.
+
+2. Image classification performance decreases with decreasing taxonomic level, showcasing a nearly 85% balanced accuracy at the genus taxonomy. 
+
+3. The novel ensemble classifier outperforms baseline image classification models by 20 times. 
+
+Please review the [thesis report](thesis.md) for full insight into the study. 
