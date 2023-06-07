@@ -9,7 +9,7 @@
     to the API for storage.
 
     Attributes:
-
+        dsn_endpoint (str): The endpoint of the DSN API
         weather_endpoint (str): The endpoint to access the Open-Meteo historical API
         hourly_weather_var (list): A list specifying all of the hourly weather variables to be collected per observation.
         daily_weather_var (list): A list specifying all of the daily weather variables to be collected per observation.
