@@ -42,7 +42,18 @@ number of child nodes.
 - Loss function: categorical cross-entropy
 
 ### Metadata Classification
+The metadata classifier used is [XGBoost](https://arxiv.org/abs/1603.02754). 
+The study's [experiments](results.md) determined this is the optimal metadata classifier at all taxonomic levels.
+XGBoost is an optimized ensemble gradient descent algorithm that has shown scalable success over a diverse range of datasets and
+challenges. 
 
+The model is hyper-parameter tuned using the maximum tree depth hyper-parameter within 5-fold cross-validation. 
+The set of maximum tree depths is within the range of $1$ to the number of input features, with a best model save policy. 
+
+#### XGBoost Specifications
+- Minimums sample split: 2
+- Split evaluation metric: Gini
+- Booster: gbtree
 
 ## Joint Decision
 
