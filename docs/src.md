@@ -9,7 +9,7 @@ The code is structured within 5 directories:
 
     A module detailing the novel cascading ensemble classifier and performing its evaluation against a validation set.
 
-3. Features
+3. [Features](src/features.md)
 
     A module performing feature extractions from both iNaturalist observations and Open-Meteo weather data.
 
