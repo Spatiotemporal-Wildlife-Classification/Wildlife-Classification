@@ -35,10 +35,15 @@ global pooling layer to flatten and average the output from the prior convolutio
 number of child nodes.
 
 #### Image Classifier Specifications
+
 - Batch size: $[4-32]$ due to variable training sizes
+
 - Input size: $(528, 528, 3)$ with pixel values in range $[0, 255]$
+
 - Drop connect rate of $0.2$
+
 - Learning rate of $0.001$ with Adam optimizer
+
 - Loss function: categorical cross-entropy
 
 ### Metadata Classification
@@ -51,10 +56,40 @@ The model is hyper-parameter tuned using the maximum tree depth hyper-parameter 
 The set of maximum tree depths is within the range of $1$ to the number of input features, with a best model save policy. 
 
 #### XGBoost Specifications
+
 - Minimums sample split: 2
+
 - Split evaluation metric: Gini
+
 - Booster: gbtree
 
 ## Joint Decision
+The joint decision, capitalizes upon the respective classifier taxonomic performance trends determined in the experiments, 
+in order to capitalize upon the strengths and mitigate the weaknesses of the two classifiers. 
+The joint decision achieves this through weighting. 
+At each taxonomic parent node within the symmetrical trees, the individual metadata and image classifiers generate a softmax output. 
+The output of each is weighted according to the table below.
+The table is constructed based on experimental results and the perceived strengths and weaknesses of each classifier based on their 
+taxonomic performance trend. 
+
+| Taxonomic Level | Meta Weight | Image Weight |
+|-----------------|-------------|--------------|
+| _Family_        | 0.1         | 0.9          |
+| _Genus_         | 0.2         | 0.8          |
+| _Species_       | 0.5         | 0.5          |
+| _Subspecies_    | 0.9         | 0.1          |
+
+The weighted softmax output of each classifier output share identical dimensions, and are added together. 
+The summed output must be restricted to a normal distribution to remain a softmax output. 
+The resulting weighted output capitalizes upon the strengths of each classifier, and mitigates the potential weaknesses.
 
 ## Limitations
+The study used a total of near 60 image, metadata, and supporting models to generate the functional cascading ensemble classifier
+for this dataset. 
+Due to the cascading nature of the classifier, batch classifications are not a possibility. Each model is required to be loaded 
+in succession based on the output of the previous model. 
+The resulting classifier is not feasible as a real-time classifier due to its very poor time complexity. 
+Additionally, the memory complexity of loading large image classification models requires that each model must be removed from memory once 
+it has been used, to free space for the sequential classifier. 
+In short, significant improvements to the space and time complexity is still required to realize the full potential of the 
+cascading ensemble classifier.
