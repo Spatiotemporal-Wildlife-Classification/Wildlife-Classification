@@ -1,0 +1,1416 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+    
+    
+      
+        <title>Weather Scraping Node - Spatiotemporal Wildlife Classification Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#weather-scraping-node" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-header__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spatiotemporal Wildlife Classification Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Weather Scraping Node
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-nav__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Spatiotemporal Wildlife Classification Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Code Documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dataset/" class="md-nav__link">
+        Dataset
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cascading_ensemble_classifier/" class="md-nav__link">
+        Novel Cascading Ensemble Classifier
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/" class="md-nav__link">
+        Results
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thesis/" class="md-nav__link">
+        Thesis report
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode" class="md-nav__link">
+    src.features.WeatherScrapingNode
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.date_check" class="md-nav__link">
+    date_check()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.determine_hour" class="md-nav__link">
+    determine_hour()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.execute_request" class="md-nav__link">
+    execute_request()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.get_job_info" class="md-nav__link">
+    get_job_info()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.job_complete_formatting" class="md-nav__link">
+    job_complete_formatting()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.job_complete_response" class="md-nav__link">
+    job_complete_response()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.progress_bar" class="md-nav__link">
+    progress_bar()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.scraping_node_process" class="md-nav__link">
+    scraping_node_process()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.features.WeatherScrapingNode.send_error_response" class="md-nav__link">
+    send_error_response()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="weather-scraping-node">Weather Scraping Node</h1>
+<p>Please note, the leaf node repository provides a far easier means of executing the weather scraping node using a docker image.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="src.features.WeatherScrapingNode"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This file forms a single node used to collect metadata from the OpenMeteo API.</p>
+<p>This node, must work in collaboration with a server containing the Distributed Scraping Network (DNS) API.
+The repository to access, create, and use this tool is within the Organization
+(look at the Distributed Scraping Network repository)</p>
+<p>This node communicates with the DSN API to determine the date, location, and time of the observation
+, performs the request to the Open-Meteo API to gather environmental variables, format and send the collected data back
+to the API for storage.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>dsn_endpoint</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The endpoint of the DSN API</p></td>
+        </tr>
+        <tr>
+          <td><code>weather_endpoint</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The endpoint to access the Open-Meteo historical API</p></td>
+        </tr>
+        <tr>
+          <td><code>hourly_weather_var</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>A list specifying all of the hourly weather variables to be collected per observation.</p></td>
+        </tr>
+        <tr>
+          <td><code>daily_weather_var</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>A list specifying all of the daily weather variables to be collected per observation.</p></td>
+        </tr>
+        <tr>
+          <td><code>job_limit</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Specifying the number of observations to collect metadata for. The value is limited to 1000 per day. Please respect the Open-Meteo limits.</p></td>
+        </tr>
+        <tr>
+          <td><code>rate_limit</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Specify the rate of requests to the Open-Meteo historical API</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.date_check" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">date_check</span><span class="p">(</span><span class="n">job</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Date checker ensures the date of the Open Meteo request is the same day.</p>
+<p>This method counters, and ensures correct formatting for the edge case whereby an observation occurs at Midnight,
+where the start and end dates are potentially different. If this is the case the start date is formatted to be equal to
+the date observed on.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>job</code></td>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The observation information critical to making the Open-Meteo API request in Json format as retrieved from the DSN API.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The job with the start_date correct modified in the Json object to be equal to the observed on date.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">date_check</span><span class="p">(</span><span class="n">job</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Date checker ensures the date of the Open Meteo request is the same day.</span>
+
+<span class="sd">    This method counters, and ensures correct formatting for the edge case whereby an observation occurs at Midnight,</span>
+<span class="sd">    where the start and end dates are potentially different. If this is the case the start date is formatted to be equal to</span>
+<span class="sd">    the date observed on.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        job (Json): The observation information critical to making the Open-Meteo API request in Json format as retrieved from the DSN API.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (Json): The job with the start_date correct modified in the Json object to be equal to the observed on date.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">observed_on</span> <span class="o">=</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;obs_time&#39;</span><span class="p">]</span>
+    <span class="n">observed_on</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">observed_on</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S%z&quot;</span><span class="p">)</span>  <span class="c1"># Convert obs_on into datetime</span>
+
+    <span class="n">start_date</span> <span class="o">=</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;start_date&#39;</span><span class="p">]</span>
+    <span class="n">start_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Convert start_date into datetime</span>
+
+    <span class="k">if</span> <span class="n">start_date</span><span class="o">.</span><span class="n">day</span> <span class="o">!=</span> <span class="n">observed_on</span><span class="o">.</span><span class="n">day</span><span class="p">:</span>  <span class="c1"># Dates differ</span>
+        <span class="n">job</span><span class="p">[</span><span class="s1">&#39;start_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">observed_on</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">job</span><span class="p">[</span><span class="s1">&#39;end_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">observed_on</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">job</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.determine_hour" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">determine_hour</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">observed_on</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method determines the hour in which the observation occurred, and returns the index at which the hourly
+weather variables can be retrieved.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>weather_data</code></td>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The Json of the collected weather data</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>observed_on</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The date and time in which the observation occurred in the format "%Y-%m-%d %H:%M:%S%z"</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">determine_hour</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">observed_on</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method determines the hour in which the observation occurred, and returns the index at which the hourly</span>
+<span class="sd">    weather variables can be retrieved.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        weather_data (Json): The Json of the collected weather data</span>
+<span class="sd">        observed_on (str): The date and time in which the observation occurred in the format &quot;%Y-%m-%d %H:%M:%S%z&quot;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">observed_on</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">observed_on</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S%z&quot;</span><span class="p">)</span>  <span class="c1"># Convert obs_on into datetime</span>
+    <span class="n">observed_on</span> <span class="o">=</span> <span class="n">observed_on</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Round down to nearest hour</span>
+    <span class="n">search_time</span> <span class="o">=</span> <span class="n">observed_on</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M&quot;</span><span class="p">)</span>  <span class="c1"># Generate string matching request hours</span>
+
+    <span class="n">hourly_index</span> <span class="o">=</span> <span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">search_time</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">search_time</span><span class="p">,</span> <span class="n">hourly_index</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.execute_request" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">execute_request</span><span class="p">(</span><span class="n">job</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method performs weather request to Open_meteo using Job info</p>
+<p>The auto timezone parameter means that coordinates will be automatically resolved to local timezone
+The start_data and end_date are set a single hour apart encompassing the hour in which the observation occurred.</p>
+<p>Note, if too many requests are sent to Open-Meteo a 403 (too many requests) response may be generated. If this is
+the case the rate limit is increased by 20%</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>job</code></td>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The Json information describing critical information for the Open-Meteo request.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>Json response</code>
+          </td>
+          <td><p>The Open-Meteo response to the API request, containing the requested metadata values. If the request fails, None is returned.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">execute_request</span><span class="p">(</span><span class="n">job</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method performs weather request to Open_meteo using Job info</span>
+
+<span class="sd">    The auto timezone parameter means that coordinates will be automatically resolved to local timezone</span>
+<span class="sd">    The start_data and end_date are set a single hour apart encompassing the hour in which the observation occurred.</span>
+
+<span class="sd">    Note, if too many requests are sent to Open-Meteo a 403 (too many requests) response may be generated. If this is</span>
+<span class="sd">    the case the rate limit is increased by 20%</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        job (Json): The Json information describing critical information for the Open-Meteo request.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (Json response): The Open-Meteo response to the API request, containing the requested metadata values. If the request fails, None is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">rate_limit</span>
+
+    <span class="n">sleep</span><span class="p">(</span><span class="n">rate_limit</span><span class="p">)</span>  <span class="c1"># Enforce the rate limit</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;start_date&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;end_date&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;end_date&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;timezone&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;hourly&quot;</span><span class="p">:</span> <span class="n">hourly_weather_var</span><span class="p">,</span>
+              <span class="s2">&quot;daily&quot;</span><span class="p">:</span> <span class="n">daily_weather_var</span><span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">weather_endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>  <span class="c1"># Too many request response.</span>
+            <span class="n">rate_limit</span> <span class="o">=</span> <span class="n">rate_limit</span> <span class="o">+</span> <span class="p">(</span><span class="n">rate_limit</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in Ope-Meteo request&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.get_job_info" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_job_info</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method requests the current job (observation) to collect data for from the DSN</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>Request Json</code>
+          </td>
+          <td><p>The contents of the request in data format if the GET request is successful. If it is not successful, None is returned and the stacktrace is printed.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_job_info</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method requests the current job (observation) to collect data for from the DSN</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (Request Json): The contents of the request in data format if the GET request is successful. If it is not successful, None is returned and the stacktrace is printed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">job_info_endpoint</span> <span class="o">=</span> <span class="s2">&quot;job/&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">dsn_endpoint</span> <span class="o">+</span> <span class="n">job_info_endpoint</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.job_complete_formatting" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">job_complete_formatting</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">weather_hour</span><span class="p">,</span> <span class="n">hour_index</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method formats the job and weather data for a POST request to the DSN API</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>weather_data</code></td>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The Json of the collected weather data</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>job</code></td>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The Json of the current job (observation) to collect weather data for</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>weather_hour</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>An string specifying the hour of weather data to be collected in the format %Y-%m-%dT%H:%M</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>hour_index</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>An integer specifying the index of the weather hour in order to collect the correct hour of weather data from the hourly weather lists.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>A dictionary containing the correctly formatted data to be POSTed to the DNS</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">job_complete_formatting</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">weather_hour</span><span class="p">,</span> <span class="n">hour_index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method formats the job and weather data for a POST request to the DSN API</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        weather_data (Json): The Json of the collected weather data</span>
+<span class="sd">        job (Json): The Json of the current job (observation) to collect weather data for</span>
+<span class="sd">        weather_hour (int): An string specifying the hour of weather data to be collected in the format %Y-%m-%dT%H:%M</span>
+<span class="sd">        hour_index (int): An integer specifying the index of the weather hour in order to collect the correct hour of weather data from the hourly weather lists.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict): A dictionary containing the correctly formatted data to be POSTed to the DNS</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;long&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;observed_on&quot;</span><span class="p">:</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;obs_time&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;time_zone&quot;</span><span class="p">:</span> <span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;timezone&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;elevation&quot;</span><span class="p">:</span> <span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;elevation&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">weather_hour</span><span class="p">,</span>
+
+            <span class="c1"># Hourly variables</span>
+            <span class="s2">&quot;temperature_2m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;temperature_2m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;relativehumidity_2m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;relativehumidity_2m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;dewpoint_2m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;dewpoint_2m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;apparent_temperature&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;apparent_temperature&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;surface_pressure&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;surface_pressure&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;precipitation&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;precipitation&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;rain&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;rain&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;snowfall&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;snowfall&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;cloudcover&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;cloudcover&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;cloudcover_low&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;cloudcover_low&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;cloudcover_mid&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;cloudcover_mid&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;cloudcover_high&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;cloudcover_high&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;shortwave_radiation&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;shortwave_radiation&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;direct_radiation&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;direct_radiation&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;diffuse_radiation&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;diffuse_radiation&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;windspeed_10m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;windspeed_10m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;windspeed_100m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;windspeed_100m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;winddirection_10m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;winddirection_10m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;winddirection_100m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;winddirection_100m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;windgusts_10m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;windgusts_10m&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;et0_fao_evapotranspiration_hourly&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;et0_fao_evapotranspiration&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;weathercode_hourly&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;weathercode&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;vapor_pressure_deficit&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;vapor_pressure_deficit&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;soil_temperature_0_to_7cm&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;soil_temperature_0_to_7cm&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;soil_temperature_7_to_28cm&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;soil_temperature_7_to_28cm&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;soil_temperature_28_to_100cm&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;soil_temperature_28_to_100cm&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;soil_moisture_0_to_7cm&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;soil_moisture_0_to_7cm&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;soil_moisture_7_to_28cm&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;soil_moisture_7_to_28cm&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+            <span class="s2">&quot;soil_moisture_28_to_100cm&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;hourly&quot;</span><span class="p">][</span><span class="s2">&quot;soil_moisture_28_to_100cm&quot;</span><span class="p">][</span><span class="n">hour_index</span><span class="p">]),</span>
+
+            <span class="c1"># Daily Variables</span>
+            <span class="s2">&quot;weathercode_daily&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;weathercode&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;temperature_2m_max&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;temperature_2m_max&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;temperature_2m_min&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;temperature_2m_min&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;apparent_temperature_max&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;apparent_temperature_max&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;apparent_temperature_min&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;apparent_temperature_min&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;precipitation_sum&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;precipitation_sum&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;rain_sum&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;rain_sum&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;snowfall_sum&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;snowfall_sum&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;precipitation_hours&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;precipitation_hours&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;sunrise&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;sunrise&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;sunset&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;sunset&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;windspeed_10m_max&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;windspeed_10m_max&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;windgusts_10m_max&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;windgusts_10m_max&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;winddirection_10m_dominant&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;winddirection_10m_dominant&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;shortwave_radiation_sum&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;shortwave_radiation_sum&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;et0_fao_evapotranspiration_daily&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">weather_data</span><span class="p">[</span><span class="s2">&quot;daily&quot;</span><span class="p">][</span><span class="s2">&quot;et0_fao_evapotranspiration&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="p">}</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.job_complete_response" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">job_complete_response</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method POSTs the collected metadata back to the DSN for storage</p>
+<p>This method formats both the job and weather information into an acceptable format for storage within the DSN.
+Two errors can occur within this method, simply printed to terminal as to continue to scraping process:
+an error in formatting the data for posting due to missing or incorrect data and an error in the POST request.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>weather_data</code></td>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The Json weather data collected from the Open-Meteo request</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>job</code></td>
+          <td>
+                <code>Json</code>
+          </td>
+          <td><p>The Json information detailing the observation.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">job_complete_response</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method POSTs the collected metadata back to the DSN for storage</span>
+
+<span class="sd">    This method formats both the job and weather information into an acceptable format for storage within the DSN.</span>
+<span class="sd">    Two errors can occur within this method, simply printed to terminal as to continue to scraping process:</span>
+<span class="sd">    an error in formatting the data for posting due to missing or incorrect data and an error in the POST request.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        weather_data (Json): The Json weather data collected from the Open-Meteo request</span>
+<span class="sd">        job (Json): The Json information detailing the observation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">completion_endpoint</span> <span class="o">=</span> <span class="s2">&quot;job/&quot;</span>  <span class="c1"># Specify completion endpoint to DSN</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">weather_hour</span><span class="p">,</span> <span class="n">hour_index</span> <span class="o">=</span> <span class="n">determine_hour</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">[</span><span class="s2">&quot;obs_time&quot;</span><span class="p">])</span>  <span class="c1"># Get hour of observation</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">job_complete_formatting</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">weather_hour</span><span class="p">,</span> <span class="n">hour_index</span><span class="p">)</span>  <span class="c1"># Format collected data</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in data formatting&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">dsn_endpoint</span> <span class="o">+</span> <span class="n">completion_endpoint</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># Post request</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in job completion transfer&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.progress_bar" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">progress_bar</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">job_no</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>A progress bar displayed on terminal to indicate the progress of the scraping</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>start_time</code></td>
+          <td>
+                <code><span title="datetime.datetime">datetime</span></code>
+          </td>
+          <td><p>The date and time at which the scraping was started</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>job_no</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>The number of jobs iterated through in this execution of the scraping node.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">progress_bar</span><span class="p">(</span><span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">job_no</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A progress bar displayed on terminal to indicate the progress of the scraping</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        start_time (datetime): The date and time at which the scraping was started</span>
+<span class="sd">        job_no (int): The number of jobs iterated through in this execution of the scraping node.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">running_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>  <span class="c1"># Calculate the running time</span>
+    <span class="n">progress_bar_length</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># Specify progress bar length</span>
+    <span class="n">percentage_complete</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">job_no</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">job_limit</span><span class="p">)</span>  <span class="c1"># Determine the percentage complete</span>
+
+    <span class="n">filled</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">progress_bar_length</span> <span class="o">*</span> <span class="n">percentage_complete</span><span class="p">)</span>  <span class="c1"># Determine fill of percentage bar</span>
+    <span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="n">filled</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">progress_bar_length</span> <span class="o">-</span> <span class="n">filled</span><span class="p">)</span>  <span class="c1"># Modify bar with fill</span>
+    <span class="n">percentage_display</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">percentage_complete</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># Calculate percentage</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">[</span><span class="si">{</span><span class="n">bar</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">percentage_display</span><span class="si">}</span><span class="s2">%s</span><span class="se">\t</span><span class="s2">current observations: </span><span class="si">{</span><span class="n">job_no</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">job_limit</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> running time: </span><span class="si">{</span><span class="n">running_time</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.scraping_node_process" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">scraping_node_process</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The overall method detailing the scraping node process.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">scraping_node_process</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The overall method detailing the scraping node process.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>  <span class="c1"># Record the start time of the process</span>
+    <span class="k">for</span> <span class="n">job_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">job_limit</span><span class="p">):</span>  <span class="c1"># Loop through number of requests</span>
+        <span class="n">progress_bar</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">job_no</span><span class="p">)</span>  <span class="c1"># Initialize the progress bar</span>
+
+        <span class="n">job</span> <span class="o">=</span> <span class="n">get_job_info</span><span class="p">()</span>  <span class="c1"># Retrieve the current job information</span>
+        <span class="n">job</span> <span class="o">=</span> <span class="n">date_check</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>  <span class="c1"># Ensure the date is correctly formatted</span>
+
+        <span class="k">if</span> <span class="n">job</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Indicates there are no jobs left to execute. Stop process.</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+        <span class="n">weather_data</span> <span class="o">=</span> <span class="n">execute_request</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>  <span class="c1"># Weather data request to Open-Meteo</span>
+
+        <span class="k">if</span> <span class="n">weather_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Error response if an error occurred</span>
+            <span class="n">send_error_response</span><span class="p">()</span>
+            <span class="k">continue</span>
+        <span class="n">job_complete_response</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span>  <span class="c1"># Successful weather data collection, transfer for storage in DSN</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.features.WeatherScrapingNode.send_error_response" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">send_error_response</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method send a POST request to the DSN indicating that an error occured at some point in the current job,
+and it could not be completed.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">send_error_response</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method send a POST request to the DSN indicating that an error occured at some point in the current job,</span>
+<span class="sd">    and it could not be completed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">error_endpoint</span> <span class="o">=</span> <span class="s2">&quot;error/&quot;</span>  <span class="c1"># Specify the DSN error endpoint</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">dsn_endpoint</span> <span class="o">+</span> <span class="n">error_endpoint</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># Post the request</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Timeout updating error count&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
