@@ -62,6 +62,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#cascading-ensemble-classifier" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -197,10 +202,110 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Novel Cascading Ensemble Classifier
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         Novel Cascading Ensemble Classifier
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-classification" class="md-nav__link">
+    Image Classification
+  </a>
+  
+    <nav class="md-nav" aria-label="Image Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-classifier-specifications" class="md-nav__link">
+    Image Classifier Specifications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-classification" class="md-nav__link">
+    Metadata Classification
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xgboost-specifications" class="md-nav__link">
+    XGBoost Specifications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#joint-decision" class="md-nav__link">
+    Joint Decision
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    Limitations
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -253,6 +358,90 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-classification" class="md-nav__link">
+    Image Classification
+  </a>
+  
+    <nav class="md-nav" aria-label="Image Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-classifier-specifications" class="md-nav__link">
+    Image Classifier Specifications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-classification" class="md-nav__link">
+    Metadata Classification
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xgboost-specifications" class="md-nav__link">
+    XGBoost Specifications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#joint-decision" class="md-nav__link">
+    Joint Decision
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    Limitations
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -267,9 +456,127 @@
                   
 
 
-  <h1>Novel Cascading Ensemble Classifier</h1>
-
-
+<h1 id="cascading-ensemble-classifier">Cascading Ensemble Classifier</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The cascading ensemble classifier capitalizes upon the determined trends within image and metadata classification 
+within wildlife's taxonomic structure. </p>
+<p>Specifically: </p>
+<ul>
+<li>
+<p>Metadata classification performance increases with decreasing taxonomic level.</p>
+</li>
+<li>
+<p>Image classification performance decreases with decreasing taxonomic level. </p>
+</li>
+</ul>
+<p>The below diagram visualizes the high level concept. 
+The concept makes use of a cascading selective classifier (classifier per parent node) for both the image and
+metadata classification components, resulting in dual, symmetrical cascading classification trees. 
+At each level of the cascade (parent node) the trees communicate, to make a joint decision leveraging or mitigating 
+their strengths or weaknesses to form a robust decision. </p>
+<p><img height="382" src="../images/cec_architecture.png" width="595" alt="cascading ensemble architecture" style="display: block; margin: 0 auto"/></p>
+<h2 id="models">Models</h2>
+<p>The models specified below are used at each parent node within the cascading classification. 
+Each model is trained on data limited to its taxonomic child nodes.</p>
+<h3 id="image-classification">Image Classification</h3>
+<p>The image classifier used is the <a href="https://arxiv.org/pdf/1905.11946.pdf">EfficientNet-B6</a> Convolutional Neural Network (CNN). 
+This CNN was selected due to its comparatively smaller size due to the efficient nature of its training and structure, 
+this is essential due to the quantity of models required to be trained within the cascading ensemble classifier. 
+It is acknowledged that potentially improved results could be generated from using state of the art image classifiers in the form of 
+image transformers such as <a href="https://openaccess.thecvf.com/content/CVPR2022/html/Zhai_Scaling_Vision_Transformers_CVPR_2022_paper.html">Vit-G/14</a></p>
+<p>The model uses transfer learning in the form of model weights pre-trained on the <a href="https://www.image-net.org/">ImageNet</a> dataset.
+The model's output is augmented to adapt to the dataset. The softmax output layer is replaced by a two-dimensional average
+global pooling layer to flatten and average the output from the prior convolutional layer, followed by a softmax layer specified by the 
+number of child nodes.</p>
+<h4 id="image-classifier-specifications">Image Classifier Specifications</h4>
+<ul>
+<li>
+<p>Batch size: <span class="arithmatex">\([4-32]\)</span> due to variable training sizes</p>
+</li>
+<li>
+<p>Input size: <span class="arithmatex">\((528, 528, 3)\)</span> with pixel values in range <span class="arithmatex">\([0, 255]\)</span></p>
+</li>
+<li>
+<p>Drop connect rate of <span class="arithmatex">\(0.2\)</span></p>
+</li>
+<li>
+<p>Learning rate of <span class="arithmatex">\(0.001\)</span> with Adam optimizer</p>
+</li>
+<li>
+<p>Loss function: categorical cross-entropy</p>
+</li>
+</ul>
+<h3 id="metadata-classification">Metadata Classification</h3>
+<p>The metadata classifier used is <a href="https://arxiv.org/abs/1603.02754">XGBoost</a>. 
+The study's <a href="../results/">experiments</a> determined this is the optimal metadata classifier at all taxonomic levels.
+XGBoost is an optimized ensemble gradient descent algorithm that has shown scalable success over a diverse range of datasets and
+challenges. </p>
+<p>The model is hyper-parameter tuned using the maximum tree depth hyper-parameter within 5-fold cross-validation. 
+The set of maximum tree depths is within the range of <span class="arithmatex">\(1\)</span> to the number of input features, with a best model save policy. </p>
+<h4 id="xgboost-specifications">XGBoost Specifications</h4>
+<ul>
+<li>
+<p>Minimums sample split: 2</p>
+</li>
+<li>
+<p>Split evaluation metric: Gini</p>
+</li>
+<li>
+<p>Booster: gbtree</p>
+</li>
+</ul>
+<h2 id="joint-decision">Joint Decision</h2>
+<p>The joint decision, capitalizes upon the respective classifier taxonomic performance trends determined in the experiments, 
+in order to capitalize upon the strengths and mitigate the weaknesses of the two classifiers. 
+The joint decision achieves this through weighting. 
+At each taxonomic parent node within the symmetrical trees, the individual metadata and image classifiers generate a softmax output. 
+The output of each is weighted according to the table below.
+The table is constructed based on experimental results and the perceived strengths and weaknesses of each classifier based on their 
+taxonomic performance trend. </p>
+<table>
+<thead>
+<tr>
+<th>Taxonomic Level</th>
+<th>Meta Weight</th>
+<th>Image Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Family</em></td>
+<td>0.1</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td><em>Genus</em></td>
+<td>0.2</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td><em>Species</em></td>
+<td>0.5</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td><em>Subspecies</em></td>
+<td>0.9</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+<p>The weighted softmax output of each classifier output share identical dimensions, and are added together. 
+The summed output must be restricted to a normal distribution to remain a softmax output. 
+The resulting weighted output capitalizes upon the strengths of each classifier, and mitigates the potential weaknesses.</p>
+<h2 id="limitations">Limitations</h2>
+<p>The study used a total of near 60 image, metadata, and supporting models to generate the functional cascading ensemble classifier
+for this dataset. 
+Due to the cascading nature of the classifier, batch classifications are not a possibility. Each model is required to be loaded 
+in succession based on the output of the previous model. 
+The resulting classifier is not feasible as a real-time classifier due to its very poor time complexity. 
+Additionally, the memory complexity of loading large image classification models requires that each model must be removed from memory once 
+it has been used, to free space for the sequential classifier. 
+In short, significant improvements to the space and time complexity is still required to realize the full potential of the 
+cascading ensemble classifier.</p>
 
 
 
