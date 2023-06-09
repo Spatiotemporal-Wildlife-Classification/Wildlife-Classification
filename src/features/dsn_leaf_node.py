@@ -244,7 +244,6 @@ def determine_hour(weather_data, observed_on):
 def send_error_response():
     """This method send a POST request to the DSN indicating that an error occured at some point in the current job,
     and it could not be completed.
-
     """
     error_endpoint = "error/"  # Specify the DSN error endpoint
 
@@ -274,7 +273,6 @@ def progress_bar(start_time: datetime, job_no: int):
 
 def scraping_node_process():
     """The overall method detailing the scraping node process.
-
     """
     start_time = datetime.now()  # Record the start time of the process
     for job_no in range(job_limit):  # Loop through number of requests
