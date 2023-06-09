@@ -6,17 +6,20 @@
 
    Note, the encoding of the location feature occurs within the pipeline processes. Please review the Silhouette
    score documentation for further information on the process.
+
+   Attributes:
+       root_path (str): The path to the project root.
+       data_path (str): The path to where the data is stored within the project
+       save_path (str): The path to where models and validation data (if created) is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`
+       validation_set_flag (bool): A boolean flag indicating whether a validation set should be created and saved. The validation set is saved to save_path. Each file will have suffixx `_validation.csv`
 """
 
 # Modelling
 import pickle
 
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
 
 from imblearn.over_sampling import RandomOverSampler
-
 
 # General
 import numpy as np
@@ -27,23 +30,17 @@ import pandas as pd
 # Geolocation libraries
 from global_land_mask import globe
 
-# Config
+# Config and local
 from src.structure.Config import root_dir
+import silhouette_k_means
 
 # Paths
-root_path = root_dir()
-data_path = '/data/processed/'
-# validation_set_path = '/notebooks/model_comparison_cache_2/'
-validation_set_path = '/models/meta_2/'
-model_destination = validation_set_path
+root_path = root_dir()  # Root path of the project
+data_path = '/data/processed/'  # Path to where data is stored
+save_path = '/models/meta/'  # '/notebooks/meta_modelling/model_comparison_cache/' to produce models for evaluation within the meta_data_model_comparison notebook
 
 # Boolean Flags
-validation_set_flag = True
-
-# K-means information
-k_max = 60
-k_interval = 2
-k_init = 4
+validation_set_flag = False
 
 
 def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
@@ -58,25 +55,25 @@ def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
 
 
 def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df)
+    k_means = silhouette_k_means.train_kmeans(df)
     model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
+    pickle.dump(k_means, open(root_path + save_path + model_name + 'k_means.sav', 'wb'))
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df)
+    k_means = silhouette_k_means.train_kmeans(df)
     model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
+    pickle.dump(k_means, open(root_path + save_path + model_name + 'k_means.sav', 'wb'))
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def neural_network_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df)
+    k_means = silhouette_k_means.train_kmeans(df)
     model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
+    pickle.dump(k_means, open(root_path + save_path + model_name + 'k_means.sav', 'wb'))
     X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
     return X, y, lb, classes
 
@@ -381,42 +378,11 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
     return X, y, lb, classes
 
 
-## KMEANS ##
-def train_kmeans(df: pd.DataFrame):
-    location_df = df[['latitude', 'longitude']]
-
-    sil_scores = calculate_optimal_k(location_df)
-    k_values = range(k_init, k_max + k_interval, k_interval)
-
-    silhouette_optimal = np.argmax(sil_scores)
-    k_value = (k_values[silhouette_optimal])
-    print("K-value: ", k_value)
-
-    k_means = KMeans(n_clusters=k_value, n_init=10)
-    k_means.fit(location_df)
-    return k_means
-
-
-# Use the Silhouette score to determine an optimal k
-def calculate_optimal_k(data):
-    sil = []
-
-    k = k_init
-    while k <= k_max and k < len(data):
-        k_means = KMeans(n_clusters=k, n_init=10).fit(data)
-        labels = k_means.labels_
-
-        sil.append(silhouette_score(data, labels))
-        print(k)
-        k += k_interval
-    return sil
-
-
 ## VALIDATION SET ##
 def validation_set(df: pd.DataFrame, target_taxon: str, file_name: str):
     if validation_set_flag:
         grouped = df.groupby([target_taxon]).sample(frac=0.2, random_state=2)  # 20% of each class goes to the validation set
-        grouped.to_csv(root_path + validation_set_path + file_name)  # Save evaluation dataset
+        grouped.to_csv(root_path + save_path + file_name)  # Save evaluation dataset
 
         df = df.drop(grouped.index)  # Remove validation observations from the current df
     return df
