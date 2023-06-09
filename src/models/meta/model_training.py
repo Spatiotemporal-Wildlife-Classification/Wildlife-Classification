@@ -7,6 +7,7 @@ import xgboost_model
 import neural_network_model
 import adaboost_model
 from pipelines import sub_species_detection
+import silhouette_k_means
 
 # Dictionaries to aid in file name creation
 model_abbreviations = {'Neural network': 'nn',
@@ -217,8 +218,8 @@ def train_base_model():
     df_proboscidia = pipelines.aggregate_data('proboscidia_train.csv', 'proboscidia_meta.csv')
     df = pd.concat([df_felids, df_proboscidia])
 
-    pipelines.k_max = 84
-    pipelines.k_interval = 20
+    silhouette_k_means.k_max = 84
+    silhouette_k_means.k_interval = 20
 
     # Train model
     model_selection_execution('Xgboost',
