@@ -1,12 +1,22 @@
+"""This file establishes the dynamic pipelines used to produce training, test, and validation sets from the dataset.
+
+   A dynamic pipeline accepts processed data, and transforms it into: training data, test data, validation data with
+   the specified labels. The pipelines account for the variable taxonomic levels and the encoding of the location
+   feature, to produce the above transformations.
+
+   Note, the encoding of the location feature occurs within the pipeline processes. Please review the Silhouette
+   score documentation for further information on the process.
+"""
+
+# Modelling
 import pickle
 
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
+
 from imblearn.over_sampling import RandomOverSampler
 
-
-from src.structure.Config import root_dir
 
 # General
 import numpy as np
@@ -17,12 +27,18 @@ import pandas as pd
 # Geolocation libraries
 from global_land_mask import globe
 
+# Config
+from src.structure.Config import root_dir
 
+# Paths
 root_path = root_dir()
 data_path = '/data/processed/'
-# data_destination = '/notebooks/model_comparison_cache_2/'
-data_destination = '/models/meta_2/'
-model_destination = data_destination
+# validation_set_path = '/notebooks/model_comparison_cache_2/'
+validation_set_path = '/models/meta_2/'
+model_destination = validation_set_path
+
+# Boolean Flags
+validation_set_flag = True
 
 # K-means information
 k_max = 60
@@ -398,13 +414,11 @@ def calculate_optimal_k(data):
 
 ## VALIDATION SET ##
 def validation_set(df: pd.DataFrame, target_taxon: str, file_name: str):
-    # Ensure at least 4 of each species are present in evaluation dataset
-    grouped = df.groupby([target_taxon]).sample(frac=0.2, random_state=2)
-    # Save evaluation dataset
-    grouped.to_csv(root_path + data_destination + file_name)
+    if validation_set_flag:
+        grouped = df.groupby([target_taxon]).sample(frac=0.2, random_state=2)  # 20% of each class goes to the validation set
+        grouped.to_csv(root_path + validation_set_path + file_name)  # Save evaluation dataset
 
-    # Remove evaluation observations from df
-    df = df.drop(grouped.index)
+        df = df.drop(grouped.index)  # Remove validation observations from the current df
     return df
 
 
