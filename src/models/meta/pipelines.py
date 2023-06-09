@@ -15,7 +15,7 @@
 """
 
 # Modelling
-import pickle
+
 
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
 
@@ -57,7 +57,7 @@ def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
 def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
     k_means = silhouette_k_means.train_kmeans(df)
     model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + save_path + model_name + 'k_means.sav', 'wb'))
+    silhouette_k_means.save_k_means(k_means, model_name)
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
@@ -65,7 +65,7 @@ def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validatio
 def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
     k_means = silhouette_k_means.train_kmeans(df)
     model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + save_path + model_name + 'k_means.sav', 'wb'))
+    silhouette_k_means.save_k_means(k_means, model_name)
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
@@ -73,7 +73,7 @@ def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: st
 def neural_network_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
     k_means = silhouette_k_means.train_kmeans(df)
     model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + save_path + model_name + 'k_means.sav', 'wb'))
+    silhouette_k_means.save_k_means(k_means, model_name)
     X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
     return X, y, lb, classes
 

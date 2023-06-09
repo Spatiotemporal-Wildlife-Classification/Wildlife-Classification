@@ -5,12 +5,13 @@
         k_interval (int): The centroid increasing interval so from k_init to k_max intervals of k_interval are used.
         k_init (int): The initial number of centroids to be considered within the K-means algorithm performing location encoding
 """
-
+import pickle
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
+from src.models.meta import pipelines
 
 # K-means information (Location encoding)
 k_max = 60
@@ -45,4 +46,8 @@ def calculate_optimal_k(data):
         print(k)
         k += k_interval
     return sil
+
+
+def save_k_means(k_means: KMeans, model_name: str):
+    pickle.dump(k_means, open(pipelines.root_path + pipelines.save_path + model_name + 'k_means.sav', 'wb'))
 
