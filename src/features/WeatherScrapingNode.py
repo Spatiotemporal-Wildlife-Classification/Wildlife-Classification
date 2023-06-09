@@ -26,7 +26,7 @@ from datetime import datetime
 import json
 
 # Endpoints
-dsn_endpoint = "http://139.144.179.74:5000/"
+dsn_endpoint = "http://109.74.200.171:5000/"
 weather_endpoint = "https://archive-api.open-meteo.com/v1/archive?"
 
 # Metadata variables
