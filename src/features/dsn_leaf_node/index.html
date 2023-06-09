@@ -15,7 +15,7 @@
     
     
       
-        <title>Weather Scraping Node - Spatiotemporal Wildlife Classification Docs</title>
+        <title>DSN Leaf Node - Spatiotemporal Wildlife Classification Docs</title>
       
     
     
@@ -59,7 +59,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#weather-scraping-node" class="md-skip">
+        <a href="#dsn-leaf-node" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Weather Scraping Node
+              DSN Leaf Node
             
           </span>
         </div>
@@ -256,70 +256,70 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode" class="md-nav__link">
-    src.features.WeatherScrapingNode
+  <a href="#src.features.dsn_leaf_node" class="md-nav__link">
+    src.features.dsn_leaf_node
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.date_check" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.date_check" class="md-nav__link">
     date_check()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.determine_hour" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.determine_hour" class="md-nav__link">
     determine_hour()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.execute_request" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.execute_request" class="md-nav__link">
     execute_request()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.get_job_info" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.get_job_info" class="md-nav__link">
     get_job_info()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.job_complete_formatting" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.job_complete_formatting" class="md-nav__link">
     job_complete_formatting()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.job_complete_response" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.job_complete_response" class="md-nav__link">
     job_complete_response()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.progress_bar" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.progress_bar" class="md-nav__link">
     progress_bar()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.scraping_node_process" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.scraping_node_process" class="md-nav__link">
     scraping_node_process()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.features.WeatherScrapingNode.send_error_response" class="md-nav__link">
+  <a href="#src.features.dsn_leaf_node.send_error_response" class="md-nav__link">
     send_error_response()
   </a>
   
@@ -340,14 +340,16 @@
                   
 
 
-<h1 id="weather-scraping-node">Weather Scraping Node</h1>
-<p>Please note, the leaf node repository provides a far easier means of executing the weather scraping node using a docker image.</p>
+<h1 id="dsn-leaf-node">DSN Leaf Node</h1>
+<p>Please note, the leaf node repository provides a far easier means of executing the weather scraping node using a docker image.
+The leaf node repository link is: https://github.com/Spatiotemporal-Wildlife-Classification/DSN-Leaf
+The leaf node documentation is: https://spatiotemporal-wildlife-classification.github.io/DSN-Leaf/</p>
 
 
 <div class="doc doc-object doc-module">
 
 
-<a id="src.features.WeatherScrapingNode"></a>
+<a id="src.features.dsn_leaf_node"></a>
   <div class="doc doc-contents first">
   
       <p>This file forms a single node used to collect metadata from the OpenMeteo API.</p>
@@ -429,7 +431,7 @@ to the API for storage.</p>
 
 
 
-<h2 id="src.features.WeatherScrapingNode.date_check" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.date_check" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">date_check</span><span class="p">(</span><span class="n">job</span><span class="p">)</span></code>
 
 </h2>
@@ -485,7 +487,7 @@ the date observed on.</p>
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
 <span class="normal">68</span>
 <span class="normal">69</span>
@@ -545,7 +547,7 @@ the date observed on.</p>
 
 
 
-<h2 id="src.features.WeatherScrapingNode.determine_hour" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.determine_hour" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">determine_hour</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">observed_on</span><span class="p">)</span></code>
 
 </h2>
@@ -591,7 +593,7 @@ weather variables can be retrieved.</p>
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
 <span class="normal">228</span>
 <span class="normal">229</span>
@@ -631,7 +633,7 @@ weather variables can be retrieved.</p>
 
 
 
-<h2 id="src.features.WeatherScrapingNode.execute_request" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.execute_request" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">execute_request</span><span class="p">(</span><span class="n">job</span><span class="p">)</span></code>
 
 </h2>
@@ -688,7 +690,7 @@ the case the rate limit is increased by 20%</p>
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 94</span>
 <span class="normal"> 95</span>
 <span class="normal"> 96</span>
@@ -764,7 +766,7 @@ the case the rate limit is increased by 20%</p>
 
 
 
-<h2 id="src.features.WeatherScrapingNode.get_job_info" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.get_job_info" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_job_info</span><span class="p">()</span></code>
 
 </h2>
@@ -793,7 +795,7 @@ the case the rate limit is increased by 20%</p>
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span>
@@ -829,7 +831,7 @@ the case the rate limit is increased by 20%</p>
 
 
 
-<h2 id="src.features.WeatherScrapingNode.job_complete_formatting" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.job_complete_formatting" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">job_complete_formatting</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">weather_hour</span><span class="p">,</span> <span class="n">hour_index</span><span class="p">)</span></code>
 
 </h2>
@@ -912,7 +914,7 @@ the case the rate limit is increased by 20%</p>
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
 <span class="normal">155</span>
 <span class="normal">156</span>
@@ -1064,7 +1066,7 @@ the case the rate limit is increased by 20%</p>
 
 
 
-<h2 id="src.features.WeatherScrapingNode.job_complete_response" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.job_complete_response" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">job_complete_response</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span></code>
 
 </h2>
@@ -1112,7 +1114,7 @@ an error in formatting the data for posting due to missing or incorrect data and
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">129</span>
 <span class="normal">130</span>
 <span class="normal">131</span>
@@ -1168,7 +1170,7 @@ an error in formatting the data for posting due to missing or incorrect data and
 
 
 
-<h2 id="src.features.WeatherScrapingNode.progress_bar" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.progress_bar" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">progress_bar</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">job_no</span><span class="p">)</span></code>
 
 </h2>
@@ -1213,8 +1215,9 @@ an error in formatting the data for posting due to missing or incorrect data and
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">257</span>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">256</span>
+<span class="normal">257</span>
 <span class="normal">258</span>
 <span class="normal">259</span>
 <span class="normal">260</span>
@@ -1228,8 +1231,7 @@ an error in formatting the data for posting due to missing or incorrect data and
 <span class="normal">268</span>
 <span class="normal">269</span>
 <span class="normal">270</span>
-<span class="normal">271</span>
-<span class="normal">272</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">progress_bar</span><span class="p">(</span><span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">job_no</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="normal">271</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">progress_bar</span><span class="p">(</span><span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">job_no</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A progress bar displayed on terminal to indicate the progress of the scraping</span>
 
 <span class="sd">    Args:</span>
@@ -1255,7 +1257,7 @@ an error in formatting the data for posting due to missing or incorrect data and
 
 
 
-<h2 id="src.features.WeatherScrapingNode.scraping_node_process" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.scraping_node_process" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">scraping_node_process</span><span class="p">()</span></code>
 
 </h2>
@@ -1266,8 +1268,9 @@ an error in formatting the data for posting due to missing or incorrect data and
       <p>The overall method detailing the scraping node process.</p>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">275</span>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">274</span>
+<span class="normal">275</span>
 <span class="normal">276</span>
 <span class="normal">277</span>
 <span class="normal">278</span>
@@ -1284,11 +1287,8 @@ an error in formatting the data for posting due to missing or incorrect data and
 <span class="normal">289</span>
 <span class="normal">290</span>
 <span class="normal">291</span>
-<span class="normal">292</span>
-<span class="normal">293</span>
-<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">scraping_node_process</span><span class="p">():</span>
+<span class="normal">292</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">scraping_node_process</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The overall method detailing the scraping node process.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>  <span class="c1"># Record the start time of the process</span>
     <span class="k">for</span> <span class="n">job_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">job_limit</span><span class="p">):</span>  <span class="c1"># Loop through number of requests</span>
@@ -1316,7 +1316,7 @@ an error in formatting the data for posting due to missing or incorrect data and
 
 
 
-<h2 id="src.features.WeatherScrapingNode.send_error_response" class="doc doc-heading">
+<h2 id="src.features.dsn_leaf_node.send_error_response" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">send_error_response</span><span class="p">()</span></code>
 
 </h2>
@@ -1328,7 +1328,7 @@ an error in formatting the data for posting due to missing or incorrect data and
 and it could not be completed.</p>
 
       <details class="quote">
-        <summary>Source code in <code>src/features/WeatherScrapingNode.py</code></summary>
+        <summary>Source code in <code>src/features/dsn_leaf_node.py</code></summary>
         <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">244</span>
 <span class="normal">245</span>
 <span class="normal">246</span>
@@ -1338,11 +1338,9 @@ and it could not be completed.</p>
 <span class="normal">250</span>
 <span class="normal">251</span>
 <span class="normal">252</span>
-<span class="normal">253</span>
-<span class="normal">254</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">send_error_response</span><span class="p">():</span>
+<span class="normal">253</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">send_error_response</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method send a POST request to the DSN indicating that an error occured at some point in the current job,</span>
 <span class="sd">    and it could not be completed.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">error_endpoint</span> <span class="o">=</span> <span class="s2">&quot;error/&quot;</span>  <span class="c1"># Specify the DSN error endpoint</span>
 
