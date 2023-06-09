@@ -17,5 +17,5 @@ Please review the documentation for the above two repositories within for more d
 
 Feature contains two files, please select file to review the documentation:
 
-1. [Weather Scraping Node](../src/features/weatherscrapingnode.md)
-2. [Weather Collection](../src/features/weathercollection.md)
+1. [Weather Scraping Node](../src/features/dsn_leaf_node.md)
+2. [Weather Collection](../src/features/dsn_weather_collection.md)
