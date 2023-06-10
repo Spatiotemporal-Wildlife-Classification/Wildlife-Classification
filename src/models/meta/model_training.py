@@ -201,7 +201,7 @@ def model_selection_execution(model: str,
             return decision_tree.decision_tree_process(df, target_taxon, model_name, training_history,
                                                        validation_file)
         case 'Random forest':
-            return random_forest.random_forest_process(df, target_taxon, k_centroids, model_name, training_history,
+            return random_forest.random_forest_process(df, target_taxon, model_name, training_history,
                                                        validation_file)
         case 'Xgboost':
             return xgboost_model.xgboost_process(df, target_taxon, model_name, training_history,
