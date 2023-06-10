@@ -58,7 +58,7 @@ def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validatio
     return X, y
 
 
-def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
+def xgb_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
     k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y

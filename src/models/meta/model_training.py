@@ -204,7 +204,7 @@ def model_selection_execution(model: str,
             return random_forest.random_forest_process(df, target_taxon, k_centroids, model_name, training_history,
                                                        validation_file)
         case 'Xgboost':
-            return xgboost_model.xgboost_process(df, target_taxon, k_centroids, model_name, training_history,
+            return xgboost_model.xgboost_process(df, target_taxon, model_name, training_history,
                                                  validation_file)
         case 'AdaBoost':
             return adaboost_model.adaboost_process(df, target_taxon, k_centroids, model_name, training_history,
