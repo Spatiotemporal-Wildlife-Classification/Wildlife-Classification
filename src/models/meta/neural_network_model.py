@@ -25,7 +25,7 @@ def write_training_accuracy(file_name: str, fold_histories: dict, learning_rate:
 
 
 def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):
-    X, y, lb, classes = pipelines.neural_network_data(df, taxon_target, validation_file)
+    X, y, classes = pipelines.neural_network_data(df, taxon_target, validation_file)
     train_neural_network(X, y, classes, model_name, score_file)
 
 
