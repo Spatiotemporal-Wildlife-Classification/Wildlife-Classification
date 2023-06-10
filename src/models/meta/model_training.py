@@ -198,7 +198,7 @@ def model_selection_execution(model: str,
             return neural_network_model.neural_network_process(df, target_taxon, model_name,
                                                                training_history, validation_file)
         case 'Decision tree':
-            return decision_tree.decision_tree_process(df, target_taxon, k_centroids, model_name, training_history,
+            return decision_tree.decision_tree_process(df, target_taxon, model_name, training_history,
                                                        validation_file)
         case 'Random forest':
             return random_forest.random_forest_process(df, target_taxon, k_centroids, model_name, training_history,
