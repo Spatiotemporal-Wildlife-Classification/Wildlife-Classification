@@ -93,63 +93,41 @@ def neural_network_data(df: pd.DataFrame, taxon_target: str, validation_file: st
     return X, y, classes
 
 
-## DECISION TREE PIPELINE ##
+def general_pipeline(df, k_means, taxon_target, validation_file: str):
+    # Data Cleaning
+    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])  # Remove non-essential columns
+    df = df.dropna(subset=['taxon_species_name', 'public_positional_accuracy'])  # Remove null species names and positional accuracies
+    df = df[df['public_positional_accuracy'] <= 40000]  # Positional Accuracy Restriction
+    df = df.drop(columns=['public_positional_accuracy'])  # Drop the public positional accuracy column
+
+    # Transformations
+    df = df.apply(lambda x: sub_species_detection(x), axis=1)  # Generate subspecies labels
+    df = df.drop(columns=['scientific_name'])  # Drop the scientific name column
+
+    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()  # Remove species with less than 5 observations
+
+    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])  # Location encoding using K-means
+
+    df['land'] = 1  # All observations from dataset are terrestrial. For unknown datasets use the `land_mask()` method to automate the feature value
+
+    df = df.apply(lambda x: elevation_clean(x), axis=1)  # Clean elevation values. In aquatic observations, the max elevation is sea level 0m
+    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))  # If elevation is missing, interpolate with mean species elevation
+
+    df['hemisphere'] = (df['latitude'] >= 0).astype(int)  # Northern/ Southern hemisphere feature
+    df = df.drop(columns=['latitude', 'longitude']) # Remove longitude and latitude columns
+
+    df['observed_on'] = pd.to_datetime(df['observed_on'], format="%Y-%m-%d %H:%M:%S%z", utc=True)  # Datetime transform into datetime object
+    df['month'] = df['observed_on'].dt.month  # Month feature
+    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)  # Local time zone hour feature
+    df = day_night_calculation(df)  # Day/ night feature
+    df = df.apply(lambda x: season_calc(x), axis=1)  # Season feature into categorical values
+    df = ohe_season(df)  # One-hot-encode the categorical season values
+
+    return df
+
+
 def tree_pipeline(df, k_means, taxon_target, validation_file: str):
-    ## CLEAN UP##
-
-    # Remove non-essential columns
-    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])
-
-    # Remove null species names
-    df = df.dropna(subset=['taxon_species_name'])
-
-    # Drop null positional accuracies
-    df = df.dropna(subset=['public_positional_accuracy'])
-
-    # Positional Accuracy Restriction
-    df = df[df['public_positional_accuracy'] <= 40000]
-    df = df.drop(columns=['public_positional_accuracy'])
-
-    ## TRANSFORM ##
-
-    # Generate sub-species and drop scientific name
-    df = df.apply(lambda x: sub_species_detection(x), axis=1)
-    df = df.drop(columns=['scientific_name'])
-
-    # Remove species with less than 5 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
-
-    # Location Centroid Feature
-    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
-
-    # Terrestrial vs Land Feature
-    df['land'] = 1
-
-    # Elevation Logical Path, dependent on land
-    df = df.apply(lambda x: elevation_clean(x), axis=1)
-    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))
-
-    # Northern and Southern Hemisphere OHE
-    df['hemisphere'] = (df['latitude'] >= 0).astype(int)
-    df = df.drop(columns=['latitude', 'longitude'])
-
-    # Datetime Transformation
-    df['observed_on'] = pd.to_datetime(df['observed_on'],
-                                       format="%Y-%m-%d %H:%M:%S%z",
-                                       utc=True)
-
-    # Month Feature
-    df['month'] = df['observed_on'].dt.month
-
-    # Hour Feature
-    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)
-
-    # Day/Night Feature
-    df = day_night_calculation(df)
-
-    # Season Feature
-    df = df.apply(lambda x: season_calc(x), axis=1)
-    df = ohe_season(df)
+    df = general_pipeline(df, k_means, validation_file)
 
     # Drop observed on column as date & time transformations are complete
     df = df.drop(columns=['observed_on', 'time_zone'])
@@ -178,61 +156,7 @@ def tree_pipeline(df, k_means, taxon_target, validation_file: str):
 
 ## XGBOOST PIPELINE ##
 def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
-    ## CLEAN UP##
-
-    # Remove non-essential columns
-    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])
-
-    # Remove null species names
-    df = df.dropna(subset=['taxon_species_name'])
-
-    # Drop null positional accuracies
-    df = df.dropna(subset=['public_positional_accuracy'])
-
-    # Positional Accuracy Restriction
-    df = df[df['public_positional_accuracy'] <= 40000]
-    df = df.drop(columns=['public_positional_accuracy'])
-
-    ## TRANSFORM ##
-
-    # Generate sub-species and rop scientific name
-    df = df.apply(lambda x: sub_species_detection(x), axis=1)
-    df = df.drop(columns=['scientific_name'])
-
-    # Remove species with less than 5 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
-
-    # Location Centroid Feature
-    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
-
-    # Terrestrial vs Land Feature
-    df['land'] = 1
-
-    # Elevation Logical Path, dependent on land
-    df = df.apply(lambda x: elevation_clean(x), axis=1)
-    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))
-
-    # Northern and Southern Hemisphere OHE
-    df['hemisphere'] = (df['latitude'] >= 0).astype(int)
-    df = df.drop(columns=['latitude', 'longitude'])
-
-    # Datetime Transformation
-    df['observed_on'] = pd.to_datetime(df['observed_on'],
-                                       format="%Y-%m-%d %H:%M:%S%z",
-                                       utc=True)
-
-    # Month Feature
-    df['month'] = df['observed_on'].dt.month
-
-    # Hour Feature
-    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)
-
-    # Day/Night Feature
-    df = day_night_calculation(df)
-
-    # Season Feature
-    df = df.apply(lambda x: season_calc(x), axis=1)
-    df = ohe_season(df)
+    df = general_pipeline(df, k_means, validation_file)
 
     # Drop observed on column as date & time transformations are complete
     df = df.drop(columns=['observed_on', 'time_zone'])
@@ -262,7 +186,6 @@ def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
     lb.fit(y)
     y = lb.transform(y)
 
-
     # Binary check
     if classes == 2:
         y = nn_binary_label_handling(y)
@@ -273,67 +196,7 @@ def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
 
 ## NEURAL NETWORK PIPELINE
 def nn_pipeline(df, k_means, taxon_target, validation_file: str):
-    ## CLEAN UP##
-
-    # Remove non-essential columns
-    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url',
-                            'weathercode_daily', 'weathercode_hourly'])
-
-    # Drop null positional accuracies
-    df = df.dropna(subset=['public_positional_accuracy'])
-
-    # Positional Accuracy Restriction
-    df = df[df['public_positional_accuracy'] <= 40000]
-    df = df.drop(columns=['public_positional_accuracy'])
-
-    ## TRANSFORM ##
-
-    # Generate sub-species and rop scientific name
-    df = df.apply(lambda x: sub_species_detection(x), axis=1)
-    df = df.drop(columns=['scientific_name'])
-
-    # Remove species with less than 10 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
-
-    # Location Centroid Feature
-    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
-    df = pd.get_dummies(df,
-                        prefix='loc',
-                        columns=['location_cluster'],
-                        drop_first=True)
-
-    # Terrestrial vs Land Feature
-    df['land'] = 1
-
-    # Elevation Logical Path, dependent on land
-    df = df.apply(lambda x: elevation_clean(x), axis=1)
-    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))
-
-    # Northern and Southern Hemisphere OHE
-    df['hemisphere'] = (df['latitude'] >= 0).astype(int)
-    df = df.drop(columns=['latitude', 'longitude'])
-
-    # Datetime Transformation
-    df['observed_on'] = pd.to_datetime(df['observed_on'],
-                                           format="%Y-%m-%d %H:%M:%S%z",
-                                           utc=True)
-
-    # Month Feature
-    df['month'] = df['observed_on'].dt.month
-
-    # Hour Feature
-    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)
-    df = pd.get_dummies(df,
-                        prefix='hr',
-                        columns=['hour'],
-                        drop_first=True)
-
-    # Day/Night Feature
-    df = day_night_calculation(df)
-
-    # Season Feature
-    df = df.apply(lambda x: season_calc(x), axis=1)
-    df = ohe_season(df)
+    df = general_pipeline(df, k_means, validation_file)
 
     # Season is dependent on month, hence month ohe here
     df = pd.get_dummies(df,
