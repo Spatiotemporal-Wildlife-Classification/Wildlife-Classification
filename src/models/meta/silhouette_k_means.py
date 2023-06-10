@@ -19,6 +19,13 @@ k_interval = 2
 k_init = 4
 
 
+def silhouette_process(df: pd.DataFrame, validation_file: str):
+    k_means = train_kmeans(df)
+    model_name = validation_file[:-14]
+    save_k_means(k_means, model_name)
+    return k_means
+
+
 def train_kmeans(df: pd.DataFrame):
     location_df = df[['latitude', 'longitude']]
 

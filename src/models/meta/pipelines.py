@@ -15,8 +15,6 @@
 """
 
 # Modelling
-
-
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
 
 from imblearn.over_sampling import RandomOverSampler
@@ -55,25 +53,19 @@ def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
 
 
 def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = silhouette_k_means.train_kmeans(df)
-    model_name = validation_file[:-14]
-    silhouette_k_means.save_k_means(k_means, model_name)
+    k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = silhouette_k_means.train_kmeans(df)
-    model_name = validation_file[:-14]
-    silhouette_k_means.save_k_means(k_means, model_name)
+    k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def neural_network_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = silhouette_k_means.train_kmeans(df)
-    model_name = validation_file[:-14]
-    silhouette_k_means.save_k_means(k_means, model_name)
+    k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
     return X, y, lb, classes
 
