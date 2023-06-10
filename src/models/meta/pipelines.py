@@ -42,12 +42,34 @@ validation_set_flag = False
 
 
 def decision_tree_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
+    """Method to create the train/set/validation data to be used by the decision tree/ random forest/ Adaboost models
+
+    Args:
+        df (DataFrame): The dataframe containing all data for each observation.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+        validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
+
+    Returns:
+        X (DataFrame): The features in a form suitable for direct use within the models.
+        y (Series): The labels for the corresponding observations as the correct taxonomic level.
+    """
     k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
 def xgb_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
+    """Method to create the train/set/validation data to be used by the decision XGBoost model.
+
+    Args:
+        df (DataFrame): The dataframe containing all data for each observation.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+        validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
+
+    Returns:
+        X (DataFrame): The features in a form suitable for direct use within the models.
+        y (Series): The labels for the corresponding observations as the correct taxonomic level.
+    """
     k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
