@@ -195,9 +195,8 @@ def model_selection_execution(model: str,
                               validation_file: str):
     match model:
         case 'Neural network':
-            return neural_network_model.neural_network_process(df, target_taxon, k_centroids, model_name,
-                                                               training_history,
-                                                               validation_file)
+            return neural_network_model.neural_network_process(df, target_taxon, model_name,
+                                                               training_history, validation_file)
         case 'Decision tree':
             return decision_tree.decision_tree_process(df, target_taxon, k_centroids, model_name, training_history,
                                                        validation_file)

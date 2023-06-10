@@ -64,7 +64,7 @@ def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: st
     return X, y
 
 
-def neural_network_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
+def neural_network_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
     k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
     return X, y, lb, classes

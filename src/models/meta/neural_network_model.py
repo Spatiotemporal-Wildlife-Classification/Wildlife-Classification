@@ -17,14 +17,15 @@ import pipelines
 root_path = Config.root_dir()
 data_destination = '/notebooks/model_comparison_cache_2/'
 
+
 def write_training_accuracy(file_name: str, fold_histories: dict, learning_rate: list):
     df = pd.DataFrame(fold_histories)
     df['learning_rate'] = learning_rate
     df.to_csv(root_path + data_destination + file_name, index=False)
 
 
-def neural_network_process(df: pd.DataFrame, taxon_target: str, k_cluster, model_name: str, score_file: str, validation_file:str):
-    X, y, lb, classes = pipelines.neural_network_data(df, taxon_target, k_cluster, validation_file)
+def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):
+    X, y, lb, classes = pipelines.neural_network_data(df, taxon_target, validation_file)
     train_neural_network(X, y, classes, model_name, score_file)
 
 
