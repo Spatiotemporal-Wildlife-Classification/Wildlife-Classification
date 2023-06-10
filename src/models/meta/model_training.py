@@ -29,10 +29,10 @@ file_name_taxon = {'taxon_family_name': '_family',
 
 
 # Method to iterate through provided datasets, in order to train models accross entire datasets scope
-def dataset_iterations(observation_files: list, metadata_files: list, k_centroids: list):
-    for (observation_file, metadata_file, k_centroid) in zip(observation_files, metadata_files, k_centroids):
+def dataset_iterations(observation_files: list, metadata_files: list):
+    for (observation_file, metadata_file) in zip(observation_files, metadata_files):
         models, model_name_collection, taxon_target_collection, abbreviations_collection = model_iteration(
-            observation_file, metadata_file, k_centroid)
+            observation_file, metadata_file)
 
     # Information to be used in the model_comparison.ipynb notebook
     print('Models: ', models)
@@ -43,8 +43,7 @@ def dataset_iterations(observation_files: list, metadata_files: list, k_centroid
 
 # Train all models on the provided dataset.
 def model_iteration(observation_file: str,
-                    metadata_file: str,
-                    k_centroids: int):
+                    metadata_file: str):
     # Multi-model collections
     models = list(model_abbreviations.keys())
     model_name_collection = []
@@ -60,8 +59,7 @@ def model_iteration(observation_file: str,
         # Models through all taxonomic levels for the model
         taxon_models, taxon_targets = taxonomic_level_modelling(observation_file,
                                                                 metadata_file,
-                                                                model,
-                                                                k_centroids)
+                                                                model)
 
         # Collect essential information regarding file names for future use
         abbreviations_collection.append(model_abbreviations[model])
@@ -75,8 +73,7 @@ def model_iteration(observation_file: str,
 
 def taxonomic_level_modelling(observation_file: str,
                               metadata_file: str,
-                              model: str,
-                              k_centroids: int):
+                              model: str):
     # Collection of taxon level information for notebook use
     models = []
     taxon_targets = []
@@ -136,7 +133,6 @@ def taxonomic_level_modelling(observation_file: str,
                 model_simplification(df=df,
                                      model=model,
                                      target_taxon=target_taxon,
-                                     k_centroids=k_centroids,
                                      model_save_type=model_save_types[model],
                                      file_name_start=file_start)
                 models.append(file_start)
@@ -170,7 +166,6 @@ def generate_file_name_start(parent_taxon: str, restriction: str):
 def model_simplification(df: pd.DataFrame,
                          model: str,
                          target_taxon,
-                         k_centroids: int,
                          model_save_type: str,
                          file_name_start: str):
     # Get model abbreviation
@@ -182,14 +177,13 @@ def model_simplification(df: pd.DataFrame,
     validation_file = file_name_start + "_" + model_abbr + '_validation.csv'
 
     # Select model, and execute the required process (data pipeline, model training, and evaluation)
-    model_selection_execution(model, df, target_taxon, k_centroids, model_name, training_history, validation_file)
+    model_selection_execution(model, df, target_taxon, model_name, training_history, validation_file)
 
 
 # Method allows for multiple model selection, training, evaluation, and saving
 def model_selection_execution(model: str,
                               df: pd.DataFrame,
                               target_taxon: str,
-                              k_centroids: int,
                               model_name: str,
                               training_history: str,
                               validation_file: str):
@@ -207,7 +201,7 @@ def model_selection_execution(model: str,
             return xgboost_model.xgboost_process(df, target_taxon, model_name, training_history,
                                                  validation_file)
         case 'AdaBoost':
-            return adaboost_model.adaboost_process(df, target_taxon, k_centroids, model_name, training_history,
+            return adaboost_model.adaboost_process(df, target_taxon, model_name, training_history,
                                                    validation_file)
 
 
@@ -232,7 +226,6 @@ def train_base_model():
 
 # Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
-    # dataset_iterations(observation_files=['proboscidia_train.csv'],
-    #                    metadata_files=['proboscidia_meta.csv'],
-    #                    k_centroids=[40])
-    train_base_model()
+    dataset_iterations(observation_files=['proboscidia_train.csv'],
+                       metadata_files=['proboscidia_meta.csv'])
+    # train_base_model()

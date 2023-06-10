@@ -17,8 +17,8 @@ root_path = Config.root_dir()
 data_destination = '/notebooks/model_comparison_cache_2/'
 
 
-def adaboost_process(df: pd.DataFrame, taxon_target: str, k_cluster, model_name: str, score_file: str, validation_file:str):
-    X, y = pipelines.decision_tree_data(df, taxon_target, k_cluster, validation_file)
+def adaboost_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):
+    X, y = pipelines.decision_tree_data(df, taxon_target, validation_file)
     train_adaboost(X, y, model_name, score_file)
 
 

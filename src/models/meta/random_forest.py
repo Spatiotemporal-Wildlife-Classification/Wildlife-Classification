@@ -16,7 +16,7 @@ root_path = Config.root_dir()
 data_destination = '/notebooks/model_comparison_cache_2/'
 
 
-def random_forest_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):
+def random_forest_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file: str):
     X, y = pipelines.decision_tree_data(df, taxon_target, validation_file)
     train_random_forest(X, y, model_name, score_file)
 
