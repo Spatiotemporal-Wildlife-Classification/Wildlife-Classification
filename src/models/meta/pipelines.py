@@ -41,17 +41,6 @@ save_path = '/models/meta/'  # '/notebooks/meta_modelling/model_comparison_cache
 validation_set_flag = False
 
 
-def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
-    obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)
-    meta_df = pd.read_csv(root_path + data_path + meta_file, index_col=0)
-
-    obs_df = obs_df.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])
-    meta_df = meta_df.drop(columns=['lat', 'long', 'time'])
-
-    df = pd.merge(obs_df, meta_df, how='inner', left_index=True, right_index=True)
-    return df
-
-
 def decision_tree_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
     k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
@@ -389,6 +378,16 @@ def over_sample(X, y):
 
 
 ## PIPELINE FUNCTIONS ##
+
+def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
+    obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)
+    meta_df = pd.read_csv(root_path + data_path + meta_file, index_col=0)
+
+    obs_df = obs_df.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])
+    meta_df = meta_df.drop(columns=['lat', 'long', 'time'])
+
+    df = pd.merge(obs_df, meta_df, how='inner', left_index=True, right_index=True)
+    return df
 
 def nn_binary_label_handling(y):
     return np.hstack((1 - y.reshape(-1, 1), y.reshape(-1, 1)))
