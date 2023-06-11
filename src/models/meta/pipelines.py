@@ -13,7 +13,7 @@
        save_path (str): The path to where models and validation data (if created) is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`
        validation_set_flag (bool): A boolean flag indicating whether a validation set should be created and saved. The validation set is saved to save_path. Each file will have suffixx `_validation.csv`
 """
-
+from sklearn.cluster import KMeans
 # Modelling
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
 
@@ -93,7 +93,17 @@ def neural_network_data(df: pd.DataFrame, taxon_target: str, validation_file: st
     return X, y, classes
 
 
-def general_pipeline(df, k_means, taxon_target):
+def general_pipeline(df: pd.DataFrame, k_means: KMeans, taxon_target: str):
+    """Method performs general pipeline functions for all model types (Neural network, XGBoost, AdaBoost, Decision tree, Random Forest)
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+
+    Returns:
+        (DataFrame): A dataframe containing cleaned, transformed, and new data features for further specified processing depending on the model.
+    """
     # Data Cleaning
     df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])  # Remove non-essential columns
     df = df.dropna(subset=['taxon_species_name', 'public_positional_accuracy'])  # Remove null species names and positional accuracies
