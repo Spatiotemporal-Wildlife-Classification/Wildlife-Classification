@@ -477,15 +477,24 @@ def day_night_calculation(df: pd.DataFrame):
 
 
 def season_calc(x):
+    """This method determines the season in which an observation occurred based on the month of observation
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with a new season feature
+    """
     hemisphere = x['hemisphere']
     month = x['month']
     season = 0
+
     if hemisphere == 1:  # Northern hemisphere
-        winter, spring, summer, autumn = [12, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]
+        winter, spring, summer, autumn = [12, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]  # Order of months starting with winter season
         seasons = [winter, spring, summer, autumn]
         season = north_south_calc(month, seasons)
-    else:
-        winter, spring, summer, autumn = [6, 7, 8], [9, 10, 11], [12, 1, 2], [3, 4, 5]
+    else:  # Southern hemisphere
+        winter, spring, summer, autumn = [6, 7, 8], [9, 10, 11], [12, 1, 2], [3, 4, 5]  # Order of months starting with winter seasons
         seasons = [winter, spring, summer, autumn]
         season = north_south_calc(month, seasons)
 
@@ -494,6 +503,17 @@ def season_calc(x):
 
 
 def north_south_calc(month: int, seasons: list):
+    """This method determined the current season when provided with a month and a list of seasonal months.
+
+     Note, this method is used within the `season_calc()` method.
+
+     Args:
+         month (int): The integer value of the month of sighting [1-12]
+         seasons (list): The list of months seperated by season, starting with winter. Example of northern hemisphere [[12, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]]
+
+    Returns:
+        (str): The season categorical variable
+     """
     seasons_dict = {0: 'Winter', 1: 'Spring', 2: 'Summer', 3: 'Autumn'}
     season_id = 0
     for i in range(len(seasons)):
@@ -503,7 +523,15 @@ def north_south_calc(month: int, seasons: list):
 
 
 def ohe_season(df):
-    cats = ['Winter', 'Spring', 'Summer', 'Autumn']
+    """This method OHE the season categorical feature
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+
+    Returns:
+        (DataFrame): The dataframe with the season feature OHE (this results in additional columns within the dataframe)
+    """
+    cats = ['Winter', 'Spring', 'Summer', 'Autumn']  # Season categorical variables to expect
     cat_type = CategoricalDtype(categories=cats)
 
     df['season'] = df['season'].astype(cat_type)
