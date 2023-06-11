@@ -313,42 +313,78 @@ def over_sample(X, y):
 
 # PIPELINE FUNCTIONS
 def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
-    obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)
+    """This method aggregates the original observations with the collected metadata to form a single cohesive dataframe
+
+    Args:
+        observation_file (str): The file name, that points to the file containing the processed iNaturalist observations
+        meta_file (str): The file name, that points to the file containing the metadata for the processed iNaturalist observations
+    """
+    obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)  # Read in the csv files
     meta_df = pd.read_csv(root_path + data_path + meta_file, index_col=0)
 
-    obs_df = obs_df.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])
+    obs_df = obs_df.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])  # Drop repeated/ non-essential columns
     meta_df = meta_df.drop(columns=['lat', 'long', 'time'])
 
-    df = pd.merge(obs_df, meta_df, how='inner', left_index=True, right_index=True)
+    df = pd.merge(obs_df, meta_df, how='inner', left_index=True, right_index=True)  # Merge the two dataframes
     return df
 
 
 def nn_binary_label_handling(y):
+    """Method handles the OHE of a binary case to ensure that OHE values returned are of the form [1, 0] or [0, 1].
+
+    Args:
+        y (Series): The labels in the form of either 1 or 0 to be transformed into a binary OHE
+
+    Returns:
+        (Series): Returns a Series containing OHE labels of the form [1, 0] or [0, 1]
+    """
     return np.hstack((1 - y.reshape(-1, 1), y.reshape(-1, 1)))
 
 
 def sub_species_detection(x):
-    name_count = len(x['scientific_name'].split())
-    x['sub_species'] = np.nan
+    """Method uses the scientific name of observations to extract the subspecies name when there are more than
+    three words present (3 names describe a subspecies)
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'scientific_name' column.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with an additional column value 'sub_species' if it could be extracted from the scientific name.
+    """
+    name_count = len(x['scientific_name'].split())  # Determine the number of names in the scientific name
+    x['sub_species'] = np.nan  # Initialize the subspecies value
     if name_count >= 3:
         x['sub_species'] = x['scientific_name']
     return x
 
 
-def ohe_month(df):
-    cats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+def ohe_month(df: pd.DataFrame):
+    """Method performs OHE on the month feature of each observation
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+    """
+    cats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]  # Initialise the possible categories
     cat_type = CategoricalDtype(categories=cats)
 
     df['season'] = df['season'].astype(cat_type)
 
-    df = pd.get_dummies(df,
-                        prefix='szn',
-                        columns=['season'],
-                        drop_first=True)
+    df = pd.get_dummies(df, prefix='szn', columns=['season'], drop_first=True)  # Perform OHE
     return df
 
 
 def land_mask(x):
+    """This method determines if the observation coordinates are terrestrial or aquatic in nature.
+
+    This method uses the Globe library to evaluate the location against a land mask.
+    If the observation is terrestrial a value of 1 is given. If not 0 is given.
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'latitude' and 'longitude' columns.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with an additional binary column value 'land'
+    """
     latitude = x['latitude']
     longitude = x['longitude']
     x['land'] = int(globe.is_land(latitude, longitude))
@@ -356,14 +392,34 @@ def land_mask(x):
 
 
 def elevation_clean(x):  # If observation is terrestrial, 0.0m elevation requires modification
+    """This method performs a logical check on each observation's elevation based on the land feature value.
+
+    The Open-Meteo API sets elevation to be 0m if the elevation is unknown.
+    If the elevation is 0m and the land value is 1 (indicating a terrestrial sighting), then the elevation is set to NaN value.
+    This NaN value will be modified within the pipeline with the species average elevation
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'land' column.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with the 'elevation' feature adjusted.
+    """
     land = x['land']
     elevation = x['elevation']
+
     if land == 1 and elevation == 0:
         x['elevation'] = np.nan
     return x
 
 
 def localize_sunrise_sunset(x):
+    """This method localizes the sunrise and sunset times based on the time zone to aid in the light/ dark feature.
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'sunrise' and 'sunset' columns.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with the 'sunrise' and 'sunset' features adjusted.
+    """
     timezone = pytz.timezone(x['time_zone'])
     x['sunrise'] = x['sunrise'].replace(tzinfo=timezone)
     x['sunset'] = x['sunset'].replace(tzinfo=timezone)
