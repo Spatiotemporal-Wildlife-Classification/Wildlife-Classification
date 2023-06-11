@@ -137,7 +137,19 @@ def general_pipeline(df: pd.DataFrame, k_means: KMeans, taxon_target: str):
 
 
 def tree_pipeline(df, k_means, taxon_target, validation_file: str):
-    df = general_pipeline(df, k_means, taxon_target)
+    """This method performs further data processing to structure and format it for use in a decision tree, random forest and adaboost models.
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        validation_file (str): The name of file to store validation data. Informs model naming as well.
+
+    Returns:
+        X (DataFrame): A dataframe containing features in rows and observations in column ready for use as input features to the models for training and evaluation.
+        y (Series): The categorical labels of the associated observations at the correct taxonomic level specified.
+    """
+    df = general_pipeline(df, k_means, taxon_target)  # Perform general pipeline
 
     df = df.drop(columns=['observed_on', 'time_zone'])  # Drop observed on column as date & time transformations are complete
 
@@ -159,6 +171,20 @@ def tree_pipeline(df, k_means, taxon_target, validation_file: str):
 
 
 def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
+    """This method performs further data processing to structure and format it for use in the XGBoost model
+
+    This method makes use of the decison_tree_pipeline, simply encoding the labels in a One-Hot-Encoded (OHE) format
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        validation_file (str): The name of file to store validation data. Informs model naming as well.
+
+    Returns:
+        X (DataFrame): A dataframe containing features in rows and observations in column ready for use as input features to the models for training and evaluation.
+        y (Series): The OHE encoding of the observation labels at the correct taxonomic level specified.
+    """
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
 
     y, classes = ohe_labels(y)  # OHE labels
@@ -167,12 +193,30 @@ def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
 
 
 def nn_pipeline(df, k_means, taxon_target, validation_file: str):
+    """This method performs further data processing to structure and format it for use in the Neural Network model
+
+    This method performs similar processing steps to both the decision tree and XGBoost pipelines.
+    However, categorical variables are required to be OHE and the resulting features are normalized for use in the model.
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        validation_file (str): The name of file to store validation data. Informs model naming as well.
+
+    Returns:
+        X (DataFrame): A dataframe containing features in rows and observations in column ready for use as input features to the models for training and evaluation. These features are normalized.
+        y (Series): The OHE encoding of the observation labels at the correct taxonomic level specified.
+    """
     df = general_pipeline(df, k_means, taxon_target)
 
     # Generate dummy variables for categorical features
     df = pd.get_dummies(df, prefix='loc', columns=['location_cluster'], drop_first=True)  # OHE location cluster feature
     df = pd.get_dummies(df, prefix='hr', columns=['hour'], drop_first=True)  # OHE hour feature
     df = pd.get_dummies(df, prefix='mnth', columns=['month'], drop_first=True)  # OHE month feature
+
+    df = df.drop(columns=['observed_on', 'time_zone'])  # Drop observed on column as date & time transformations are complete
+    df = validation_set(df, taxon_target, validation_file)  # Create validation set for further testing
 
     # Data formatting
     taxon_y = df[taxon_target]  # Retrieve labels at taxonomic target level
@@ -202,7 +246,6 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
                     'winddirection_100m', 'winddirection_10m', 'winddirection_10m_dominant',
                     'windgusts_10m', 'windgusts_10m_max', 'windspeed_100m', 'windspeed_10m',
                     'windspeed_10m_max']
-
     X[norm_columns] = StandardScaler().fit_transform(X[norm_columns])
     return X, y, classes
 
