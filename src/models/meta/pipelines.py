@@ -427,18 +427,37 @@ def localize_sunrise_sunset(x):
 
 
 def dark_light_calc(x):
-    timezone = pytz.timezone(x['time_zone'])
+    """This method performs the dark/ light feature creation based on the time of observation and the sunrise & sunset times
+    Args:
+        x (DataFrame row): This variable represents a dataframe row.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with a new binary 'light' column
+    """
+    timezone = pytz.timezone(x['time_zone'])  # Extract the timezone
     sunrise_utc = x['sunrise']
     sunset_utc = x['sunset']
 
-    observ_time = x['observed_on'].replace(tzinfo=pytz.utc)
-    observ_time = x['observed_on'].astimezone(timezone)
+    observ_time = x['observed_on'].replace(tzinfo=pytz.utc)  # Place time zone info with utc (this is required to localize the timezone in the next step)
+    observ_time = x['observed_on'].astimezone(timezone)  # Generate the observed timezone in local time
 
-    x['light'] = int(sunrise_utc <= observ_time <= sunset_utc)
+    x['light'] = int(sunrise_utc <= observ_time <= sunset_utc)  # Logical operators cast into integer form create the binary light (1) or dark (0) value
     return x
 
 
-def day_night_calculation(df):
+def day_night_calculation(df: pd.DataFrame):
+    """This method provides the overall process to create the light/ dark feature.
+
+    This method converts the time of observation, sunrise, and sunset into local times.
+    Local times are compared to determine light or dark.
+    The sunrise and sunset columns are removed as they are no longer required.
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+
+    Returns:
+        (DataFrame): The dataframe with the additional light column, and the sunrise & sunset columns removed.
+    """
     # Convert to datetime objects. Remove NaT values from resulting transformation
     df['sunrise'] = pd.to_datetime(df['sunrise'],
                                    format="%Y-%m-%dT%H:%M",
@@ -448,11 +467,9 @@ def day_night_calculation(df):
                                   errors='coerce')
     df = df.dropna(subset=['sunrise', 'sunset'])
 
-    # Localize sunrise and sunset times to be timezone aware
-    df = df.apply(lambda x: localize_sunrise_sunset(x), axis=1)
+    df = df.apply(lambda x: localize_sunrise_sunset(x), axis=1)  # Localize sunrise and sunset times to be timezone aware
 
-    # Dark/ light calc based on sunrise and sunset times
-    df = df.apply(lambda x: dark_light_calc(x), axis=1)
+    df = df.apply(lambda x: dark_light_calc(x), axis=1)  # Dark/ light calc based on sunrise and sunset times
 
     df = df.drop(columns=['sunrise', 'sunset'])
 
