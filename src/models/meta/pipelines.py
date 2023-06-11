@@ -93,7 +93,7 @@ def neural_network_data(df: pd.DataFrame, taxon_target: str, validation_file: st
     return X, y, classes
 
 
-def general_pipeline(df, k_means, taxon_target, validation_file: str):
+def general_pipeline(df, k_means, taxon_target):
     # Data Cleaning
     df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])  # Remove non-essential columns
     df = df.dropna(subset=['taxon_species_name', 'public_positional_accuracy'])  # Remove null species names and positional accuracies
@@ -127,118 +127,59 @@ def general_pipeline(df, k_means, taxon_target, validation_file: str):
 
 
 def tree_pipeline(df, k_means, taxon_target, validation_file: str):
-    df = general_pipeline(df, k_means, validation_file)
+    df = general_pipeline(df, k_means, taxon_target)
 
-    # Drop observed on column as date & time transformations are complete
-    df = df.drop(columns=['observed_on', 'time_zone'])
+    df = df.drop(columns=['observed_on', 'time_zone'])  # Drop observed on column as date & time transformations are complete
 
-    # Create validation set for further testing
-    df = validation_set(df, taxon_target, validation_file)
+    df = validation_set(df, taxon_target, validation_file)  # Create validation set for further testing
 
-    ## TRAIN & TEST DATA
-    # Retrieve labels
-    taxon_y = df[taxon_target]
+    # Data formatting
+    taxon_y = df[taxon_target]  # Retrieve labels at taxonomic target level
 
-    # Sub-specie contains null values, if selected as target taxon. Remove
-    if taxon_y.isnull().any():
+    if taxon_y.isnull().any():  # If no taxonomic label is present, remove the observation
         df = df.dropna(subset=[taxon_target])
 
-    y = df[taxon_target]
+    y = df[taxon_target]  # Extract labels
     X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
                          'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
-                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])
+                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])  # Extract features only
 
-    # Resample dataset to reduce imbalance
-    X, y = over_sample(X, y)
-
+    X, y = over_sample(X, y)  # Resample dataset to reduce imbalance
     return X, y
 
 
-## XGBOOST PIPELINE ##
 def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
-    df = general_pipeline(df, k_means, validation_file)
+    X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
 
-    # Drop observed on column as date & time transformations are complete
-    df = df.drop(columns=['observed_on', 'time_zone'])
-
-    # Create validation set for further testing
-    df = validation_set(df, taxon_target, validation_file)
-
-    ## TRAIN & TEST DATA
-    # Retrieve labels
-    taxon_y = df[taxon_target]
-
-    # Sub-specie contains null values, if selected as target taxon. Remove
-    if taxon_y.isnull().any():
-        df = df.dropna(subset=[taxon_target])
-
-    y = df[taxon_target]
-    X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
-                         'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
-                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])
-
-    # Resample dataset to reduce imbalance
-    X, y = over_sample(X, y)
-
-    # Encode labels
-    classes = y.nunique()
-    lb = LabelBinarizer()
-    lb.fit(y)
-    y = lb.transform(y)
-
-    # Binary check
-    if classes == 2:
-        y = nn_binary_label_handling(y)
-    print(y[0])
+    y, classes = ohe_labels(y)  # OHE labels
 
     return X, y
 
 
-## NEURAL NETWORK PIPELINE
 def nn_pipeline(df, k_means, taxon_target, validation_file: str):
-    df = general_pipeline(df, k_means, validation_file)
+    df = general_pipeline(df, k_means, taxon_target)
 
-    # Season is dependent on month, hence month ohe here
-    df = pd.get_dummies(df,
-                        prefix='mnth',
-                        columns=['month'],
-                        drop_first=True)
+    # Generate dummy variables for categorical features
+    df = pd.get_dummies(df, prefix='loc', columns=['location_cluster'], drop_first=True)  # OHE location cluster feature
+    df = pd.get_dummies(df, prefix='hr', columns=['hour'], drop_first=True)  # OHE hour feature
+    df = pd.get_dummies(df, prefix='mnth', columns=['month'], drop_first=True)  # OHE month feature
 
-    # Drop observed on column as date & time transformations are complete
-    df = df.drop(columns=['observed_on', 'time_zone'])
+    # Data formatting
+    taxon_y = df[taxon_target]  # Retrieve labels at taxonomic target level
 
-    # Create validation set for further testing
-    df = validation_set(df, taxon_target, validation_file)
-
-
-    ## TRAIN & TEST DATA
-    # Retrieve labels
-    taxon_y = df[taxon_target]
-
-    # Sub-specie contains null values, if selected as target taxon. Remove
-    if taxon_y.isnull().any():
+    if taxon_y.isnull().any():  # If no taxonomic label is present, remove the observation
         df = df.dropna(subset=[taxon_target])
 
-    y = df[taxon_target]
+    y = df[taxon_target]  # Extract labels
     X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
-                             'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
-                             'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])
+                         'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
+                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])  # Extract features only
 
-    X, y = over_sample(X, y)
+    X, y = over_sample(X, y)  # Resample dataset to reduce imbalance
 
+    y, classes = ohe_labels(y)  # OHE labels
 
-    # Encode labels
-    classes = y.nunique()
-    lb = LabelBinarizer()
-    lb.fit(y)
-    y = lb.transform(y)
-
-    # Binary check
-    if classes == 2:
-        y = nn_binary_label_handling(y)
-
-
-    # Min-max normalize data
+    # Normalize data using min-max approach
     norm_columns = ['apparent_temperature', 'apparent_temperature_max', 'apparent_temperature_min',
                     'cloudcover', 'cloudcover_high', 'cloudcover_low', 'cloudcover_mid', 'dewpoint_2m',
                     'diffuse_radiation', 'direct_radiation', 'elevation', 'et0_fao_evapotranspiration_daily',
@@ -253,10 +194,20 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
                     'windspeed_10m_max']
 
     X[norm_columns] = StandardScaler().fit_transform(X[norm_columns])
-    return X, y, lb, classes
+    return X, y, classes
 
 
-## VALIDATION SET ##
+def ohe_labels(y):
+    classes = y.nunique()  # OHE encode the labels
+    lb = LabelBinarizer()
+    lb.fit(y)
+    y = lb.transform(y)
+
+    if classes == 2:  # Modification required if only two classes are present
+        y = nn_binary_label_handling(y)
+    return y, classes
+
+
 def validation_set(df: pd.DataFrame, target_taxon: str, file_name: str):
     if validation_set_flag:
         grouped = df.groupby([target_taxon]).sample(frac=0.2, random_state=2)  # 20% of each class goes to the validation set
@@ -266,7 +217,6 @@ def validation_set(df: pd.DataFrame, target_taxon: str, file_name: str):
     return df
 
 
-## OVER SAMPLING ##
 def over_sample(X, y):
     ros = RandomOverSampler(sampling_strategy='minority',
                             random_state=2)
@@ -274,8 +224,7 @@ def over_sample(X, y):
     return X_res, y_res
 
 
-## PIPELINE FUNCTIONS ##
-
+# PIPELINE FUNCTIONS
 def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
     obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)
     meta_df = pd.read_csv(root_path + data_path + meta_file, index_col=0)
