@@ -251,6 +251,16 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
 
 
 def ohe_labels(y):
+    """This method encodes the taxonomic labels in a One-hot-encoded format.
+
+    Special consideration is enforced for binary labels such that the resulting ohe labels are of the form [0, 1] or [1, 0]
+
+    Args:
+        y (Series): The categorical taxonomic labels
+
+    Returns:
+        (Series): OHE taxonomic labels
+    """
     classes = y.nunique()  # OHE encode the labels
     lb = LabelBinarizer()
     lb.fit(y)
@@ -261,18 +271,42 @@ def ohe_labels(y):
     return y, classes
 
 
-def validation_set(df: pd.DataFrame, target_taxon: str, file_name: str):
+def validation_set(df: pd.DataFrame, taxon_target: str, file_name: str):
+    """This method creates a validation set from the provided dataframe for further model evaluation
+
+    The validation set comprises 20% of each class's composition from the dataframe.
+    The observations included in the validation set are removed from the dataframe.
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        file_name (str): The name of the file in which the validation data will be stored.
+
+    Returns:
+        (DataFrame): The dataframe with the validation observations removed
+    """
     if validation_set_flag:
-        grouped = df.groupby([target_taxon]).sample(frac=0.2, random_state=2)  # 20% of each class goes to the validation set
+        grouped = df.groupby([taxon_target]).sample(frac=0.2, random_state=2)  # 20% of each class goes to the validation set
         grouped.to_csv(root_path + save_path + file_name)  # Save evaluation dataset
 
-        df = df.drop(grouped.index)  # Remove validation observations from the current df
+        df = df.drop(grouped.index)  # Remove validation observations from the current df through their index
     return df
 
 
 def over_sample(X, y):
-    ros = RandomOverSampler(sampling_strategy='minority',
-                            random_state=2)
+    """This method performs oversampling on the dataset in order to provide a more balanced data distribution, to combat the tail-end distribution (characteristic of wildlife data).
+
+    Note, the oversampling aimed to increase the quantity of observations in minority classes to achieve a more even distribution.
+
+    Args:
+        X (DataFrame): The dataset's observation features to be used in model training and evaluation.
+        y (Series): The label for each observation (still categorical)
+
+    Returns:
+         X_res (DataFrame): The features dataset with additional observations due to the oversampling
+         y_res (Series): An associated dataframe containing the observation labels, including for the additional observations created.
+    """
+    ros = RandomOverSampler(sampling_strategy='minority', random_state=2)
     X_res, y_res = ros.fit_resample(X, y)
     return X_res, y_res
 
@@ -287,6 +321,7 @@ def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
 
     df = pd.merge(obs_df, meta_df, how='inner', left_index=True, right_index=True)
     return df
+
 
 def nn_binary_label_handling(y):
     return np.hstack((1 - y.reshape(-1, 1), y.reshape(-1, 1)))
