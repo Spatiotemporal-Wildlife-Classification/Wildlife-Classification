@@ -13,7 +13,7 @@ The code is structured within 5 directories:
 
     A module performing feature extractions from both iNaturalist observations and Open-Meteo weather data.
 
-4. Models 
+4. [Models](src/models.md)
 
     A module detailing the construction, training, and evaluation of both image and meta classifiers
 
