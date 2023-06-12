@@ -1,4 +1,14 @@
-import numpy as np
+"""This file creates and trains the decision tree metadata classification model.
+
+    The decision tree metadata classification model performs hyperparameter tuning over the depth of the decision tree.
+    The training process makes use of 5-fold cross validation to evaluate the models performance for each hyperparameter.
+    A best-model save policy is enforced using the mean accuracy across the 5-folds.
+
+
+    Attributes:
+        root_path (str): The path to the project root.
+        data_destination (str): The path to where the decision tree model and its training accuracy is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`
+"""
 
 # Model
 from sklearn.tree import DecisionTreeClassifier
@@ -10,21 +20,40 @@ from src.structure import Config
 import pipelines
 import pandas as pd
 import pickle
+import numpy as np
 
 
 root_path = Config.root_dir()
-data_destination = '/notebooks/model_comparison_cache_2/'
-# data_destination = '/models/meta_4/'  # File save destination for use in ensemble
+data_destination = pipelines.save_path
 
 
 def write_scores_to_file(mean_scores: list, depth_range: list, filename: str):
+    """This method writes the model training scores to a csv file for visualization and records
+
+    Args:
+        mean_scores (list): The list of mean accuracy scores for each model.
+        depth_range (list):: The list containing the decision tree depths trained over. For each element, there is a corresponding mean accuracy in mean_scores.
+        filename (str): The filename, where the training data will be saved.
+    """
     df = pd.DataFrame({'depth': depth_range, 'mean_scores': mean_scores})
     df.to_csv(root_path + data_destination + filename, index=False)
 
 
-def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):
-    X, y = pipelines.decision_tree_data(df, taxon_target, validation_file)
-    train_decision_tree(X, y, model_name, score_file)
+def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file: str):
+    """This method specifies the decision tree training process.
+
+    Specifically this method, calls the required pipeline to generate the features and labels required for training.
+    Then, calls the training process to use the data.
+    
+    Args:
+        df (DataFrame): The dataframe containing all data for each observation.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+        model_name (str): The name of the model type being trained. In this case 'Decision tree'.
+        score_file (str): The filename of where the training data will be stored. This will have the same location as where the model is saved.
+        validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
+    """
+    X, y = pipelines.decision_tree_data(df, taxon_target, validation_file)  # Processing and formatting
+    train_decision_tree(X, y, model_name, score_file)  # Training and evaluation
 
 
 def train_decision_tree(X, y, model_name: str, score_file: str):
