@@ -44,7 +44,7 @@ def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, 
 
     Specifically this method, calls the required pipeline to generate the features and labels required for training.
     Then, calls the training process to use the data.
-    
+
     Args:
         df (DataFrame): The dataframe containing all data for each observation.
         taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
@@ -57,40 +57,45 @@ def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, 
 
 
 def train_decision_tree(X, y, model_name: str, score_file: str):
-    depth_limit = len(X.columns)
-    depth_range = range(1, depth_limit, 2)
-    best_accuracy = 0
-    scores = []
+    """This method performs the decision tree training and 5-fold cross validation on the tree depth hyperparameter to determine the optimal model
 
-    for depth in depth_range:
-        # Weight the training by presence of each class.
-        classes = np.unique(y)
+    This process uses a best-model save policy based on the balanced accuracy evaluation metric.
+
+    Args:
+        X (DataFrame): The input features to the decision tree
+        y (Series): The categorical taxonomic labels of the corresponding observations to the features.
+        model_name (str): The name of the model type being trained. In this case 'Decision tree'.
+        score_file (str): The filename of where the training data will be stored.
+    """
+    depth_limit = len(X.columns)  # Calculate the depth limit as the number of input features
+    depth_range = range(1, depth_limit, 2)  # Generate the depth range using an interval of 2
+    best_accuracy = 0  # Instantiate the best accuracy holder
+    scores = []  # Scores holder
+
+    for depth in depth_range:  # Iterate through decision tree depths
+        classes = np.unique(y)  # Weight the training by presence of each class.
         weight_values = compute_class_weight(class_weight='balanced', classes=classes, y=y)
-        weights = dict(zip(classes, weight_values))
+        weights = dict(zip(classes, weight_values))  # Zip the calculated weights to the classes to form a dict
 
-        # Train the model
-        clf = DecisionTreeClassifier(max_depth=depth, random_state=0, class_weight=weights)
+        clf = DecisionTreeClassifier(max_depth=depth, random_state=0, class_weight=weights)  # Create the model
         score = cross_val_score(estimator=clf,
                                 X=X,
                                 y=y,
                                 cv=5,
                                 n_jobs=-1,
-                                scoring='balanced_accuracy')
+                                scoring='balanced_accuracy')  # Train and evaluate the model using 5-fold cross-validation
 
-        # Average the scores
-        score_mean = np.mean(score)
+        score_mean = np.mean(score)  # Average the scores
 
-        clf.fit(X.values, y)
+        clf.fit(X.values, y)  # Retrain the model for saving purposes if it is the top-performer
 
-        scores.append(score_mean)
+        scores.append(score_mean)  # Save mean score
         print(f"Depth {depth} out of {depth_limit}, generates {score_mean} accuracy")
 
-        if best_accuracy < score_mean:
-            # Save the best model
+        if best_accuracy < score_mean:  # Best model save policy
             filename = root_path + data_destination + model_name
             best_accuracy = score_mean
-            pickle.dump(clf, open(filename, 'wb'))
+            pickle.dump(clf, open(filename, 'wb'))  # Save the model
 
-    # Write mean scores/ loss to file
-    write_scores_to_file(scores, [*depth_range], score_file)
+    write_scores_to_file(scores, [*depth_range], score_file)  # Write mean scores/ loss to file
 
