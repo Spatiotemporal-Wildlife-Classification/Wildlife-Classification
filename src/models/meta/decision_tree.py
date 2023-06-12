@@ -46,7 +46,7 @@ def write_scores_to_file(mean_scores: list, depth_range: list, filename: str):
 def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file: str):
     """This method specifies the decision tree training process.
 
-    Specifically this method, calls the required pipeline to generate the features and labels required for training.
+    Specifically this method, calls the required pipeline (decision tree pipeline) to generate the features and labels required for training.
     Then, calls the training process to use the data.
 
     Args:

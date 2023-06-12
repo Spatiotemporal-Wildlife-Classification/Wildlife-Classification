@@ -47,9 +47,21 @@ def write_training_accuracy(filename: str, fold_histories: dict, learning_rate: 
     df.to_csv(root_path + data_destination + filename, index=False)
 
 
-def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):
-    X, y, classes = pipelines.neural_network_data(df, taxon_target, validation_file)
-    train_neural_network(X, y, classes, model_name, score_file)
+def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file: str):
+    """This method specified the neural network training process
+
+    Specifically this method, calls the required pipeline (neural network pipeline) to generate the features and labels required for training.
+    Then, calls the training process to use the data.
+
+    Args:
+        df (DataFrame): The dataframe containing all data for each observation.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+        model_name (str): The name of the model type being trained. In this case 'Neural network'.
+        score_file (str): The filename of where the training data will be stored. This will have the same location as where the model is saved.
+        validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
+    """
+    X, y, classes = pipelines.neural_network_data(df, taxon_target, validation_file)  # Processing and formatting
+    train_neural_network(X, y, classes, model_name, score_file)  # Training and evaluation
 
 
 def train_neural_network(X, y, classes: int, model_name: str, score_file: str):
@@ -113,7 +125,6 @@ def train_neural_network(X, y, classes: int, model_name: str, score_file: str):
             print('Best model saved')
 
     write_training_accuracy(score_file, fold_histories, learning_rates)
-
 
 
 def make_model(input_dimension: int, classes: int) -> keras.Sequential:
