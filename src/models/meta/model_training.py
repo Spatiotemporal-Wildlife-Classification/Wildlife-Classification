@@ -11,6 +11,8 @@
         model_save_types (dict): A dictionary containing the names of the classification models as keys, and their relevant file types when saved.
         file_name_taxon (dict): A dictionary containing the taxonomic level indicators in the dataset, and their relevant abbreviations to be used in file naming.
 """
+import sys
+
 import pandas as pd
 
 import pipelines
@@ -100,53 +102,58 @@ def model_iteration(observation_file: str, metadata_file: str):
 
 
 def taxonomic_level_modelling(observation_file: str, metadata_file: str, model: str):
+    """This method performs a taxonomic level breakdown and training at all taxonomic levels for the specified model.
+
+    This method performs the dataset taxonomic restriction at the parent node, modifying the dataset to fit each taxonomic parent node,
+    such that only the taxonomic children of the parent node are within the dataset. This is done for the entire taxonomic structure within the dataset.
+
+    Args:
+        observation_file (str): The processed iNaturalist observations dataset.
+        metadata_file (str): The corresponding metadata for the observation file.
+        model (str): String specification of the model to be trained ane evaluated.
+
+    Returns:
+        models (list): A list of file names, where the file name specified the taxonomic parent node (model classifies the taxonomic children)
+        taxon_targets (list): Species the list of the taxonomic target levels in the same order as the models list.
+    """
     # Collection of taxon level information for notebook use
     models = []  # Collection of model file names
     taxon_targets = []  # Collection of taxonomic target levels.
 
-    # Data aggregation
-    df_prime = pipelines.aggregate_data(observation_file, metadata_file)
+    df_prime = pipelines.aggregate_data(observation_file, metadata_file)  # Aggregate observations with metadata
 
-    # Remove dominant species
-    df_prime = df_prime[df_prime['taxon_species_name'] != 'Felis catus']
+    df_prime = df_prime[df_prime['taxon_species_name'] != 'Felis catus']  # Remove common household cat from dataset
 
-    # Generate sub_species
-    df_prime = df_prime.apply(lambda x: sub_species_detection(x), axis=1)
+    df_prime = df_prime.apply(lambda x: sub_species_detection(x), axis=1) # Extract subspecies labels
 
-    # Taxon breakdown
-    taxon_breakdown = taxonomic_analysis(df_prime.copy())
-    taxonomic_keys = list(taxon_breakdown.keys())
+    taxon_breakdown = taxonomic_analysis(df_prime.copy())  # Generate a taxonomic breakdown (dictionary with taxon level as the keys, and a list of taxonomic labels as the values)
+    taxonomic_keys = list(taxon_breakdown.keys())  # Extract taxonomic levels (keys)
 
     print('<----------->')
     print('Taxon breakdown: ', taxon_breakdown)
 
-    for i in range(len(taxonomic_keys) - 1):
-        if len(taxon_breakdown[taxonomic_keys[i + 1]]) > 1:
+    for i in range(len(taxonomic_keys) - 1):  # Iterate through taxonomic keys until species (taxonomic parent node level)
+        if len(taxon_breakdown[taxonomic_keys[i + 1]]) > 1:  # Ensure there are more than a single child in the taxonomic level below
             taxon_parent_level = taxonomic_keys[i]
 
             # Restriction
-            for restriction in taxon_breakdown[taxonomic_keys[i]]:
+            for restriction in taxon_breakdown[taxonomic_keys[i]]:  # Restrict the dataset to one of the labels at the parent note
                 df = df_prime.copy()
 
-                # Enforce taxon restriction
-                df = df[df[taxonomic_keys[i]] == restriction]
+                df = df[df[taxonomic_keys[i]] == restriction]  # Enforce taxon restriction
 
-                # Target taxon
-                target_taxon = taxonomic_keys[i + 1]
-                df = df.dropna(subset=[target_taxon])
+                target_taxon = taxonomic_keys[i + 1]  # Extract the target taxon (taxonomic child level)
+                df = df.dropna(subset=[target_taxon])  # Remove any NaN labels at this taxonomic level
 
                 # Taxonomic level clean-up to determine number of classes (with restriction)
                 df = df.dropna(subset=['public_positional_accuracy'])  # Remove n/a entries
                 df = df[df['public_positional_accuracy'] <= 40000]  # Remove entries with inadequate accuracy
-                df = df[df.groupby(target_taxon).common_name.transform(
-                    'count') >= 5].copy()  # Enforce at least 10 observations
+                df = df[df.groupby(target_taxon).common_name.transform('count') >= 5].copy()  # Enforce at least 10 observations
 
-                # Check at least two classes present with restriction
-                if df[target_taxon].nunique() <= 1:
+                if df[target_taxon].nunique() <= 1:  # Check at least two classes present with restriction
                     continue
 
-                # Generate file_start_name
-                file_start = generate_file_name_start(taxon_parent_level, restriction)
+                file_start = generate_file_name_start(taxon_parent_level, restriction)  # Generate file_start_name based on the parent taxon level and the restriction (parent node)
 
                 # Print Information
                 print('------------------------------')
@@ -155,15 +162,13 @@ def taxonomic_level_modelling(observation_file: str, metadata_file: str, model: 
                 print('Target taxon: ', target_taxon)
                 print('Model: ', model)
 
-                # Data pipeline process
+                # Execute the model training with the restricted and processed data
                 model_simplification(df=df,
                                      model=model,
                                      target_taxon=target_taxon,
                                      model_save_type=model_save_types[model],
                                      file_name_start=file_start)
-                models.append(file_start)
-
-                # Taxonomic information for notebook
+                models.append(file_start)  # Save the model file name for notebook input
                 taxon_targets.append(target_taxon)
     return models, taxon_targets
 
