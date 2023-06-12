@@ -1,6 +1,6 @@
 """This file creates and trains the XGBoost metadata classification model.
     The XGBoost metadata classification model performs hyperparameter tuning over the depth of the XGBoost tree.
-    The porcess makes use of 5-fold cross-validation to evaluate the models performance for each hyperparameter.
+    The process makes use of 5-fold cross-validation to evaluate the models performance for each hyperparameter.
     A best-model save policy is enforced, using mean balanced accuracy as the evaluating metric.
 
     Attributes:

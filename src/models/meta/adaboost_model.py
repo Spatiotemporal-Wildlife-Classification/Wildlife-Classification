@@ -1,20 +1,34 @@
-# General
-import pickle
+"""This file creates and trains the AdaBoost metadata classification model.
+    The AdaBoost classification model performs hyperparameter tuning over the number of
+    estimators to be used within the ensemble method. The number of estimators experimented over
+    is within the range of [1, 201] using an increment of 20.
+    The process makes use of 5-fold cross-validation to evaluate the models performance for each hyperparameter.
+    A best-model save policy is enforced, using mean balanced accuracy as the evaluating metric.
 
-import numpy as np
-import pandas as pd
+    Attributes:
+        root_path (str): The path to the project root.
+        data_destination (str): The path to where the decision tree model and its training accuracy is saved.
+"""
+
+# Model
 from sklearn.metrics import balanced_accuracy_score
-from sklearn.model_selection import KFold, cross_val_score
+from sklearn.model_selection import KFold
 from sklearn.utils import compute_sample_weight
 from sklearn.ensemble import AdaBoostClassifier
 
-from src.models.meta.decision_tree import write_scores_to_file
+# General
+import pickle
+import numpy as np
+import pandas as pd
+
 # Project
 from src.structure import Config
 import pipelines
+from src.models.meta.decision_tree import write_scores_to_file
+
 
 root_path = Config.root_dir()
-data_destination = '/notebooks/model_comparison_cache_2/'
+data_destination = pipelines.save_path
 
 
 def adaboost_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):
