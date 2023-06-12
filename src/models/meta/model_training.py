@@ -203,22 +203,29 @@ def generate_file_name_start(restriction: str):
     return restriction
 
 
-# Method simplifies model training, model saving, and data collection
 def model_simplification(df: pd.DataFrame,
                          model: str,
                          target_taxon,
                          model_save_type: str,
                          file_name_start: str):
-    # Get model abbreviation
-    model_abbr = model_abbreviations[model]
+    """This method simplifies the model training, testing, and saving process. It completes a full model training,
+    testing, and saving for the specified model and dataset
 
-    # Put together essential file names
-    model_name = file_name_start + "_" + model_abbr + "_model" + model_save_type
+    Args:
+        df (DataFrame): The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.
+        model (str): Specification of the model to be used to classify the taxonomic child nodes.
+        target_taxon (str): Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node.
+        model_save_type (str): Specification of the model file type/ model suffix.
+        file_name_start (str): The standardized taxon parent node label which will be used to construct a unique file name for the trained model.
+    """
+
+    model_abbr = model_abbreviations[model]  # Get model abbreviation
+
+    model_name = file_name_start + "_" + model_abbr + "_model" + model_save_type  # Put together essential file names
     training_history = file_name_start + "_" + model_abbr + '_training_accuracy.csv'
     validation_file = file_name_start + "_" + model_abbr + '_validation.csv'
 
-    # Select model, and execute the required process (data pipeline, model training, and evaluation)
-    model_selection_execution(model, df, target_taxon, model_name, training_history, validation_file)
+    model_selection_execution(model, df, target_taxon, model_name, training_history, validation_file)  # Select model, and execute the required process (data pipeline, model training, and evaluation)
 
 
 # Method allows for multiple model selection, training, evaluation, and saving
