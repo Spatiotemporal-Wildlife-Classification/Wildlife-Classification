@@ -15,7 +15,9 @@ generated at different taxonomic levels.
 
 ### Random Forest
 
-### XGBoost
+### [XGBoost](../../src/models/meta/xgboost.md)
+The XGBoost metadata model training and evaluation process. 
+Hyperparameter tuning involved determining the optimal tree depth within the XGBoost model.
 
 ### [Decision Tree](../../src/models/meta/decision_tree.md)
 The decision tree metadata model training and evaluation process.
