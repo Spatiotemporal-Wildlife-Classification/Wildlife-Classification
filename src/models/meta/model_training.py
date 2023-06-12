@@ -1,3 +1,16 @@
+"""This file performs metadata model training for all proposed models, at all taxonomic levels.
+
+    The metadata model training is automated to train the proposed models
+    (Decision Tree, Random Forest, Adaboost, XGBoost, and a Neural Network) at each taxonomic parent node of the dataset.
+    This forms five cascading taxonomic classifiers, with a model at each taxonomic parent node.
+    This enables comparison of the models at each taxonomic level, to determine the most robust and optimal model to use
+    as a metadata classifier.
+
+    Attributes:
+        model_abbreviations (dict): A dictionary containing the names of the classification models as keys, and their abbreviations as values.
+        model_save_types (dict): A dictionary containing the names of the classification models as keys, and their relevant file types when saved.
+        file_name_taxon (dict): A dictionary containing the taxonomic level indicators in the dataset, and their relevant abbreviations to be used in file naming.
+"""
 import pandas as pd
 
 import pipelines
@@ -9,7 +22,6 @@ import adaboost_model
 from pipelines import sub_species_detection
 import silhouette_k_means
 
-# Dictionaries to aid in file name creation
 model_abbreviations = {'Neural network': 'nn',
                        'Decision tree': 'dt',
                        'Random forest': 'rf',
@@ -28,11 +40,22 @@ file_name_taxon = {'taxon_family_name': '_family',
                    'sub_species': '_subspecies'}
 
 
-# Method to iterate through provided datasets, in order to train models accross entire datasets scope
 def dataset_iterations(observation_files: list, metadata_files: list):
+    """This method is performs the full metadata training for all models at all available taxonomic levels for the
+    provided datasets.
+
+    This method enables, the entire metadata training process across all models and taxonomic levels for multiple
+    specified datasets with the required metadata information.
+
+    The information printed out, is to be used within the `model_comparison.ipynb` to direct the model validation and figure construction.
+    For more information, please review the `model_comparison` notebook.
+
+    Args:
+        observation_files (list): A list containing the names of the observation files within the `data/processed/` directory.
+        metadata_files (list): A list containing the names of the metadata files within the `data/processed/` directory. Note they must coincide with the order of the observation files.
+    """
     for (observation_file, metadata_file) in zip(observation_files, metadata_files):
-        models, model_name_collection, taxon_target_collection, abbreviations_collection = model_iteration(
-            observation_file, metadata_file)
+        models, model_name_collection, taxon_target_collection, abbreviations_collection = model_iteration(observation_file, metadata_file)
 
     # Information to be used in the model_comparison.ipynb notebook
     print('Models: ', models)
@@ -42,41 +65,44 @@ def dataset_iterations(observation_files: list, metadata_files: list):
 
 
 # Train all models on the provided dataset.
-def model_iteration(observation_file: str,
-                    metadata_file: str):
+def model_iteration(observation_file: str, metadata_file: str):
+    """Method performs the model iteration per dataset.
+
+    Args:
+        observation_file (str): The processed iNaturalist observations dataset.
+        metadata_file (str): The corresponding metadata for the observation file.
+
+    Returns:
+        models (list): The list of all models iterated over.
+        model_name_collection (list): The list of all model names produced during the iteration of the dataset.
+        taxon_target_collection (list): The list of all taxonomic targets iterated through within this dataset.
+        abbreviations_collection (list): A list of the corresponding model abbreviations
+    """
     # Multi-model collections
     models = list(model_abbreviations.keys())
-    model_name_collection = []
+
+    model_name_collection = []  # Collections across multiple model collections (this is the same for all models)
     taxon_target_collection = []
     abbreviations_collection = []
 
-    # Single model collections
-    taxon_models = []
+    taxon_models = []  # Collections across single models
     taxon_targets = []
 
-    # Iterate through all models
-    for model in models:
-        # Models through all taxonomic levels for the model
-        taxon_models, taxon_targets = taxonomic_level_modelling(observation_file,
-                                                                metadata_file,
-                                                                model)
+    for model in models:  # Iterate across all models
+        taxon_models, taxon_targets = taxonomic_level_modelling(observation_file, metadata_file, model)  # Iterate across all taxonomic levels per model
 
-        # Collect essential information regarding file names for future use
-        abbreviations_collection.append(model_abbreviations[model])
+        abbreviations_collection.append(model_abbreviations[model])  # Collect essential information regarding file names for future use
 
-    model_name_collection.append(taxon_models)
-    taxon_target_collection.append(taxon_targets)
+    model_name_collection.append(taxon_models)  # Collect model file names which indicate taxonomic level (supplemented by model abbreviations)
+    taxon_target_collection.append(taxon_targets)  # Collect taxonomic target levels
 
-    # Return gathered file information
-    return models, model_name_collection, taxon_target_collection, abbreviations_collection
+    return models, model_name_collection, taxon_target_collection, abbreviations_collection  # Return gathered file information
 
 
-def taxonomic_level_modelling(observation_file: str,
-                              metadata_file: str,
-                              model: str):
+def taxonomic_level_modelling(observation_file: str, metadata_file: str, model: str):
     # Collection of taxon level information for notebook use
-    models = []
-    taxon_targets = []
+    models = []  # Collection of model file names
+    taxon_targets = []  # Collection of taxonomic target levels.
 
     # Data aggregation
     df_prime = pipelines.aggregate_data(observation_file, metadata_file)
