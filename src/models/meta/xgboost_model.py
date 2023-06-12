@@ -36,7 +36,7 @@ def xgboost_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_
         Args:
             df (DataFrame): The dataframe containing all data for each observation.
             taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
-            model_name (str): The name of the model type being trained. In this case 'Decision tree'.
+            model_name (str): The name of the model type being trained. In this case 'XGBoost'.
             score_file (str): The filename of where the training data will be stored. This will have the same location as where the model is saved.
             validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
     """
@@ -45,8 +45,9 @@ def xgboost_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_
 
 
 def train_xgboost(X, y, model_name: str, score_file: str):
-    """This method performs the XGBoost training and 5-fold cross-validation on the XGBoost tree depth as hyperparameter tuning to determine the optmial model.
+    """This method performs the XGBoost training and hyperparameter tuning.
 
+    Hyperparameter tuning aims to determine the optimal depth of tree within the XGBoost model for each classification model.
     This process uses a best-model save policy based on the mean balanced accuracy evaluation metric.
 
     Args:
@@ -79,7 +80,7 @@ def train_xgboost(X, y, model_name: str, score_file: str):
 
             model.fit(X_train, y_train, sample_weight=weight_values)  # Train the Xgboost model
 
-            y_pred = np.argmax(model.predict(X_val), axis=1)  # Generate evaluation set predictions
+            y_pred = np.argmax(model.predict(X_val), axis=1)  # Generate test set predictions
             y_true = np.argmax(y_val, axis=1)  # Get true labels
 
             score = balanced_accuracy_score(y_true, y_pred)  # Calculate the balanced accuracy score

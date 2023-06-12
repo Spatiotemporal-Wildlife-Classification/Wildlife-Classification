@@ -61,8 +61,9 @@ def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, 
 
 
 def train_decision_tree(X, y, model_name: str, score_file: str):
-    """This method performs the decision tree training and 5-fold cross validation on the tree depth hyperparameter to determine the optimal model
+    """This method performs the decision tree training and hyperparameter tuning.
 
+    Hyperparameter tuning aims to determine the optimal decision tree depth to be used in each classification model.
     This process uses a best-model save policy based on the mean balanced accuracy evaluation metric.
 
     Args:

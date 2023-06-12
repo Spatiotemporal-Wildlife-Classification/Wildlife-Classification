@@ -65,16 +65,18 @@ def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str,
 
 
 def train_neural_network(X, y, classes: int, model_name: str, score_file: str):
-    """This method performs the neural network model training and the 5-fold cross validation tune the learning rate hyperparameter to determine the optimal model.
+    """This method performs the neural network model training and hyperparameter tuning.
 
+    Hyperparameter tuning aims to determine the optimal learning rate for each classification model.
+    The learning rates tuned over include: [0.1, 0.01, 0.001, 0.0001]. Learning rate was selected due to the
+    varying levels of abstractions within the taxonomic cascading structure.
     This process makes use of a best-model save policy based on the mean categorical accuracy (balanced accuracy) evaluation metric.
-    The learning rate hyperparameters involved in the tuning include [0.1, 0.01, 0.001, 0.0001]
 
     Args:
         X (DataFrame): The input features to the decision tree
         y (Series): The categorical taxonomic labels of the corresponding observations to the features.
         classes (int): The number of unique classes for the model to classify
-        model_name (str): The name of the model type being trained. In this case 'Decision tree'.
+        model_name (str): The name of the model type being trained. In this case 'Neural network'.
         score_file (str): The filename of where the training data will be stored.
     """
     input_dimension = len(X.columns)  # determine the size of the input dimension
