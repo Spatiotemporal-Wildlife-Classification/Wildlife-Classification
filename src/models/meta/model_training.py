@@ -41,7 +41,7 @@ file_name_taxon = {'taxon_family_name': '_family',
                    'sub_species': '_subspecies'}
 
 
-def dataset_iterations(observation_file: str, metadata_file: str):
+def dataset_iteration(observation_file: str, metadata_file: str):
     """This method is performs the full metadata training for all models at all available taxonomic levels for the
     provided dataset. Only a single dataset is trained at a time
 
@@ -235,6 +235,18 @@ def model_selection_execution(model: str,
                               model_name: str,
                               training_history: str,
                               validation_file: str):
+    """This method allows multiple models to be trained through the specification of the model type, and the subsequent execution of the required data pipeline.
+
+    Args:
+        model (str): Specification of the model to be used to classify the taxonomic child nodes.
+        df (DataFrame): The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.
+        target_taxon (str): Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)
+        model_name (str): The complete model name (parent taxon label and model abbreviation make the combined name unique)
+        training_history (str): File name at which to save the model training history.
+        validation_file (str): File name at which to save the validation dataset.
+    Returns:
+        (None)
+    """
     match model:
         case 'Neural network':
             return neural_network_model.neural_network_process(df, target_taxon, model_name,
@@ -253,26 +265,44 @@ def model_selection_execution(model: str,
                                                    validation_file)
 
 
-def train_base_model():
-    # Generate entire dataset
-    df_felids = pipelines.aggregate_data('felids_train.csv', 'felids_meta.csv')
-    df_proboscidia = pipelines.aggregate_data('proboscidia_train.csv', 'proboscidia_meta.csv')
-    df = pd.concat([df_felids, df_proboscidia])
+def train_base_model(model: str, target_taxon, file_name='base_meta'):
+    """This method trains the root node of the taxonomic tree.
 
-    silhouette_k_means.k_max = 84
+    The current model training requires the Felid and Elephant datasets to be kept separate to train all of their relevant taxonomic models.
+    This however excludes the root classifier to determine between the two taxon families.
+    This method ensures the taxonomic root is trained.
+    Note, this method can be used to train a metadata global classifier by specifying the target taxom to the species level.
+
+    Args:
+        model (str): Specification of the model to be used to classify the taxonomic child nodes.
+        target_taxon (str): Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)
+        file_name (str): The file name of the root classification model.
+    """
+    df_felids = pipelines.aggregate_data('felids_train.csv', 'felids_meta.csv')  # Aggregate felid observations and metadata
+    df_proboscidia = pipelines.aggregate_data('proboscidia_train.csv', 'proboscidia_meta.csv')  # Aggregate elephant observations and metadata
+    df = pd.concat([df_felids, df_proboscidia])  # Joint both felid and elephant datasets into one
+
+    silhouette_k_means.k_max = 84  # Modify silhouette score process to increase the range and interval due to the large amount of datapoints.
     silhouette_k_means.k_interval = 20
 
-    # Train model
-    model_selection_execution('Xgboost',
+    model_suffix = model_abbreviations[model]  # Get model suffix
+    model_selection_execution(model,
                               df,
-                              'taxon_species_name',
-                              0,
-                              'global_xgb_model.json',
-                              'global_xgb_training_accuracy',
-                              'global_xgb_validation.csv')
+                              target_taxon,
+                              file_name + '_model' + model_suffix,
+                              file_name + '_training_accuracy',
+                              file_name + '_validation.csv')  # Train model on one model type at a time
 
 
-# Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
-    dataset_iterations(observation_file='proboscidia_train.csv', metadata_file='proboscidia_meta.csv')
-    # train_base_model()
+    """This method executes the training of the root classifier or the full taxonomic tree of the specified dataset. 
+    
+    The root flag when set to True will perform the root classifier training. Changing this to false, allows for the full taxonomic tree classification 
+    training at each parent node (of the provided dataset).
+    """
+    root = True
+
+    if root:
+        train_base_model('Xgboost', 'taxon_family_name')
+    else:
+        dataset_iteration(observation_file='proboscidia_train.csv', metadata_file='proboscidia_meta.csv')
