@@ -23,7 +23,9 @@ Hyperparameter tuning involved determining the optimal tree depth within the XGB
 The decision tree metadata model training and evaluation process.
 Hyperparameter tuning involved determining the optimal decision tree depth for the model.
 
-### AdaBoost
+### [AdaBoost](../../src/models/meta/adaboost.md)
+The AdaBoost metadata model training and evaluation process. 
+Hyperparameter tuning involved determining the optimal number of estimators to be used within the ensemble model.
 
 ### [K-means Silhouette Score Automation](../../src/models/meta/sil_score.md)
 The Silhouette score is a method of automating the selection of the number of centroids for a K-means clustering algorithms. 
