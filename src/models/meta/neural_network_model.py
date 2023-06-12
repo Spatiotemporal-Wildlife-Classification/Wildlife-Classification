@@ -1,6 +1,16 @@
-# General
-import numpy as np
-import pandas as pd
+"""This file creates and trains the neural network metadata classification model.
+
+    The neural network model performs learning rate hyperparameter tuning due to the variable levels of abstraction
+    within the taxonomic tree.
+    The training process makes use of 5-fold cross validation to evaluate the models performance for each
+    hyperparameter, using balanced accuracy as the evaluating metric.
+    A best-model save policy is enforced using the mean accuracy across the 5-folds.
+
+
+    Attributes:
+        root_path (str): The path to the project root.
+        data_destination (str): The path to where the neural network model and its training accuracy is saved.
+"""
 
 # Modelling
 from tensorflow import keras
@@ -13,15 +23,28 @@ from sklearn.model_selection import KFold
 from src.structure import Config
 import pipelines
 
+# General
+import numpy as np
+import pandas as pd
 
 root_path = Config.root_dir()
-data_destination = '/notebooks/model_comparison_cache_2/'
+data_destination = pipelines.save_path
 
 
-def write_training_accuracy(file_name: str, fold_histories: dict, learning_rate: list):
+def write_training_accuracy(filename: str, fold_histories: dict, learning_rate: list):
+    """This method writes the mean training and evaluation scores to a csv file for visualization and recording purposes.
+
+    Note, the data written is the mean 5-fold categorical accuracy at each epoch of training.
+    This is written for each learning rate used, serving as hyperparameter tuning.
+
+    Args:
+        filename (str): The filename, where the training data will be saved.
+        fold_histories (str): The mean 5-fold categorical accuracy for each epoch of training for all models trained.
+        learning_rate (str): The learning rate applied to the trained and evaluated model.
+    """
     df = pd.DataFrame(fold_histories)
-    df['learning_rate'] = learning_rate
-    df.to_csv(root_path + data_destination + file_name, index=False)
+    df['learning_rate'] = learning_rate  # Add learning rate to the dataframe.
+    df.to_csv(root_path + data_destination + filename, index=False)
 
 
 def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file:str):

@@ -7,7 +7,7 @@
 
     Attributes:
         root_path (str): The path to the project root.
-        data_destination (str): The path to where the decision tree model and its training accuracy is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`
+        data_destination (str): The path to where the decision tree model and its training accuracy is saved.
 """
 
 # Model
@@ -15,9 +15,11 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.model_selection import cross_val_score
 
-# General
+# Project
 from src.structure import Config
 import pipelines
+
+# General
 import pandas as pd
 import pickle
 import numpy as np
@@ -28,7 +30,9 @@ data_destination = pipelines.save_path
 
 
 def write_scores_to_file(mean_scores: list, depth_range: list, filename: str):
-    """This method writes the model training scores to a csv file for visualization and records
+    """This method writes the model mean training and evaluation scores to a csv file for visualization and records.
+
+    Note, the data written includes the mean training balanced accuracy value calculated in the cross validation.
 
     Args:
         mean_scores (list): The list of mean accuracy scores for each model.
