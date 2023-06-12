@@ -11,7 +11,6 @@
         model_save_types (dict): A dictionary containing the names of the classification models as keys, and their relevant file types when saved.
         file_name_taxon (dict): A dictionary containing the taxonomic level indicators in the dataset, and their relevant abbreviations to be used in file naming.
 """
-import sys
 
 import pandas as pd
 
@@ -42,22 +41,19 @@ file_name_taxon = {'taxon_family_name': '_family',
                    'sub_species': '_subspecies'}
 
 
-def dataset_iterations(observation_files: list, metadata_files: list):
+def dataset_iterations(observation_file: str, metadata_file: str):
     """This method is performs the full metadata training for all models at all available taxonomic levels for the
-    provided datasets.
+    provided dataset. Only a single dataset is trained at a time
 
-    This method enables, the entire metadata training process across all models and taxonomic levels for multiple
-    specified datasets with the required metadata information.
 
     The information printed out, is to be used within the `model_comparison.ipynb` to direct the model validation and figure construction.
     For more information, please review the `model_comparison` notebook.
 
     Args:
-        observation_files (list): A list containing the names of the observation files within the `data/processed/` directory.
-        metadata_files (list): A list containing the names of the metadata files within the `data/processed/` directory. Note they must coincide with the order of the observation files.
+        observation_file (str): The name of the observation files within the `data/processed/` directory.
+        metadata_file (str): The name of the metadata files within the `data/processed/` directory. Note they must coincide with the order of the observation files.
     """
-    for (observation_file, metadata_file) in zip(observation_files, metadata_files):
-        models, model_name_collection, taxon_target_collection, abbreviations_collection = model_iteration(observation_file, metadata_file)
+    models, model_name_collection, taxon_target_collection, abbreviations_collection = model_iteration(observation_file, metadata_file)
 
     # Information to be used in the model_comparison.ipynb notebook
     print('Models: ', models)
@@ -153,7 +149,7 @@ def taxonomic_level_modelling(observation_file: str, metadata_file: str, model: 
                 if df[target_taxon].nunique() <= 1:  # Check at least two classes present with restriction
                     continue
 
-                file_start = generate_file_name_start(taxon_parent_level, restriction)  # Generate file_start_name based on the parent taxon level and the restriction (parent node)
+                file_start = generate_file_name_start(restriction)  # Generate file_start_name based on the parent taxon level and the restriction (parent node)
 
                 # Print Information
                 print('------------------------------')
@@ -174,20 +170,34 @@ def taxonomic_level_modelling(observation_file: str, metadata_file: str, model: 
 
 
 def taxonomic_analysis(df: pd.DataFrame):
-    # Taxonomy breakdown
-    taxonomy_list = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
-    taxon_breakdown = dict()
+    """This method performs the taxonomic breakdown of the dataset at the following taxonomic levels: taxon_family_name, taxon_genus_name, taxon_species_name, subspecies
 
-    # Identify each unique taxon level mammal
-    for taxon in taxonomy_list:
+    Args:
+        df (DataFrame): The dataframe containing the unrestricted observations and metadata to perform a taxonomic breakdown of the entire dataset
+
+    Returns:
+        (dict): Keys specify the taxonomic level and the values are a list containing all unique labels in the dataset, forming a taxonomic breakdown
+    """
+    taxonomy_list = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']   # Taxonomic levels to target in breakdown
+    taxon_breakdown = dict()  # Create an empty dictionary
+
+    for taxon in taxonomy_list:  # Iterate through the taxonomic levels
         df = df.dropna(subset=[taxon])  # Remove all n/a labels
-        taxon_breakdown[taxon] = df[taxon].unique().tolist()  # Find unique taxon level genus names
-    return taxon_breakdown
+        taxon_breakdown[taxon] = df[taxon].unique().tolist()  # Find unique taxon level labels. These form the values to the taxonomic key in the dictionary
+    return taxon_breakdown  # Return the taxonomic breakdown dictionary
 
 
 # Method generates unique file name that can be referenced for evaluation in the notebook
-def generate_file_name_start(parent_taxon: str, restriction: str):
-    taxon = file_name_taxon[parent_taxon]
+def generate_file_name_start(restriction: str):
+    """Method standardizes the parent taxonomic restriction to create a suitable filename for each model
+
+        This method removes white space, replacing it with an underscore, and ensures the name is all lower case.
+        Args:
+            restriction (str): The label of the taxonomic parent node (restriction)
+
+        Returns:
+            (str): A standardized form of the restriction.
+    """
     restriction = restriction.replace(" ", "_")
     restriction = restriction.lower()
     return restriction
@@ -257,6 +267,5 @@ def train_base_model():
 
 # Execution to train all datasets, at all taxonomic levels, across all models
 if __name__ == '__main__':
-    dataset_iterations(observation_files=['proboscidia_train.csv'],
-                       metadata_files=['proboscidia_meta.csv'])
+    dataset_iterations(observation_file='proboscidia_train.csv', metadata_file='proboscidia_meta.csv')
     # train_base_model()
