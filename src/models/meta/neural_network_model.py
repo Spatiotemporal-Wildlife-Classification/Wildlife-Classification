@@ -65,61 +65,62 @@ def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str,
 
 
 def train_neural_network(X, y, classes: int, model_name: str, score_file: str):
-    input_dimension = len(X.columns)
-    epoch_num = 10
-    learning_rates = [0.1, 0.01, 0.001, 0.0001]
-    fold_histories = []
-    best_accuracy = 0
+    input_dimension = len(X.columns)  # determine the size of the input dimension
+    epoch_num = 10  # Number of training epochs
+    learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Learning rates hyperparameter tuning is completed over
+    fold_histories = []  # Training accuracy store
+    best_accuracy = 0  # Best model accuracy initialization
 
-    for rate in learning_rates:
-        kf_container = []
+    for rate in learning_rates:  # Iterate through learning rates
+        kf_container = []  # Specify model store holders
         kf_val_accuracy = []
         kf_val_loss = []
         fold_ind = 0
-        kf = KFold(n_splits=5)
+
+        kf = KFold(n_splits=5)  # Initialize the 5-fold cross-validation
 
         for train_index, test_index in kf.split(X, y):
-            # Generate test and validation training sets
-            X_train = X.iloc[train_index]
+            X_train = X.iloc[train_index]  # Generate training dataset
             y_train = y[train_index]
 
-            X_val = X.iloc[test_index]
+            X_val = X.iloc[test_index]  # Generate test dataset
             y_val = y[test_index]
 
-            # Weight the training by presence of each class.
-            y_cat = np.argmax(y_train, axis=1)
+            y_cat = np.argmax(y_train, axis=1)  # Weight the training by presence of each class.
             unique_classes = np.unique(y_cat)
             weight_values = compute_class_weight(class_weight='balanced', classes=unique_classes, y=y_cat)
             weights = dict(zip(unique_classes, weight_values))
 
-            # Create a new model
-            model = make_model(input_dimension, classes)
+            model = make_model(input_dimension, classes)  # Create a new model
 
-            opt = keras.optimizers.Adam(learning_rate=rate)
+            opt = keras.optimizers.Adam(learning_rate=rate)  # Specify the models learning rate
             model.compile(optimizer=opt,
                           loss='categorical_crossentropy',
-                          metrics=[keras.metrics.CategoricalAccuracy()])
+                          metrics=[keras.metrics.CategoricalAccuracy()])  # Compile the model.
 
-            # Train model and record training history
-            history = model.fit(X_train.to_numpy(), y_train, epochs=epoch_num, class_weight=weights, verbose=0)
+            # Training
+            history = model.fit(X_train.to_numpy(),
+                                y_train,
+                                epochs=epoch_num,
+                                class_weight=weights,
+                                verbose=0)  # Train model and record training history
 
-            # Save training history
-            hist_df = pd.DataFrame(history.history)
+            hist_df = pd.DataFrame(history.history)  # Save training categorical accuracy
             kf_container.append(hist_df['categorical_accuracy'].values.tolist())
 
-            # Validation
-            results = model.evaluate(X_val, y_val, verbose=0)
-            kf_val_accuracy.append(results[1])
-            kf_val_loss.append(results[0])
+            # Test
+            results = model.evaluate(X_val, y_val, verbose=0)  # Generate model predictions for the test set
+            kf_val_accuracy.append(results[1])  # Collect the categorical accuracy data
+            kf_val_loss.append(results[0])  # Collect the loss
 
-            fold_ind = fold_ind + 1
+            fold_ind = fold_ind + 1  # Increase the current fold
 
-        fold_histories.append(np.mean(kf_container, axis=0))
-        mean_accuracy = np.mean(kf_val_accuracy)
-        mean_loss = np.mean(kf_val_loss)
+        fold_histories.append(np.mean(kf_container, axis=0))  # Generate the training mean
+        mean_accuracy = np.mean(kf_val_accuracy)  # Extract the mean accuracy from the model test
+        mean_loss = np.mean(kf_val_loss)  # Extract the mean loss
         print(f"Mean accuracy with learning rate {rate} is {mean_accuracy} and loss is {mean_loss}")
 
-        if best_accuracy < mean_accuracy:
+        if best_accuracy < mean_accuracy:  # Best model save policy using test mean categorical accuracy and current best model.
             model.save(root_path + data_destination + model_name)
             best_accuracy = mean_accuracy
             print('Best model saved')
@@ -128,6 +129,20 @@ def train_neural_network(X, y, classes: int, model_name: str, score_file: str):
 
 
 def make_model(input_dimension: int, classes: int) -> keras.Sequential:
+    """This method creates a new neural network model.
+
+    This neural network has the following architecture:
+    A variable input due to the varying number of input features.
+    Two densely interconnected layers of 80 and 60 neurons each with RELU activation functions.
+    Finally, a softmax output layer.
+
+    Args:
+        input_dimension (int): The number of input features to the neural network
+        classes (int): The number of classes that should be classified in the output layer.
+
+    Returns:
+        (keras.Sequential): The model constructed in the specified architecture, with appropriate input and output dimensions.
+    """
     model = keras.Sequential()
     model.add(Dense(input_dimension, input_shape=(input_dimension,), activation='relu'))
     model.add(Dense(80, activation='relu'))
