@@ -48,7 +48,7 @@ def write_training_accuracy(filename: str, fold_histories: dict, learning_rate: 
 
 
 def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file: str):
-    """This method specified the neural network training process
+    """This method specified the neural network modelling process
 
     Specifically this method, calls the required pipeline (neural network pipeline) to generate the features and labels required for training.
     Then, calls the training process to use the data.
@@ -65,6 +65,18 @@ def neural_network_process(df: pd.DataFrame, taxon_target: str, model_name: str,
 
 
 def train_neural_network(X, y, classes: int, model_name: str, score_file: str):
+    """This method performs the neural network model training and the 5-fold cross validation tune the learning rate hyperparameter to determine the optimal model.
+
+    This process makes use of a best-model save policy based on the mean categorical accuracy (balanced accuracy) evaluation metric.
+    The learning rate hyperparameters involved in the tuning include [0.1, 0.01, 0.001, 0.0001]
+
+    Args:
+        X (DataFrame): The input features to the decision tree
+        y (Series): The categorical taxonomic labels of the corresponding observations to the features.
+        classes (int): The number of unique classes for the model to classify
+        model_name (str): The name of the model type being trained. In this case 'Decision tree'.
+        score_file (str): The filename of where the training data will be stored.
+    """
     input_dimension = len(X.columns)  # determine the size of the input dimension
     epoch_num = 10  # Number of training epochs
     learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Learning rates hyperparameter tuning is completed over

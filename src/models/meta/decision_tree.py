@@ -2,7 +2,7 @@
 
     The decision tree metadata classification model performs hyperparameter tuning over the depth of the decision tree.
     The training process makes use of 5-fold cross validation to evaluate the models performance for each hyperparameter.
-    A best-model save policy is enforced using the mean accuracy across the 5-folds.
+    A best-model save policy is enforced using the mean balanced accuracy across the 5-folds.
 
 
     Attributes:
@@ -44,7 +44,7 @@ def write_scores_to_file(mean_scores: list, depth_range: list, filename: str):
 
 
 def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, score_file: str, validation_file: str):
-    """This method specifies the decision tree training process.
+    """This method specifies the decision tree modelling process.
 
     Specifically this method, calls the required pipeline (decision tree pipeline) to generate the features and labels required for training.
     Then, calls the training process to use the data.
@@ -63,7 +63,7 @@ def decision_tree_process(df: pd.DataFrame, taxon_target: str, model_name: str, 
 def train_decision_tree(X, y, model_name: str, score_file: str):
     """This method performs the decision tree training and 5-fold cross validation on the tree depth hyperparameter to determine the optimal model
 
-    This process uses a best-model save policy based on the balanced accuracy evaluation metric.
+    This process uses a best-model save policy based on the mean balanced accuracy evaluation metric.
 
     Args:
         X (DataFrame): The input features to the decision tree
