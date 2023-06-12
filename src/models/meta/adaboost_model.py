@@ -2,7 +2,7 @@
     The AdaBoost classification model performs hyperparameter tuning over the number of
     estimators to be used within the ensemble method. The number of estimators experimented over
     is within the range of [1, 201] using an increment of 20.
-    The process makes use of 5-fold cross-validation to evaluate the models performance for each hyperparameter.
+    The process makes use of 5-fold cross-validation to evaluate the models performance for each model.
     A best-model save policy is enforced, using mean balanced accuracy as the evaluating metric.
 
     Attributes:
