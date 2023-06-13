@@ -83,7 +83,7 @@ def construct_model(classes: int):
         classes (int): Integer specifying the number of classes to be classified. Instructs the size of the softmax output layer.
 
     Returns:
-        (Keras.model): The complete model ready to be trained.
+        (Model): The complete model ready to be trained.
     """
     inputs = layers.Input(shape=(img_size, img_size, 3))  # Construct the expected image input
     model = EfficientNetB6(include_top=False,
@@ -109,19 +109,42 @@ def construct_model(classes: int):
     return model
 
 
-def get_image_labels(ds, classes):
-    ohe_labels = []
-    labels = []
+def get_image_labels(ds: tf.data.Dataset, classes: list):
+    """Method generates class names from the dataset. This helps test the model
+
+    Args:
+        ds (tf.data.Dataset): Either the train or test dataset which labels must be generated for.
+        classes (list): A list of the class labels (alphabetically ordered).
+
+    Returns:
+        (list): A list of labels in the provided dataset, in the same order as specified in the dataset.
+    """
+    ohe_labels = []  # Container to hold the ohe encoded version of the labels
+    labels = []  # Container to hold the categorical labels
+
     for x, y in ds:
-        ohe_labels.extend(np.argmax(y.numpy().tolist(), axis=1))
+        ohe_labels.extend(np.argmax(y.numpy().tolist(), axis=1))  # Generate ohe encoded labels from dataset
     for label in ohe_labels:
-        labels.append(classes[label])
+        labels.append(classes[label])  # Transform ohe labels into categorical labels
     return labels
 
 
-def train_model_top_weights(model, train_ds, val_ds):
-    # Create dataset weighting
-    classes = train_ds.class_names
+def train_model_top_weights(model: Model, train_ds: tf.data.Dataset, val_ds: tf.data.Dataset):
+    """Perform CNN training on the unfrozen top weights of the model.
+
+    The dataset is weighted to achieve a balanced impact of each class on the model training.
+    This is used to combat the long-tail distribution of the dataset.
+
+    Args:
+        model (Model): The crated and prepared EfficientNet-B6 model with all but the top layers frozen, for training on the provided dataset.
+        train_ds (tf.data.Dataset): The image training dataset
+        val_ds (tf.data.Dataset): The image test dataset
+
+    Returns:
+        model (Model): The trained model
+        hist (dict): The history of the model training process.
+    """
+    classes = train_ds.class_names   # Create dataset weighting
     weight_values = compute_class_weight(class_weight='balanced',
                                          classes=classes,
                                          y=get_image_labels(train_ds, classes))
@@ -132,11 +155,12 @@ def train_model_top_weights(model, train_ds, val_ds):
                                                      save_weights_only=False,
                                                      monitor='val_accuracy',
                                                      save_best_only=True,
-                                                     verbose=1)
+                                                     verbose=1)  # Create the best-model save policy through the use of a callback
 
-    train_ds = train_ds.prefetch(AUTOTUNE)
+    train_ds = train_ds.prefetch(AUTOTUNE)  # Prefetch both the train and test dataset to speed up training and evaluation
     val_ds = val_ds.prefetch(AUTOTUNE)
-    steps = int(len(train_ds) / batch_size)
+
+    steps = int(len(train_ds) / batch_size)  # Specify training specifics. The calculation of steps and validation steps speeds up training
     validation_steps = int(0.05 * len(train_ds))
 
     if steps == 0:
@@ -144,6 +168,7 @@ def train_model_top_weights(model, train_ds, val_ds):
     if validation_steps == 0:
         validation_steps = 1
     print("Steps per epoch: ", steps)
+    print("Validation steps: ", validation_steps)
     hist = model.fit(train_ds,
                      epochs=epochs,
                      validation_data=val_ds,
@@ -151,7 +176,7 @@ def train_model_top_weights(model, train_ds, val_ds):
                      callbacks=[cp_callback],
                      validation_steps=validation_steps,
                      steps_per_epoch=steps,
-                     class_weight=weights)
+                     class_weight=weights)  # Train the model and gather training history
     return model, hist
 
 
