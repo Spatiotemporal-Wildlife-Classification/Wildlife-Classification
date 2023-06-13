@@ -2,7 +2,34 @@
 Bachelor's thesis investigating **if** and **how** observation **spatiotemporal metadata** can be used to improve 
 existing **wildlife image classification** processes. 
 
-## Summary
+# Development
+
+## Image Classification
+The image classification models executes model training and validation from two separate Docker images. 
+This allows for easy model training and validation using a GPU unit, on the same image as originally run. 
+Any code changes to any of the image classification files do not require the images to be rebuilt as the project directory is 
+copied into the container on execution. Any code changes are automatically picked up by the Docker container. 
+
+### Download Docker Images
+The compressed docker images are located in the `docker` directory. To extract and load them, please do the following:
+1. Navigate into the project root on terminal.
+2. Load the docker images using the following commands
+    - `docker load -i docker/image_train.tar.gz`
+    - `docker load -i docker/image_validate.tar.gz`
+
+### Train New Model
+1. Specify the name of the model and the path to the appropriate image directory in `src/models/image/taxonomic_modelling.py`
+   - The documentation provides examples. 
+2. In the terminal please execute the following command to train the CNN using an available GPU unit.
+
+```angular2html
+docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t model_train:latest
+```
+You will see information updating you on the training process printed to terminal
+
+
+
+# Information Summary
 Automated wildlife classification is essential within ecological studies, wildlife conservation and management, 
 specifically fulfilling the roles of species population estimates, individual identification, and behavioural patterns.
 
@@ -35,10 +62,10 @@ the taxonomic tree.
 #### Data Subject
 The data subject itself, wildlife species, make the classification process difficult, largely due to similar looking 
 species, and sub-species, in addition to sympatric species (species found in the same geographic area). 
-
+`
 | ![](http://static.inaturalist.org/photos/88383/medium.jpg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/9581740/medium.jpg) |
 |------------------------------------------------------------|-------------------------------------------------------------------------------|
-| Panthera pardus                                            | Panthera Onca                                                                 |
+| Panthera pardus                                            | Panthera Onca                                                                 |`
 
 ## Data
 The training data is obtained from [iNaturalist](https://www.inaturalist.org/), a citizen-science based platform tasked with generating global research-grade, annotated flora and fauna images to facilitate computer vision developement. 
