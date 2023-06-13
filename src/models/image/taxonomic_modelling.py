@@ -4,7 +4,10 @@
     requirements of training a large CNN, only a single model can be trained at a time.
 
     Please note, the dataset must be structured within the taxonomic tree structure. Please review the `dataset_structure.py` file
-    to see how this is accomplished.
+    to see how this is accomplished..
+
+    This training process is structured to be run within a Docker container in order to train on a single GPU unit.
+    Please review the documentation how to run the training and validation processes.
 
 """
 
@@ -24,10 +27,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 # Data Information
-model_name = 'lynx_lynx_taxon_classifier'
-img_path = os.path.join(os.getcwd(), 'data', 'taxon/felidae/lynx/lynx_lynx/')
-save_path = os.path.join(os.getcwd(), 'models/image/', model_name)
-checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/sub_species')
+model_name = ''
+img_path = ''
+save_path = ''
 
 # Model details
 img_size = 528
@@ -203,22 +205,46 @@ def plot_hist(hist, title):
     plt.savefig(resources_path)
 
 
-if __name__ == "__main__":
-    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+def train_model(file_name: str, dataset_path: str):
+    """
+    This model specifies the entire training process, and simplifies the model naming and dataset specification procedure for training.
 
-    # Import and generate dataset
-    train_ds, val_ds = import_dataset(img_path)
-    classes = len(train_ds.class_names)
+    Args:
+        file_name (str): The file name must have the following format. taxonomic name + _taxon_classifier. Example: `lynx_lynx_taxon_classifier`
+        dataset_path (str): The path to the taxonomic parent node within the `taxon` directory. Example" `felidae/lynx/lynx_lynx/`
+    """
+    setup_paths(file_name, dataset_path)  # Setup the model save and dataset paths
 
-    # Construct the model
-    model = construct_model(classes)
+    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))  # This will print out the number of GPU's available
 
-    # Train the model's top weights
-    model, hist = train_model_top_weights(model, train_ds, val_ds)
+    train_ds, val_ds = import_dataset(img_path)  # Import and generate dataset
+    classes = len(train_ds.class_names)  # Number of classes
 
-    try:
+    model = construct_model(classes)  # Construct the model
+
+    model, hist = train_model_top_weights(model, train_ds, val_ds)  # Train the model's top weights
+
+    try:  # Attempt to plot and save visualization of training and test data
         plot_hist(hist, "Lynx Lynx Classification Training")
     except:
         print('Not enough training epochs to generate display')
 
-    # model.save(save_path)
+
+def setup_paths(file_name: str, dataset_path: str):
+    """This method creates the correct file save and dataset access paths
+
+    This method directly modifies global path variables
+
+    Args:
+        file_name (str): The file name must have the following format. taxonomic name + _taxon_classifier. Example: `lynx_lynx_taxon_classifier`
+        dataset_path (str): The path to the taxonomic parent node within the `taxon` directory. Example" `felidae/lynx/lynx_lynx/`
+    """
+    global model_name, img_path, save_path
+    model_name = file_name
+    img_path = os.path.join(os.getcwd(), 'data', 'taxon/' + dataset_path)
+    save_path = os.path.join(os.getcwd(), 'models/image/', model_name)
+
+
+if __name__ == "__main__":
+    train_model(file_name='elephantidae_taxon_classifier',
+                dataset_path='elephantidae/')
