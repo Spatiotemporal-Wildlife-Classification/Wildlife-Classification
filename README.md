@@ -11,11 +11,11 @@ Any code changes to any of the image classification files do not require the ima
 copied into the container on execution. Any code changes are automatically picked up by the Docker container. 
 
 ### Download Docker Images
-The compressed docker images are located in the `docker` directory. To extract and load them, please do the following:
-1. Navigate into the project root on terminal.
-2. Load the docker images using the following commands
-    - `docker load -i docker/image_train.tar.gz`
-    - `docker load -i docker/image_validate.tar.gz`
+The docker images are packages in this repository, to download the latest train and validate packages execute the following: 
+```angular2html
+docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classification/image_train:latest
+docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classification/image_validate:latest
+```
 
 ### Train New Model
 1. Specify the name of the model and the path to the appropriate image directory in `src/models/image/taxonomic_modelling.py`
@@ -25,7 +25,10 @@ The compressed docker images are located in the `docker` directory. To extract a
 ```angular2html
 docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t model_train:latest
 ```
-You will see information updating you on the training process printed to terminal
+You will see information updating you on the training process printed to terminal/
+
+### Validate New Model
+
 
 
 

@@ -3,3 +3,7 @@ notebooks/
 resources/
 site/
 .git/
+models/
+docs/
+.github/
+.keras/
