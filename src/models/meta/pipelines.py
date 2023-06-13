@@ -1,12 +1,23 @@
-import pickle
+"""This file establishes the dynamic pipelines used to produce training, test, and validation sets from the dataset.
 
+   A dynamic pipeline accepts processed data, and transforms it into: training data, test data, validation data with
+   the specified labels. The pipelines account for the variable taxonomic levels and the encoding of the location
+   feature, to produce the above transformations.
+
+   Note, the encoding of the location feature occurs within the pipeline processes. Please review the Silhouette
+   score documentation for further information on the process.
+
+   Attributes:
+       root_path (str): The path to the project root.
+       data_path (str): The path to where the data is stored within the project
+       save_path (str): The path to where models and validation data (if created) is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`
+       validation_set_flag (bool): A boolean flag indicating whether a validation set should be created and saved. The validation set is saved to save_path. Each file will have suffixx `_validation.csv`
+"""
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+# Modelling
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
+
 from imblearn.over_sampling import RandomOverSampler
-
-
-from src.structure.Config import root_dir
 
 # General
 import numpy as np
@@ -17,337 +28,212 @@ import pandas as pd
 # Geolocation libraries
 from global_land_mask import globe
 
+# Config and local
+from src.structure.Config import root_dir
+import silhouette_k_means
 
-root_path = root_dir()
-data_path = '/data/processed/'
-# data_destination = '/notebooks/model_comparison_cache_2/'
-data_destination = '/models/meta_2/'
-model_destination = data_destination
+# Paths
+root_path = root_dir()  # Root path of the project
+data_path = '/data/processed/'  # Path to where data is stored
+save_path = '/models/meta/'  # '/notebooks/meta_modelling/model_comparison_cache/' to produce models for evaluation within the meta_data_model_comparison notebook
 
-# K-means information
-k_max = 60
-k_interval = 2
-k_init = 4
-
-
-def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
-    obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)
-    meta_df = pd.read_csv(root_path + data_path + meta_file, index_col=0)
-
-    obs_df = obs_df.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])
-    meta_df = meta_df.drop(columns=['lat', 'long', 'time'])
-
-    df = pd.merge(obs_df, meta_df, how='inner', left_index=True, right_index=True)
-    return df
+# Boolean Flags
+validation_set_flag = False
 
 
-def decision_tree_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df)
-    model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
+def decision_tree_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
+    """Method to create the train/set/validation data to be used by the decision tree/ random forest/ Adaboost models
+
+    Args:
+        df (DataFrame): The dataframe containing all data for each observation.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+        validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
+
+    Returns:
+        X (DataFrame): The features in a form suitable for direct use within the models.
+        y (Series): The labels for the corresponding observations as the correct taxonomic level.
+    """
+    k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
-def xgb_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df)
-    model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
+def xgb_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
+    """Method to create the train/set/validation data to be used by the XGBoost model.
+
+    Args:
+        df (DataFrame): The dataframe containing all data for each observation.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+        validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
+
+    Returns:
+        X (DataFrame): The features in a form suitable for direct use within the models.
+        y (Series): The labels for the corresponding observations as the correct taxonomic level.
+    """
+    k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y = xgb_pipeline(df, k_means, taxon_target, validation_file)
     return X, y
 
 
-def neural_network_data(df: pd.DataFrame, taxon_target: str, k_cluster, validation_file: str):
-    k_means = train_kmeans(df)
-    model_name = validation_file[:-14]
-    pickle.dump(k_means, open(root_path + model_destination + model_name + 'k_means.sav', 'wb'))
+def neural_network_data(df: pd.DataFrame, taxon_target: str, validation_file: str):
+    """Method to create the train/set/validation data to be used by the neural network model.
+
+    Args:
+        df (DataFrame): The dataframe containing all data for each observation.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+        validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.
+
+    Returns:
+        X (DataFrame): The features in a form suitable for direct use within the models.
+        y (Series): The labels for the corresponding observations as the correct taxonomic level.
+        classes (int): The number of classes data labels
+    """
+    k_means = silhouette_k_means.silhouette_process(df, validation_file)
     X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
-    return X, y, lb, classes
+    return X, y, classes
 
 
-## DECISION TREE PIPELINE ##
+def general_pipeline(df: pd.DataFrame, k_means: KMeans, taxon_target: str):
+    """Method performs general pipeline functions for all model types (Neural network, XGBoost, AdaBoost, Decision tree, Random Forest)
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+
+    Returns:
+        (DataFrame): A dataframe containing cleaned, transformed, and new data features for further specified processing depending on the model.
+    """
+    # Data Cleaning
+    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])  # Remove non-essential columns
+    df = df.dropna(subset=['taxon_species_name', 'public_positional_accuracy'])  # Remove null species names and positional accuracies
+    df = df[df['public_positional_accuracy'] <= 40000]  # Positional Accuracy Restriction
+    df = df.drop(columns=['public_positional_accuracy'])  # Drop the public positional accuracy column
+
+    # Transformations
+    df = df.apply(lambda x: sub_species_detection(x), axis=1)  # Generate subspecies labels
+    df = df.drop(columns=['scientific_name'])  # Drop the scientific name column
+
+    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()  # Remove species with less than 5 observations
+
+    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])  # Location encoding using K-means
+
+    df['land'] = 1  # All observations from dataset are terrestrial. For unknown datasets use the `land_mask()` method to automate the feature value
+
+    df = df.apply(lambda x: elevation_clean(x), axis=1)  # Clean elevation values. In aquatic observations, the max elevation is sea level 0m
+    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))  # If elevation is missing, interpolate with mean species elevation
+
+    df['hemisphere'] = (df['latitude'] >= 0).astype(int)  # Northern/ Southern hemisphere feature
+    df = df.drop(columns=['latitude', 'longitude']) # Remove longitude and latitude columns
+
+    df['observed_on'] = pd.to_datetime(df['observed_on'], format="%Y-%m-%d %H:%M:%S%z", utc=True)  # Datetime transform into datetime object
+    df['month'] = df['observed_on'].dt.month  # Month feature
+    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)  # Local time zone hour feature
+    df = day_night_calculation(df)  # Day/ night feature
+    df = df.apply(lambda x: season_calc(x), axis=1)  # Season feature into categorical values
+    df = ohe_season(df)  # One-hot-encode the categorical season values
+
+    return df
+
+
 def tree_pipeline(df, k_means, taxon_target, validation_file: str):
-    ## CLEAN UP##
+    """This method performs further data processing to structure and format it for use in a decision tree, random forest and adaboost models.
 
-    # Remove non-essential columns
-    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        validation_file (str): The name of file to store validation data. Informs model naming as well.
 
-    # Remove null species names
-    df = df.dropna(subset=['taxon_species_name'])
+    Returns:
+        X (DataFrame): A dataframe containing features in rows and observations in column ready for use as input features to the models for training and evaluation.
+        y (Series): The categorical labels of the associated observations at the correct taxonomic level specified.
+    """
+    df = general_pipeline(df, k_means, taxon_target)  # Perform general pipeline
 
-    # Drop null positional accuracies
-    df = df.dropna(subset=['public_positional_accuracy'])
+    df = df.drop(columns=['observed_on', 'time_zone'])  # Drop observed on column as date & time transformations are complete
 
-    # Positional Accuracy Restriction
-    df = df[df['public_positional_accuracy'] <= 40000]
-    df = df.drop(columns=['public_positional_accuracy'])
+    df = validation_set(df, taxon_target, validation_file)  # Create validation set for further testing
 
-    ## TRANSFORM ##
+    # Data formatting
+    taxon_y = df[taxon_target]  # Retrieve labels at taxonomic target level
 
-    # Generate sub-species and drop scientific name
-    df = df.apply(lambda x: sub_species_detection(x), axis=1)
-    df = df.drop(columns=['scientific_name'])
-
-    # Remove species with less than 5 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
-
-    # Location Centroid Feature
-    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
-
-    # Terrestrial vs Land Feature
-    df['land'] = 1
-
-    # Elevation Logical Path, dependent on land
-    df = df.apply(lambda x: elevation_clean(x), axis=1)
-    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))
-
-    # Northern and Southern Hemisphere OHE
-    df['hemisphere'] = (df['latitude'] >= 0).astype(int)
-    df = df.drop(columns=['latitude', 'longitude'])
-
-    # Datetime Transformation
-    df['observed_on'] = pd.to_datetime(df['observed_on'],
-                                       format="%Y-%m-%d %H:%M:%S%z",
-                                       utc=True)
-
-    # Month Feature
-    df['month'] = df['observed_on'].dt.month
-
-    # Hour Feature
-    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)
-
-    # Day/Night Feature
-    df = day_night_calculation(df)
-
-    # Season Feature
-    df = df.apply(lambda x: season_calc(x), axis=1)
-    df = ohe_season(df)
-
-    # Drop observed on column as date & time transformations are complete
-    df = df.drop(columns=['observed_on', 'time_zone'])
-
-    # Create validation set for further testing
-    df = validation_set(df, taxon_target, validation_file)
-
-    ## TRAIN & TEST DATA
-    # Retrieve labels
-    taxon_y = df[taxon_target]
-
-    # Sub-specie contains null values, if selected as target taxon. Remove
-    if taxon_y.isnull().any():
+    if taxon_y.isnull().any():  # If no taxonomic label is present, remove the observation
         df = df.dropna(subset=[taxon_target])
 
-    y = df[taxon_target]
+    y = df[taxon_target]  # Extract labels
     X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
                          'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
-                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])
+                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])  # Extract features only
 
-    # Resample dataset to reduce imbalance
-    X, y = over_sample(X, y)
-
+    X, y = over_sample(X, y)  # Resample dataset to reduce imbalance
     return X, y
 
 
-## XGBOOST PIPELINE ##
 def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
-    ## CLEAN UP##
+    """This method performs further data processing to structure and format it for use in the XGBoost model
 
-    # Remove non-essential columns
-    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url'])
+    This method makes use of the decison_tree_pipeline, simply encoding the labels in a One-Hot-Encoded (OHE) format
 
-    # Remove null species names
-    df = df.dropna(subset=['taxon_species_name'])
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        validation_file (str): The name of file to store validation data. Informs model naming as well.
 
-    # Drop null positional accuracies
-    df = df.dropna(subset=['public_positional_accuracy'])
+    Returns:
+        X (DataFrame): A dataframe containing features in rows and observations in column ready for use as input features to the models for training and evaluation.
+        y (Series): The OHE encoding of the observation labels at the correct taxonomic level specified.
+    """
+    X, y = tree_pipeline(df, k_means, taxon_target, validation_file)
 
-    # Positional Accuracy Restriction
-    df = df[df['public_positional_accuracy'] <= 40000]
-    df = df.drop(columns=['public_positional_accuracy'])
-
-    ## TRANSFORM ##
-
-    # Generate sub-species and rop scientific name
-    df = df.apply(lambda x: sub_species_detection(x), axis=1)
-    df = df.drop(columns=['scientific_name'])
-
-    # Remove species with less than 5 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
-
-    # Location Centroid Feature
-    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
-
-    # Terrestrial vs Land Feature
-    df['land'] = 1
-
-    # Elevation Logical Path, dependent on land
-    df = df.apply(lambda x: elevation_clean(x), axis=1)
-    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))
-
-    # Northern and Southern Hemisphere OHE
-    df['hemisphere'] = (df['latitude'] >= 0).astype(int)
-    df = df.drop(columns=['latitude', 'longitude'])
-
-    # Datetime Transformation
-    df['observed_on'] = pd.to_datetime(df['observed_on'],
-                                       format="%Y-%m-%d %H:%M:%S%z",
-                                       utc=True)
-
-    # Month Feature
-    df['month'] = df['observed_on'].dt.month
-
-    # Hour Feature
-    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)
-
-    # Day/Night Feature
-    df = day_night_calculation(df)
-
-    # Season Feature
-    df = df.apply(lambda x: season_calc(x), axis=1)
-    df = ohe_season(df)
-
-    # Drop observed on column as date & time transformations are complete
-    df = df.drop(columns=['observed_on', 'time_zone'])
-
-    # Create validation set for further testing
-    df = validation_set(df, taxon_target, validation_file)
-
-    ## TRAIN & TEST DATA
-    # Retrieve labels
-    taxon_y = df[taxon_target]
-
-    # Sub-specie contains null values, if selected as target taxon. Remove
-    if taxon_y.isnull().any():
-        df = df.dropna(subset=[taxon_target])
-
-    y = df[taxon_target]
-    X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
-                         'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
-                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])
-
-    # Resample dataset to reduce imbalance
-    X, y = over_sample(X, y)
-
-    # Encode labels
-    classes = y.nunique()
-    lb = LabelBinarizer()
-    lb.fit(y)
-    y = lb.transform(y)
-
-
-    # Binary check
-    if classes == 2:
-        y = nn_binary_label_handling(y)
-    print(y[0])
+    y, classes = ohe_labels(y)  # OHE labels
 
     return X, y
 
 
-## NEURAL NETWORK PIPELINE
 def nn_pipeline(df, k_means, taxon_target, validation_file: str):
-    ## CLEAN UP##
+    """This method performs further data processing to structure and format it for use in the Neural Network model
 
-    # Remove non-essential columns
-    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'license', 'image_url',
-                            'weathercode_daily', 'weathercode_hourly'])
+    This method performs similar processing steps to both the decision tree and XGBoost pipelines.
+    However, categorical variables are required to be OHE and the resulting features are normalized for use in the model.
 
-    # Drop null positional accuracies
-    df = df.dropna(subset=['public_positional_accuracy'])
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        k_means (KMeans): The trained K-means model that performs the location encoding
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        validation_file (str): The name of file to store validation data. Informs model naming as well.
 
-    # Positional Accuracy Restriction
-    df = df[df['public_positional_accuracy'] <= 40000]
-    df = df.drop(columns=['public_positional_accuracy'])
+    Returns:
+        X (DataFrame): A dataframe containing features in rows and observations in column ready for use as input features to the models for training and evaluation. These features are normalized.
+        y (Series): The OHE encoding of the observation labels at the correct taxonomic level specified.
+    """
+    df = general_pipeline(df, k_means, taxon_target)
 
-    ## TRANSFORM ##
+    # Generate dummy variables for categorical features
+    df = pd.get_dummies(df, prefix='loc', columns=['location_cluster'], drop_first=True)  # OHE location cluster feature
+    df = pd.get_dummies(df, prefix='hr', columns=['hour'], drop_first=True)  # OHE hour feature
+    df = pd.get_dummies(df, prefix='mnth', columns=['month'], drop_first=True)  # OHE month feature
 
-    # Generate sub-species and rop scientific name
-    df = df.apply(lambda x: sub_species_detection(x), axis=1)
-    df = df.drop(columns=['scientific_name'])
+    df = df.drop(columns=['observed_on', 'time_zone'])  # Drop observed on column as date & time transformations are complete
+    df = validation_set(df, taxon_target, validation_file)  # Create validation set for further testing
 
-    # Remove species with less than 10 observations
-    df = df[df.groupby(taxon_target).common_name.transform('count') >= 5].copy()
+    # Data formatting
+    taxon_y = df[taxon_target]  # Retrieve labels at taxonomic target level
 
-    # Location Centroid Feature
-    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
-    df = pd.get_dummies(df,
-                        prefix='loc',
-                        columns=['location_cluster'],
-                        drop_first=True)
-
-    # Terrestrial vs Land Feature
-    df['land'] = 1
-
-    # Elevation Logical Path, dependent on land
-    df = df.apply(lambda x: elevation_clean(x), axis=1)
-    df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))
-
-    # Northern and Southern Hemisphere OHE
-    df['hemisphere'] = (df['latitude'] >= 0).astype(int)
-    df = df.drop(columns=['latitude', 'longitude'])
-
-    # Datetime Transformation
-    df['observed_on'] = pd.to_datetime(df['observed_on'],
-                                           format="%Y-%m-%d %H:%M:%S%z",
-                                           utc=True)
-
-    # Month Feature
-    df['month'] = df['observed_on'].dt.month
-
-    # Hour Feature
-    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)
-    df = pd.get_dummies(df,
-                        prefix='hr',
-                        columns=['hour'],
-                        drop_first=True)
-
-    # Day/Night Feature
-    df = day_night_calculation(df)
-
-    # Season Feature
-    df = df.apply(lambda x: season_calc(x), axis=1)
-    df = ohe_season(df)
-
-    # Season is dependent on month, hence month ohe here
-    df = pd.get_dummies(df,
-                        prefix='mnth',
-                        columns=['month'],
-                        drop_first=True)
-
-    # Drop observed on column as date & time transformations are complete
-    df = df.drop(columns=['observed_on', 'time_zone'])
-
-    # Create validation set for further testing
-    df = validation_set(df, taxon_target, validation_file)
-
-
-    ## TRAIN & TEST DATA
-    # Retrieve labels
-    taxon_y = df[taxon_target]
-
-    # Sub-specie contains null values, if selected as target taxon. Remove
-    if taxon_y.isnull().any():
+    if taxon_y.isnull().any():  # If no taxonomic label is present, remove the observation
         df = df.dropna(subset=[taxon_target])
 
-    y = df[taxon_target]
+    y = df[taxon_target]  # Extract labels
     X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
-                             'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
-                             'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])
+                         'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
+                         'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])  # Extract features only
 
-    X, y = over_sample(X, y)
+    X, y = over_sample(X, y)  # Resample dataset to reduce imbalance
 
+    y, classes = ohe_labels(y)  # OHE labels
 
-    # Encode labels
-    classes = y.nunique()
-    lb = LabelBinarizer()
-    lb.fit(y)
-    y = lb.transform(y)
-
-    # Binary check
-    if classes == 2:
-        y = nn_binary_label_handling(y)
-
-
-    # Min-max normalize data
+    # Normalize data using min-max approach
     norm_columns = ['apparent_temperature', 'apparent_temperature_max', 'apparent_temperature_min',
                     'cloudcover', 'cloudcover_high', 'cloudcover_low', 'cloudcover_mid', 'dewpoint_2m',
                     'diffuse_radiation', 'direct_radiation', 'elevation', 'et0_fao_evapotranspiration_daily',
@@ -360,90 +246,145 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
                     'winddirection_100m', 'winddirection_10m', 'winddirection_10m_dominant',
                     'windgusts_10m', 'windgusts_10m_max', 'windspeed_100m', 'windspeed_10m',
                     'windspeed_10m_max']
-
     X[norm_columns] = StandardScaler().fit_transform(X[norm_columns])
-    return X, y, lb, classes
+    return X, y, classes
 
 
-## KMEANS ##
-def train_kmeans(df: pd.DataFrame):
-    location_df = df[['latitude', 'longitude']]
+def ohe_labels(y):
+    """This method encodes the taxonomic labels in a One-hot-encoded format.
 
-    sil_scores = calculate_optimal_k(location_df)
-    k_values = range(k_init, k_max + k_interval, k_interval)
+    Special consideration is enforced for binary labels such that the resulting ohe labels are of the form [0, 1] or [1, 0]
 
-    silhouette_optimal = np.argmax(sil_scores)
-    k_value = (k_values[silhouette_optimal])
-    print("K-value: ", k_value)
+    Args:
+        y (Series): The categorical taxonomic labels
 
-    k_means = KMeans(n_clusters=k_value, n_init=10)
-    k_means.fit(location_df)
-    return k_means
+    Returns:
+        (Series): OHE taxonomic labels
+    """
+    classes = y.nunique()  # OHE encode the labels
+    lb = LabelBinarizer()
+    lb.fit(y)
+    y = lb.transform(y)
 
-
-# Use the Silhouette score to determine an optimal k
-def calculate_optimal_k(data):
-    sil = []
-
-    k = k_init
-    while k <= k_max and k < len(data):
-        k_means = KMeans(n_clusters=k, n_init=10).fit(data)
-        labels = k_means.labels_
-
-        sil.append(silhouette_score(data, labels))
-        print(k)
-        k += k_interval
-    return sil
+    if classes == 2:  # Modification required if only two classes are present
+        y = nn_binary_label_handling(y)
+    return y, classes
 
 
-## VALIDATION SET ##
-def validation_set(df: pd.DataFrame, target_taxon: str, file_name: str):
-    # Ensure at least 4 of each species are present in evaluation dataset
-    grouped = df.groupby([target_taxon]).sample(frac=0.2, random_state=2)
-    # Save evaluation dataset
-    grouped.to_csv(root_path + data_destination + file_name)
+def validation_set(df: pd.DataFrame, taxon_target: str, file_name: str):
+    """This method creates a validation set from the provided dataframe for further model evaluation
 
-    # Remove evaluation observations from df
-    df = df.drop(grouped.index)
+    The validation set comprises 20% of each class's composition from the dataframe.
+    The observations included in the validation set are removed from the dataframe.
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        file_name (str): The name of the file in which the validation data will be stored.
+
+    Returns:
+        (DataFrame): The dataframe with the validation observations removed
+    """
+    if validation_set_flag:
+        grouped = df.groupby([taxon_target]).sample(frac=0.2, random_state=2)  # 20% of each class goes to the validation set
+        grouped.to_csv(root_path + save_path + file_name)  # Save evaluation dataset
+
+        df = df.drop(grouped.index)  # Remove validation observations from the current df through their index
     return df
 
 
-## OVER SAMPLING ##
 def over_sample(X, y):
-    ros = RandomOverSampler(sampling_strategy='minority',
-                            random_state=2)
+    """This method performs oversampling on the dataset in order to provide a more balanced data distribution, to combat the tail-end distribution (characteristic of wildlife data).
+
+    Note, the oversampling aimed to increase the quantity of observations in minority classes to achieve a more even distribution.
+
+    Args:
+        X (DataFrame): The dataset's observation features to be used in model training and evaluation.
+        y (Series): The label for each observation (still categorical)
+
+    Returns:
+         X_res (DataFrame): The features dataset with additional observations due to the oversampling
+         y_res (Series): An associated dataframe containing the observation labels, including for the additional observations created.
+    """
+    ros = RandomOverSampler(sampling_strategy='minority', random_state=2)
     X_res, y_res = ros.fit_resample(X, y)
     return X_res, y_res
 
 
-## PIPELINE FUNCTIONS ##
+# PIPELINE FUNCTIONS
+def aggregate_data(observation_file: str, meta_file: str) -> pd.DataFrame:
+    """This method aggregates the original observations with the collected metadata to form a single cohesive dataframe
+
+    Args:
+        observation_file (str): The file name, that points to the file containing the processed iNaturalist observations
+        meta_file (str): The file name, that points to the file containing the metadata for the processed iNaturalist observations
+    """
+    obs_df = pd.read_csv(root_path + data_path + observation_file, index_col=0)  # Read in the csv files
+    meta_df = pd.read_csv(root_path + data_path + meta_file, index_col=0)
+
+    obs_df = obs_df.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])  # Drop repeated/ non-essential columns
+    meta_df = meta_df.drop(columns=['lat', 'long', 'time'])
+
+    df = pd.merge(obs_df, meta_df, how='inner', left_index=True, right_index=True)  # Merge the two dataframes
+    return df
+
 
 def nn_binary_label_handling(y):
+    """Method handles the OHE of a binary case to ensure that OHE values returned are of the form [1, 0] or [0, 1].
+
+    Args:
+        y (Series): The labels in the form of either 1 or 0 to be transformed into a binary OHE
+
+    Returns:
+        (Series): Returns a Series containing OHE labels of the form [1, 0] or [0, 1]
+    """
     return np.hstack((1 - y.reshape(-1, 1), y.reshape(-1, 1)))
 
 
 def sub_species_detection(x):
-    name_count = len(x['scientific_name'].split())
-    x['sub_species'] = np.nan
+    """Method uses the scientific name of observations to extract the subspecies name when there are more than
+    three words present (3 names describe a subspecies)
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'scientific_name' column.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with an additional column value 'sub_species' if it could be extracted from the scientific name.
+    """
+    name_count = len(x['scientific_name'].split())  # Determine the number of names in the scientific name
+    x['sub_species'] = np.nan  # Initialize the subspecies value
     if name_count >= 3:
         x['sub_species'] = x['scientific_name']
     return x
 
 
-def ohe_month(df):
-    cats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+def ohe_month(df: pd.DataFrame):
+    """Method performs OHE on the month feature of each observation
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+    """
+    cats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]  # Initialise the possible categories
     cat_type = CategoricalDtype(categories=cats)
 
     df['season'] = df['season'].astype(cat_type)
 
-    df = pd.get_dummies(df,
-                        prefix='szn',
-                        columns=['season'],
-                        drop_first=True)
+    df = pd.get_dummies(df, prefix='szn', columns=['season'], drop_first=True)  # Perform OHE
     return df
 
 
 def land_mask(x):
+    """This method determines if the observation coordinates are terrestrial or aquatic in nature.
+
+    This method uses the Globe library to evaluate the location against a land mask.
+    If the observation is terrestrial a value of 1 is given. If not 0 is given.
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'latitude' and 'longitude' columns.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with an additional binary column value 'land'
+    """
     latitude = x['latitude']
     longitude = x['longitude']
     x['land'] = int(globe.is_land(latitude, longitude))
@@ -451,14 +392,34 @@ def land_mask(x):
 
 
 def elevation_clean(x):  # If observation is terrestrial, 0.0m elevation requires modification
+    """This method performs a logical check on each observation's elevation based on the land feature value.
+
+    The Open-Meteo API sets elevation to be 0m if the elevation is unknown.
+    If the elevation is 0m and the land value is 1 (indicating a terrestrial sighting), then the elevation is set to NaN value.
+    This NaN value will be modified within the pipeline with the species average elevation
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'land' column.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with the 'elevation' feature adjusted.
+    """
     land = x['land']
     elevation = x['elevation']
+
     if land == 1 and elevation == 0:
         x['elevation'] = np.nan
     return x
 
 
 def localize_sunrise_sunset(x):
+    """This method localizes the sunrise and sunset times based on the time zone to aid in the light/ dark feature.
+    Args:
+        x (DataFrame row): This variable represents a dataframe row containing the 'sunrise' and 'sunset' columns.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with the 'sunrise' and 'sunset' features adjusted.
+    """
     timezone = pytz.timezone(x['time_zone'])
     x['sunrise'] = x['sunrise'].replace(tzinfo=timezone)
     x['sunset'] = x['sunset'].replace(tzinfo=timezone)
@@ -466,18 +427,37 @@ def localize_sunrise_sunset(x):
 
 
 def dark_light_calc(x):
-    timezone = pytz.timezone(x['time_zone'])
+    """This method performs the dark/ light feature creation based on the time of observation and the sunrise & sunset times
+    Args:
+        x (DataFrame row): This variable represents a dataframe row.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with a new binary 'light' column
+    """
+    timezone = pytz.timezone(x['time_zone'])  # Extract the timezone
     sunrise_utc = x['sunrise']
     sunset_utc = x['sunset']
 
-    observ_time = x['observed_on'].replace(tzinfo=pytz.utc)
-    observ_time = x['observed_on'].astimezone(timezone)
+    observ_time = x['observed_on'].replace(tzinfo=pytz.utc)  # Place time zone info with utc (this is required to localize the timezone in the next step)
+    observ_time = x['observed_on'].astimezone(timezone)  # Generate the observed timezone in local time
 
-    x['light'] = int(sunrise_utc <= observ_time <= sunset_utc)
+    x['light'] = int(sunrise_utc <= observ_time <= sunset_utc)  # Logical operators cast into integer form create the binary light (1) or dark (0) value
     return x
 
 
-def day_night_calculation(df):
+def day_night_calculation(df: pd.DataFrame):
+    """This method provides the overall process to create the light/ dark feature.
+
+    This method converts the time of observation, sunrise, and sunset into local times.
+    Local times are compared to determine light or dark.
+    The sunrise and sunset columns are removed as they are no longer required.
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+
+    Returns:
+        (DataFrame): The dataframe with the additional light column, and the sunrise & sunset columns removed.
+    """
     # Convert to datetime objects. Remove NaT values from resulting transformation
     df['sunrise'] = pd.to_datetime(df['sunrise'],
                                    format="%Y-%m-%dT%H:%M",
@@ -487,11 +467,9 @@ def day_night_calculation(df):
                                   errors='coerce')
     df = df.dropna(subset=['sunrise', 'sunset'])
 
-    # Localize sunrise and sunset times to be timezone aware
-    df = df.apply(lambda x: localize_sunrise_sunset(x), axis=1)
+    df = df.apply(lambda x: localize_sunrise_sunset(x), axis=1)  # Localize sunrise and sunset times to be timezone aware
 
-    # Dark/ light calc based on sunrise and sunset times
-    df = df.apply(lambda x: dark_light_calc(x), axis=1)
+    df = df.apply(lambda x: dark_light_calc(x), axis=1)  # Dark/ light calc based on sunrise and sunset times
 
     df = df.drop(columns=['sunrise', 'sunset'])
 
@@ -499,15 +477,24 @@ def day_night_calculation(df):
 
 
 def season_calc(x):
+    """This method determines the season in which an observation occurred based on the month of observation
+
+    Args:
+        x (DataFrame row): This variable represents a dataframe row.
+
+    Returns:
+        (DataFrame row): The method returns the dataframe row with a new season feature
+    """
     hemisphere = x['hemisphere']
     month = x['month']
     season = 0
+
     if hemisphere == 1:  # Northern hemisphere
-        winter, spring, summer, autumn = [12, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]
+        winter, spring, summer, autumn = [12, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]  # Order of months starting with winter season
         seasons = [winter, spring, summer, autumn]
         season = north_south_calc(month, seasons)
-    else:
-        winter, spring, summer, autumn = [6, 7, 8], [9, 10, 11], [12, 1, 2], [3, 4, 5]
+    else:  # Southern hemisphere
+        winter, spring, summer, autumn = [6, 7, 8], [9, 10, 11], [12, 1, 2], [3, 4, 5]  # Order of months starting with winter seasons
         seasons = [winter, spring, summer, autumn]
         season = north_south_calc(month, seasons)
 
@@ -516,6 +503,17 @@ def season_calc(x):
 
 
 def north_south_calc(month: int, seasons: list):
+    """This method determined the current season when provided with a month and a list of seasonal months.
+
+     Note, this method is used within the `season_calc()` method.
+
+     Args:
+         month (int): The integer value of the month of sighting [1-12]
+         seasons (list): The list of months seperated by season, starting with winter. Example of northern hemisphere [[12, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]]
+
+    Returns:
+        (str): The season categorical variable
+     """
     seasons_dict = {0: 'Winter', 1: 'Spring', 2: 'Summer', 3: 'Autumn'}
     season_id = 0
     for i in range(len(seasons)):
@@ -525,7 +523,15 @@ def north_south_calc(month: int, seasons: list):
 
 
 def ohe_season(df):
-    cats = ['Winter', 'Spring', 'Summer', 'Autumn']
+    """This method OHE the season categorical feature
+
+    Args:
+        df (DataFrame): The dataframe containing all observation data from the processed data directory.
+
+    Returns:
+        (DataFrame): The dataframe with the season feature OHE (this results in additional columns within the dataframe)
+    """
+    cats = ['Winter', 'Spring', 'Summer', 'Autumn']  # Season categorical variables to expect
     cat_type = CategoricalDtype(categories=cats)
 
     df['season'] = df['season'].astype(cat_type)
