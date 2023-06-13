@@ -1,12 +1,18 @@
 # Metadata Modelling
 
+Please keep in mind the models are trained to form parent node classifiers within the cascading taxonomic structure. 
+
 The metadata modelling process is accomplished through the below scripts:
-Please keep in mind the models are trained to form parent node classifiers within the cascading taxonomic structure.
+
 
 ### [Pipeline](../../src/models/meta/pipeline.md)
 This file performs data cleaning, transformation, and structuring for use within the metadata models.
 
-### Model Training
+### [Model Training](../../src/models/meta/training.md)
+This file performs all metadata classification model training. 
+Specifically this file, performs metadata classification training at all taxonomic levels across all proposed models. 
+This results in 5 complete cascading taxonomic classifiers that are compared at each taxonomic level to determine the most robust
+metadata classifier. For the model comparison, please review `notebooks/meta_modelling/meta_data_model_comparison.ipynb`
 
 ### [Neural Network](../../src/models/meta/neural_network.md)
 The neural network metadata model training and evaluation process. 

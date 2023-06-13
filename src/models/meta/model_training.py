@@ -245,7 +245,7 @@ def model_selection_execution(model: str,
         training_history (str): File name at which to save the model training history.
         validation_file (str): File name at which to save the validation dataset.
     Returns:
-        (None)
+        (None): This method returns nothing. The return statement was used to ensure case stopping.
     """
     match model:
         case 'Neural network':
