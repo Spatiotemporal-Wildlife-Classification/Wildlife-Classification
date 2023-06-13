@@ -134,6 +134,7 @@ def train_model_top_weights(model: Model, train_ds: tf.data.Dataset, val_ds: tf.
 
     The dataset is weighted to achieve a balanced impact of each class on the model training.
     This is used to combat the long-tail distribution of the dataset.
+    A best model save policy is created so only the best model from the training epochs is saved.
 
     Args:
         model (Model): The crated and prepared EfficientNet-B6 model with all but the top layers frozen, for training on the provided dataset.
@@ -163,10 +164,11 @@ def train_model_top_weights(model: Model, train_ds: tf.data.Dataset, val_ds: tf.
     steps = int(len(train_ds) / batch_size)  # Specify training specifics. The calculation of steps and validation steps speeds up training
     validation_steps = int(0.05 * len(train_ds))
 
-    if steps == 0:
+    if steps == 0:  # Due to varying dataset sizes, the conditionals determine if steps or validation steps are under 1 and correct for it.
         steps = 1
     if validation_steps == 0:
         validation_steps = 1
+
     print("Steps per epoch: ", steps)
     print("Validation steps: ", validation_steps)
     hist = model.fit(train_ds,
@@ -181,16 +183,23 @@ def train_model_top_weights(model: Model, train_ds: tf.data.Dataset, val_ds: tf.
 
 
 def plot_hist(hist, title):
+    """This method plots the accuracy and the validation set accuracy over the number of epochs and saves the figure.
+
+    Args:
+        hist (dict): A dictionary containing the training accuracy and testing accuracies per epoch
+    """
     plt.plot(hist.history["accuracy"])
     plt.plot(hist.history['val_accuracy'])
     plt.title(title)
     plt.ylabel("Accuracy (%)")
     plt.xlabel("Epoch")
     plt.legend(["Train", "Validation"])
-    plt.show()
-    save_title = title.replace(" ", "_")
+    plt.show()  # Show the model
+
+    save_title = title.replace(" ", "_")  # Prepare the figure save name
     save_title = save_title.lower()
-    resources_path = os.path.join(os.getcwd(), 'resources', save_title + '.jpg')
+
+    resources_path = os.path.join(os.getcwd(), 'resources', save_title + '.jpg')  # Save the figure
     plt.savefig(resources_path)
 
 
