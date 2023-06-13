@@ -3,7 +3,6 @@ Bachelor's thesis investigating **if** and **how** observation **spatiotemporal 
 existing **wildlife image classification** processes. 
 
 # Development
-
 ## Image Classification
 The image classification models executes model training and validation from two separate Docker images. 
 This allows for easy model training and validation using a GPU unit, on the same image as originally run. 
