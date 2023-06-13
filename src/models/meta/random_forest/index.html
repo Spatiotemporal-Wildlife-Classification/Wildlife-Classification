@@ -1,0 +1,683 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+    
+    
+      
+        <title>Random Forest Model - Spatiotemporal Wildlife Classification Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#random-forest-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-header__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spatiotemporal Wildlife Classification Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Random Forest Model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-nav__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Spatiotemporal Wildlife Classification Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        Code Documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../dataset/" class="md-nav__link">
+        Dataset
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../cascading_ensemble_classifier/" class="md-nav__link">
+        Novel Cascading Ensemble Classifier
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../results/" class="md-nav__link">
+        Results
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../thesis/" class="md-nav__link">
+        Thesis report
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.random_forest" class="md-nav__link">
+    src.models.meta.random_forest
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.random_forest.random_forest_process" class="md-nav__link">
+    random_forest_process()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.random_forest.train_random_forest" class="md-nav__link">
+    train_random_forest()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="random-forest-model">Random Forest Model</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="src.models.meta.random_forest"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This file creates and trains the Random Forest metadata classification model.
+The Random Forest Classification model performs hyperparameter tuning on the tree depth used for each estimator in
+the ensemble method.
+The tree depth was from 1 to the number of input features. Input features are variable due to the cascading
+taxonomic structure.
+The process makes use of 5-fold cross-validation to evaluate the performance for each model.
+A best-model save policy is enforced, using the mean balanced accuracy as the evaluating metric</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>root_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The path to the project root.</p></td>
+        </tr>
+        <tr>
+          <td><code>data_destination</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The path to where the decision tree model and its training accuracy is saved.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.random_forest.random_forest_process" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">random_forest_process</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">taxon_target</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">score_file</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method specified the Random Forest modelling process</p>
+<p>Specifically this method, calls the required pipeline (Decision tree pipeline) to generate the features and labels required for training.
+Then, calls the training process to use the data.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>The dataframe containing all data for each observation.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>taxon_target</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model_name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The name of the model type being trained. In this case 'Random Forest'.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>score_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The filename of where the training data will be stored. This will have the same location as where the model is saved.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>validation_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The name of the file where the validation data will be stored. Also informs the name of the saved models.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/random_forest.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">random_forest_process</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">taxon_target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">score_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method specified the Random Forest modelling process</span>
+
+<span class="sd">        Specifically this method, calls the required pipeline (Decision tree pipeline) to generate the features and labels required for training.</span>
+<span class="sd">        Then, calls the training process to use the data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (DataFrame): The dataframe containing all data for each observation.</span>
+<span class="sd">            taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</span>
+<span class="sd">            model_name (str): The name of the model type being trained. In this case &#39;Random Forest&#39;.</span>
+<span class="sd">            score_file (str): The filename of where the training data will be stored. This will have the same location as where the model is saved.</span>
+<span class="sd">            validation_file (str): The name of the file where the validation data will be stored. Also informs the name of the saved models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pipelines</span><span class="o">.</span><span class="n">decision_tree_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">taxon_target</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">)</span>   <span class="c1"># Processing and formatting</span>
+    <span class="n">train_random_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">score_file</span><span class="p">)</span>  <span class="c1"># Training and evaluation</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.random_forest.train_random_forest" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">train_random_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">score_file</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method performs the Random Forest training and hyperparameter tuning.</p>
+<p>Hyperparameter tuning aims to determine the optimal tree depth for each estimator within the ensemble method, to
+produce optimal classification models.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>X</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>The input features to the decision tree</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>y</code></td>
+          <td>
+                <code>Series</code>
+          </td>
+          <td><p>The categorical taxonomic labels of the corresponding observations to the features.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model_name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The name of the model type being trained. In this case 'XGBoost'.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>score_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The filename of where the training data will be stored.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/random_forest.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">train_random_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">score_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method performs the Random Forest training and hyperparameter tuning.</span>
+
+<span class="sd">    Hyperparameter tuning aims to determine the optimal tree depth for each estimator within the ensemble method, to</span>
+<span class="sd">    produce optimal classification models.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X (DataFrame): The input features to the decision tree</span>
+<span class="sd">        y (Series): The categorical taxonomic labels of the corresponding observations to the features.</span>
+<span class="sd">        model_name (str): The name of the model type being trained. In this case &#39;XGBoost&#39;.</span>
+<span class="sd">        score_file (str): The filename of where the training data will be stored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">depth_limit</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>  <span class="c1"># Determine maximum depth as the number of input features</span>
+    <span class="n">depth_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">depth_limit</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Generate the tree depth range with an increment of 2</span>
+    <span class="n">best_accuracy</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Best balanced accuracy holder initialized</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Scores holder</span>
+
+    <span class="k">for</span> <span class="n">depth</span> <span class="ow">in</span> <span class="n">depth_range</span><span class="p">:</span>  <span class="c1"># Iterate through the tree depth range</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Weight the training by presence of each class.</span>
+        <span class="n">weight_values</span> <span class="o">=</span> <span class="n">compute_class_weight</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">weight_values</span><span class="p">))</span>
+
+        <span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># Create Random Forest classifier</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span>
+                                <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+                                <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+                                <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;balanced_accuracy&#39;</span><span class="p">)</span>  <span class="c1"># Train and evaluate using 5-fold cross-validation</span>
+
+        <span class="n">score_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>  <span class="c1"># Average the balanced accuracy from the 5 folds</span>
+        <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score_mean</span><span class="p">)</span>  <span class="c1"># Save the mean balanced accuracy</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth </span><span class="si">{</span><span class="n">depth</span><span class="si">}</span><span class="s2"> out of </span><span class="si">{</span><span class="n">depth_limit</span><span class="si">}</span><span class="s2">, generates </span><span class="si">{</span><span class="n">score_mean</span><span class="si">}</span><span class="s2"> accuracy&quot;</span><span class="p">)</span>
+
+        <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># Refit the model in case of saving</span>
+
+        <span class="k">if</span> <span class="n">best_accuracy</span> <span class="o">&lt;</span> <span class="n">score_mean</span><span class="p">:</span>  <span class="c1"># Best model save policy comparing the best mean score from the 5-fold cross-validation</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">root_path</span> <span class="o">+</span> <span class="n">data_destination</span> <span class="o">+</span> <span class="n">model_name</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+
+    <span class="n">write_scores_to_file</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="p">[</span><span class="o">*</span><span class="n">depth_range</span><span class="p">],</span> <span class="n">score_file</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

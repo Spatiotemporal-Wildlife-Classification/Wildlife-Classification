@@ -1,0 +1,809 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+    
+    
+      
+        <title>Silhouette Score Location Encoding - Spatiotemporal Wildlife Classification Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#silhouette-score-location-encoding" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-header__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spatiotemporal Wildlife Classification Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Silhouette Score Location Encoding
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-nav__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Spatiotemporal Wildlife Classification Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        Code Documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../dataset/" class="md-nav__link">
+        Dataset
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../cascading_ensemble_classifier/" class="md-nav__link">
+        Novel Cascading Ensemble Classifier
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../results/" class="md-nav__link">
+        Results
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../thesis/" class="md-nav__link">
+        Thesis report
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.silhouette_k_means" class="md-nav__link">
+    src.models.meta.silhouette_k_means
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.silhouette_k_means.calculate_optimal_k" class="md-nav__link">
+    calculate_optimal_k()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.silhouette_k_means.save_k_means" class="md-nav__link">
+    save_k_means()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.silhouette_k_means.silhouette_process" class="md-nav__link">
+    silhouette_process()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.silhouette_k_means.train_kmeans" class="md-nav__link">
+    train_kmeans()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="silhouette-score-location-encoding">Silhouette Score Location Encoding</h1>
+<p>TODO Add link to Sil Score explanation page</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="src.models.meta.silhouette_k_means"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This file automates the encoding of observation location metadata features through the use of K-means clustering</p>
+<p>In order to automate the selection of the number of clusters to best describe the locations of the provided data,
+a Silhouette score is created across a set range of cluster values. The global maximum silhouette score is selected as the
+optimal number of centroids best fitting the data.
+The Silhouette score calculates the mean intra-cluster distance and the mean nearest-cluster distance.
+For more information on the Silhouette score please read the documentation provided by sklearn here: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html</p>
+<p>This file, provides methods to handle the automated selection of the number of centroids and model saving.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>k_max</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>The maximum number of centroids to be considered within the K-means algorithm performing location encoding.</p></td>
+        </tr>
+        <tr>
+          <td><code>k_interval</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>The centroid increasing interval so from k_init to k_max intervals of k_interval are used.</p></td>
+        </tr>
+        <tr>
+          <td><code>k_init</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>The initial number of centroids to be considered within the K-means algorithm performing location encoding</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.silhouette_k_means.calculate_optimal_k" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate_optimal_k</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method performs the Silhouette score calculations, creating a list of Silhouette scores for the range of centroids</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>data</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>A  dataframe containing the latitude and longitude columns.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>A list of Silhouette scores aligned with the range of centroids.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/silhouette_k_means.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_optimal_k</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method performs the Silhouette score calculations, creating a list of Silhouette scores for the range of centroids</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (DataFrame): A  dataframe containing the latitude and longitude columns.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of Silhouette scores aligned with the range of centroids.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sil</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="n">k_init</span>
+    <span class="k">while</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">k_max</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">k_means</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># Train model with k centroids</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">k_means</span><span class="o">.</span><span class="n">labels_</span>
+
+        <span class="n">sil</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>  <span class="c1"># Append model&#39;s Silhouette score to the list</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="n">k_interval</span>  <span class="c1"># Increase k by the interval</span>
+    <span class="k">return</span> <span class="n">sil</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.silhouette_k_means.save_k_means" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">save_k_means</span><span class="p">(</span><span class="n">k_means</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method saves the provided K-means model according to the Pipeline save path.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>k_means</code></td>
+          <td>
+                <code><span title="sklearn.cluster.KMeans">KMeans</span></code>
+          </td>
+          <td><p>The trained K-means model to be saved.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model_name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The name of the file in which the model will be saved.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/silhouette_k_means.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span>
+<span class="normal">98</span>
+<span class="normal">99</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">save_k_means</span><span class="p">(</span><span class="n">k_means</span><span class="p">:</span> <span class="n">KMeans</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method saves the provided K-means model according to the Pipeline save path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        k_means (KMeans): The trained K-means model to be saved.</span>
+<span class="sd">        model_name (str): The name of the file in which the model will be saved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">k_means</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">pipelines</span><span class="o">.</span><span class="n">root_path</span> <span class="o">+</span> <span class="n">pipelines</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="n">model_name</span> <span class="o">+</span> <span class="s1">&#39;k_means.sav&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.silhouette_k_means.silhouette_process" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">silhouette_process</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method defines the entire process of automating the centroid selection and returning the model created k-means model</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>The dataframe containing each observation and its associated dataframe, including the latitude and longitude location.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>validation_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The name of the validation dataset file. This filename will be augmented to provide a name for the saved K-means model.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>K-means model</code>
+          </td>
+          <td><p>Returns a trained K-means model with the optimal number of centroids determined by the Silhouette score.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/silhouette_k_means.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">silhouette_process</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method defines the entire process of automating the centroid selection and returning the model created k-means model</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (DataFrame): The dataframe containing each observation and its associated dataframe, including the latitude and longitude location.</span>
+<span class="sd">        validation_file (str): The name of the validation dataset file. This filename will be augmented to provide a name for the saved K-means model.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (K-means model): Returns a trained K-means model with the optimal number of centroids determined by the Silhouette score.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">k_means</span> <span class="o">=</span> <span class="n">train_kmeans</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>  <span class="c1">#Train the K-means algorithm across the range of centroids and determine optimal centroids</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="n">validation_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">14</span><span class="p">]</span>  <span class="c1"># Extract model name from the validation name</span>
+    <span class="n">save_k_means</span><span class="p">(</span><span class="n">k_means</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>  <span class="c1"># Save the optimal model</span>
+    <span class="k">return</span> <span class="n">k_means</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.silhouette_k_means.train_kmeans" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">train_kmeans</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method trains the K-means models across the range of centroids and determines the optimal centroids using the Silhouette score.</p>
+<p>For more information on how the Silhouette score works, please review <code>notebooks/meta_modelling/location_feature_k_means_automation</code> notebook.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>The dataframe containing all observation features including the latitude and longitude location.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>K-means model</code>
+          </td>
+          <td><p>The optimal trained K-means model as determined by the global maximum Silhouette score</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/silhouette_k_means.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">train_kmeans</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method trains the K-means models across the range of centroids and determines the optimal centroids using the Silhouette score.</span>
+
+<span class="sd">    For more information on how the Silhouette score works, please review `notebooks/meta_modelling/location_feature_k_means_automation` notebook.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (DataFrame): The dataframe containing all observation features including the latitude and longitude location.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (K-means model): The optimal trained K-means model as determined by the global maximum Silhouette score</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">location_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">]]</span>  <span class="c1"># Extract longitude and latidues</span>
+
+    <span class="n">sil_scores</span> <span class="o">=</span> <span class="n">calculate_optimal_k</span><span class="p">(</span><span class="n">location_df</span><span class="p">)</span>  <span class="c1"># Perform Silhouette score calculations</span>
+    <span class="n">k_values</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">k_init</span><span class="p">,</span> <span class="n">k_max</span> <span class="o">+</span> <span class="n">k_interval</span><span class="p">,</span> <span class="n">k_interval</span><span class="p">)</span>  <span class="c1"># Generate the centroid range</span>
+
+    <span class="n">silhouette_optimal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">sil_scores</span><span class="p">)</span>  <span class="c1"># Extract the optimal number of centroids (this is the index value)</span>
+    <span class="n">k_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">k_values</span><span class="p">[</span><span class="n">silhouette_optimal</span><span class="p">])</span>  <span class="c1"># Extract the number of centroids from the range using the index</span>
+
+    <span class="n">k_means</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k_value</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Recreate K-means model</span>
+    <span class="n">k_means</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">location_df</span><span class="p">)</span>  <span class="c1"># Train using k centroids</span>
+    <span class="k">return</span> <span class="n">k_means</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

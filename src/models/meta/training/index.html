@@ -1,0 +1,1558 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+    
+    
+      
+        <title>Metadata Model Training - Spatiotemporal Wildlife Classification Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#metadata-model-training" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-header__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spatiotemporal Wildlife Classification Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Metadata Model Training
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Spatiotemporal Wildlife Classification Docs" class="md-nav__button md-logo" aria-label="Spatiotemporal Wildlife Classification Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Spatiotemporal Wildlife Classification Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        Code Documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../dataset/" class="md-nav__link">
+        Dataset
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../cascading_ensemble_classifier/" class="md-nav__link">
+        Novel Cascading Ensemble Classifier
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../results/" class="md-nav__link">
+        Results
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../thesis/" class="md-nav__link">
+        Thesis report
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training" class="md-nav__link">
+    src.models.meta.model_training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.dataset_iteration" class="md-nav__link">
+    dataset_iteration()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.generate_file_name_start" class="md-nav__link">
+    generate_file_name_start()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.model_iteration" class="md-nav__link">
+    model_iteration()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.model_selection_execution" class="md-nav__link">
+    model_selection_execution()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.model_simplification" class="md-nav__link">
+    model_simplification()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.taxonomic_analysis" class="md-nav__link">
+    taxonomic_analysis()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.taxonomic_level_modelling" class="md-nav__link">
+    taxonomic_level_modelling()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.models.meta.model_training.train_base_model" class="md-nav__link">
+    train_base_model()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="metadata-model-training">Metadata Model Training</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="src.models.meta.model_training"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This file performs metadata model training for all proposed models, at all taxonomic levels.</p>
+<p>The metadata model training is automated to train the proposed models
+(Decision Tree, Random Forest, Adaboost, XGBoost, and a Neural Network) at each taxonomic parent node of the dataset.
+This forms five cascading taxonomic classifiers, with a model at each taxonomic parent node.
+This enables comparison of the models at each taxonomic level, to determine the most robust and optimal model to use
+as a metadata classifier.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>model_abbreviations</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>A dictionary containing the names of the classification models as keys, and their abbreviations as values.</p></td>
+        </tr>
+        <tr>
+          <td><code>model_save_types</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>A dictionary containing the names of the classification models as keys, and their relevant file types when saved.</p></td>
+        </tr>
+        <tr>
+          <td><code>file_name_taxon</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>A dictionary containing the taxonomic level indicators in the dataset, and their relevant abbreviations to be used in file naming.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.dataset_iteration" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dataset_iteration</span><span class="p">(</span><span class="n">observation_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method is performs the full metadata training for all models at all available taxonomic levels for the
+provided dataset. Only a single dataset is trained at a time</p>
+<p>The information printed out, is to be used within the <code>model_comparison.ipynb</code> to direct the model validation and figure construction.
+For more information, please review the <code>model_comparison</code> notebook.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>observation_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The name of the observation files within the <code>data/processed/</code> directory.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>metadata_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The name of the metadata files within the <code>data/processed/</code> directory. Note they must coincide with the order of the observation files.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">dataset_iteration</span><span class="p">(</span><span class="n">observation_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method is performs the full metadata training for all models at all available taxonomic levels for the</span>
+<span class="sd">    provided dataset. Only a single dataset is trained at a time</span>
+
+
+<span class="sd">    The information printed out, is to be used within the `model_comparison.ipynb` to direct the model validation and figure construction.</span>
+<span class="sd">    For more information, please review the `model_comparison` notebook.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        observation_file (str): The name of the observation files within the `data/processed/` directory.</span>
+<span class="sd">        metadata_file (str): The name of the metadata files within the `data/processed/` directory. Note they must coincide with the order of the observation files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">models</span><span class="p">,</span> <span class="n">model_name_collection</span><span class="p">,</span> <span class="n">taxon_target_collection</span><span class="p">,</span> <span class="n">abbreviations_collection</span> <span class="o">=</span> <span class="n">model_iteration</span><span class="p">(</span><span class="n">observation_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">)</span>
+
+    <span class="c1"># Information to be used in the model_comparison.ipynb notebook</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Models: &#39;</span><span class="p">,</span> <span class="n">models</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File names: &#39;</span><span class="p">,</span> <span class="n">model_name_collection</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Taxon targets: &#39;</span><span class="p">,</span> <span class="n">taxon_target_collection</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model abbreviations: &#39;</span><span class="p">,</span> <span class="n">abbreviations_collection</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.generate_file_name_start" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">generate_file_name_start</span><span class="p">(</span><span class="n">restriction</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method standardizes the parent taxonomic restriction to create a suitable filename for each model</p>
+<p>This method removes white space, replacing it with an underscore, and ensures the name is all lower case.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>restriction</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The label of the taxonomic parent node (restriction)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>A standardized form of the restriction.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_file_name_start</span><span class="p">(</span><span class="n">restriction</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method standardizes the parent taxonomic restriction to create a suitable filename for each model</span>
+
+<span class="sd">        This method removes white space, replacing it with an underscore, and ensures the name is all lower case.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            restriction (str): The label of the taxonomic parent node (restriction)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (str): A standardized form of the restriction.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">restriction</span> <span class="o">=</span> <span class="n">restriction</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+    <span class="n">restriction</span> <span class="o">=</span> <span class="n">restriction</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">restriction</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.model_iteration" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">model_iteration</span><span class="p">(</span><span class="n">observation_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Method performs the model iteration per dataset.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>observation_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The processed iNaturalist observations dataset.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>metadata_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The corresponding metadata for the observation file.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>models</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td><p>The list of all models iterated over.</p></td>
+        </tr>
+        <tr>
+<td><code>model_name_collection</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td><p>The list of all model names produced during the iteration of the dataset.</p></td>
+        </tr>
+        <tr>
+<td><code>taxon_target_collection</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td><p>The list of all taxonomic targets iterated through within this dataset.</p></td>
+        </tr>
+        <tr>
+<td><code>abbreviations_collection</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td><p>A list of the corresponding model abbreviations</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_iteration</span><span class="p">(</span><span class="n">observation_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method performs the model iteration per dataset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        observation_file (str): The processed iNaturalist observations dataset.</span>
+<span class="sd">        metadata_file (str): The corresponding metadata for the observation file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        models (list): The list of all models iterated over.</span>
+<span class="sd">        model_name_collection (list): The list of all model names produced during the iteration of the dataset.</span>
+<span class="sd">        taxon_target_collection (list): The list of all taxonomic targets iterated through within this dataset.</span>
+<span class="sd">        abbreviations_collection (list): A list of the corresponding model abbreviations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Multi-model collections</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model_abbreviations</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="n">model_name_collection</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Collections across multiple model collections (this is the same for all models)</span>
+    <span class="n">taxon_target_collection</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">abbreviations_collection</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">taxon_models</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Collections across single models</span>
+    <span class="n">taxon_targets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>  <span class="c1"># Iterate across all models</span>
+        <span class="n">taxon_models</span><span class="p">,</span> <span class="n">taxon_targets</span> <span class="o">=</span> <span class="n">taxonomic_level_modelling</span><span class="p">(</span><span class="n">observation_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>  <span class="c1"># Iterate across all taxonomic levels per model</span>
+
+        <span class="n">abbreviations_collection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_abbreviations</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>  <span class="c1"># Collect essential information regarding file names for future use</span>
+
+    <span class="n">model_name_collection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">taxon_models</span><span class="p">)</span>  <span class="c1"># Collect model file names which indicate taxonomic level (supplemented by model abbreviations)</span>
+    <span class="n">taxon_target_collection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">taxon_targets</span><span class="p">)</span>  <span class="c1"># Collect taxonomic target levels</span>
+
+    <span class="k">return</span> <span class="n">models</span><span class="p">,</span> <span class="n">model_name_collection</span><span class="p">,</span> <span class="n">taxon_target_collection</span><span class="p">,</span> <span class="n">abbreviations_collection</span>  <span class="c1"># Return gathered file information</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.model_selection_execution" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">model_selection_execution</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">training_history</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method allows multiple models to be trained through the specification of the model type, and the subsequent execution of the required data pipeline.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>model</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Specification of the model to be used to classify the taxonomic child nodes.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>target_taxon</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model_name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The complete model name (parent taxon label and model abbreviation make the combined name unique)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>training_history</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>File name at which to save the model training history.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>validation_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>File name at which to save the validation dataset.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>None</code>
+          </td>
+          <td><p>This method returns nothing. The return statement was used to ensure case stopping.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_selection_execution</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+                              <span class="n">target_taxon</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="n">training_history</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="n">validation_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method allows multiple models to be trained through the specification of the model type, and the subsequent execution of the required data pipeline.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (str): Specification of the model to be used to classify the taxonomic child nodes.</span>
+<span class="sd">        df (DataFrame): The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</span>
+<span class="sd">        target_taxon (str): Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</span>
+<span class="sd">        model_name (str): The complete model name (parent taxon label and model abbreviation make the combined name unique)</span>
+<span class="sd">        training_history (str): File name at which to save the model training history.</span>
+<span class="sd">        validation_file (str): File name at which to save the validation dataset.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (None): This method returns nothing. The return statement was used to ensure case stopping.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">match</span> <span class="n">model</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s1">&#39;Neural network&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">neural_network_model</span><span class="o">.</span><span class="n">neural_network_process</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span>
+                                                               <span class="n">training_history</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s1">&#39;Decision tree&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">decision_tree</span><span class="o">.</span><span class="n">decision_tree_process</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">training_history</span><span class="p">,</span>
+                                                       <span class="n">validation_file</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s1">&#39;Random forest&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">random_forest</span><span class="o">.</span><span class="n">random_forest_process</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">training_history</span><span class="p">,</span>
+                                                       <span class="n">validation_file</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s1">&#39;Xgboost&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">xgboost_model</span><span class="o">.</span><span class="n">xgboost_process</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">training_history</span><span class="p">,</span>
+                                                 <span class="n">validation_file</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s1">&#39;AdaBoost&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">adaboost_model</span><span class="o">.</span><span class="n">adaboost_process</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">training_history</span><span class="p">,</span>
+                                                   <span class="n">validation_file</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.model_simplification" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">model_simplification</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_save_type</span><span class="p">,</span> <span class="n">file_name_start</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method simplifies the model training, testing, and saving process. It completes a full model training,
+testing, and saving for the specified model and dataset</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Specification of the model to be used to classify the taxonomic child nodes.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>target_taxon</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model_save_type</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Specification of the model file type/ model suffix.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>file_name_start</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The standardized taxon parent node label which will be used to construct a unique file name for the trained model.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_simplification</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+                         <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                         <span class="n">target_taxon</span><span class="p">,</span>
+                         <span class="n">model_save_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                         <span class="n">file_name_start</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method simplifies the model training, testing, and saving process. It completes a full model training,</span>
+<span class="sd">    testing, and saving for the specified model and dataset</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (DataFrame): The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</span>
+<span class="sd">        model (str): Specification of the model to be used to classify the taxonomic child nodes.</span>
+<span class="sd">        target_taxon (str): Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node.</span>
+<span class="sd">        model_save_type (str): Specification of the model file type/ model suffix.</span>
+<span class="sd">        file_name_start (str): The standardized taxon parent node label which will be used to construct a unique file name for the trained model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">model_abbr</span> <span class="o">=</span> <span class="n">model_abbreviations</span><span class="p">[</span><span class="n">model</span><span class="p">]</span>  <span class="c1"># Get model abbreviation</span>
+
+    <span class="n">model_name</span> <span class="o">=</span> <span class="n">file_name_start</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">model_abbr</span> <span class="o">+</span> <span class="s2">&quot;_model&quot;</span> <span class="o">+</span> <span class="n">model_save_type</span>  <span class="c1"># Put together essential file names</span>
+    <span class="n">training_history</span> <span class="o">=</span> <span class="n">file_name_start</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">model_abbr</span> <span class="o">+</span> <span class="s1">&#39;_training_accuracy.csv&#39;</span>
+    <span class="n">validation_file</span> <span class="o">=</span> <span class="n">file_name_start</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">model_abbr</span> <span class="o">+</span> <span class="s1">&#39;_validation.csv&#39;</span>
+
+    <span class="n">model_selection_execution</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">training_history</span><span class="p">,</span> <span class="n">validation_file</span><span class="p">)</span>  <span class="c1"># Select model, and execute the required process (data pipeline, model training, and evaluation)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.taxonomic_analysis" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">taxonomic_analysis</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method performs the taxonomic breakdown of the dataset at the following taxonomic levels: taxon_family_name, taxon_genus_name, taxon_species_name, subspecies</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>The dataframe containing the unrestricted observations and metadata to perform a taxonomic breakdown of the entire dataset</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>Keys specify the taxonomic level and the values are a list containing all unique labels in the dataset, forming a taxonomic breakdown</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">taxonomic_analysis</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method performs the taxonomic breakdown of the dataset at the following taxonomic levels: taxon_family_name, taxon_genus_name, taxon_species_name, subspecies</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (DataFrame): The dataframe containing the unrestricted observations and metadata to perform a taxonomic breakdown of the entire dataset</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict): Keys specify the taxonomic level and the values are a list containing all unique labels in the dataset, forming a taxonomic breakdown</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">taxonomy_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;taxon_family_name&#39;</span><span class="p">,</span> <span class="s1">&#39;taxon_genus_name&#39;</span><span class="p">,</span> <span class="s1">&#39;taxon_species_name&#39;</span><span class="p">,</span> <span class="s1">&#39;sub_species&#39;</span><span class="p">]</span>   <span class="c1"># Taxonomic levels to target in breakdown</span>
+    <span class="n">taxon_breakdown</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># Create an empty dictionary</span>
+
+    <span class="k">for</span> <span class="n">taxon</span> <span class="ow">in</span> <span class="n">taxonomy_list</span><span class="p">:</span>  <span class="c1"># Iterate through the taxonomic levels</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">taxon</span><span class="p">])</span>  <span class="c1"># Remove all n/a labels</span>
+        <span class="n">taxon_breakdown</span><span class="p">[</span><span class="n">taxon</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">taxon</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># Find unique taxon level labels. These form the values to the taxonomic key in the dictionary</span>
+    <span class="k">return</span> <span class="n">taxon_breakdown</span>  <span class="c1"># Return the taxonomic breakdown dictionary</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.taxonomic_level_modelling" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">taxonomic_level_modelling</span><span class="p">(</span><span class="n">observation_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method performs a taxonomic level breakdown and training at all taxonomic levels for the specified model.</p>
+<p>This method performs the dataset taxonomic restriction at the parent node, modifying the dataset to fit each taxonomic parent node,
+such that only the taxonomic children of the parent node are within the dataset. This is done for the entire taxonomic structure within the dataset.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>observation_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The processed iNaturalist observations dataset.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>metadata_file</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The corresponding metadata for the observation file.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>model</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>String specification of the model to be trained ane evaluated.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>models</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td><p>A list of file names, where the file name specified the taxonomic parent node (model classifies the taxonomic children)</p></td>
+        </tr>
+        <tr>
+<td><code>taxon_targets</code></td>          <td>
+                <code>list</code>
+          </td>
+          <td><p>Species the list of the taxonomic target levels in the same order as the models list.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">taxonomic_level_modelling</span><span class="p">(</span><span class="n">observation_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method performs a taxonomic level breakdown and training at all taxonomic levels for the specified model.</span>
+
+<span class="sd">    This method performs the dataset taxonomic restriction at the parent node, modifying the dataset to fit each taxonomic parent node,</span>
+<span class="sd">    such that only the taxonomic children of the parent node are within the dataset. This is done for the entire taxonomic structure within the dataset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        observation_file (str): The processed iNaturalist observations dataset.</span>
+<span class="sd">        metadata_file (str): The corresponding metadata for the observation file.</span>
+<span class="sd">        model (str): String specification of the model to be trained ane evaluated.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        models (list): A list of file names, where the file name specified the taxonomic parent node (model classifies the taxonomic children)</span>
+<span class="sd">        taxon_targets (list): Species the list of the taxonomic target levels in the same order as the models list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Collection of taxon level information for notebook use</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Collection of model file names</span>
+    <span class="n">taxon_targets</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Collection of taxonomic target levels.</span>
+
+    <span class="n">df_prime</span> <span class="o">=</span> <span class="n">pipelines</span><span class="o">.</span><span class="n">aggregate_data</span><span class="p">(</span><span class="n">observation_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">)</span>  <span class="c1"># Aggregate observations with metadata</span>
+
+    <span class="n">df_prime</span> <span class="o">=</span> <span class="n">df_prime</span><span class="p">[</span><span class="n">df_prime</span><span class="p">[</span><span class="s1">&#39;taxon_species_name&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;Felis catus&#39;</span><span class="p">]</span>  <span class="c1"># Remove common household cat from dataset</span>
+
+    <span class="n">df_prime</span> <span class="o">=</span> <span class="n">df_prime</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">sub_species_detection</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Extract subspecies labels</span>
+
+    <span class="n">taxon_breakdown</span> <span class="o">=</span> <span class="n">taxonomic_analysis</span><span class="p">(</span><span class="n">df_prime</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>  <span class="c1"># Generate a taxonomic breakdown (dictionary with taxon level as the keys, and a list of taxonomic labels as the values)</span>
+    <span class="n">taxonomic_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">taxon_breakdown</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>  <span class="c1"># Extract taxonomic levels (keys)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&lt;-----------&gt;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Taxon breakdown: &#39;</span><span class="p">,</span> <span class="n">taxon_breakdown</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">taxonomic_keys</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># Iterate through taxonomic keys until species (taxonomic parent node level)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">taxon_breakdown</span><span class="p">[</span><span class="n">taxonomic_keys</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Ensure there are more than a single child in the taxonomic level below</span>
+            <span class="n">taxon_parent_level</span> <span class="o">=</span> <span class="n">taxonomic_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="c1"># Restriction</span>
+            <span class="k">for</span> <span class="n">restriction</span> <span class="ow">in</span> <span class="n">taxon_breakdown</span><span class="p">[</span><span class="n">taxonomic_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]:</span>  <span class="c1"># Restrict the dataset to one of the labels at the parent note</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df_prime</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">taxonomic_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="n">restriction</span><span class="p">]</span>  <span class="c1"># Enforce taxon restriction</span>
+
+                <span class="n">target_taxon</span> <span class="o">=</span> <span class="n">taxonomic_keys</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># Extract the target taxon (taxonomic child level)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">target_taxon</span><span class="p">])</span>  <span class="c1"># Remove any NaN labels at this taxonomic level</span>
+
+                <span class="c1"># Taxonomic level clean-up to determine number of classes (with restriction)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;public_positional_accuracy&#39;</span><span class="p">])</span>  <span class="c1"># Remove n/a entries</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;public_positional_accuracy&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">40000</span><span class="p">]</span>  <span class="c1"># Remove entries with inadequate accuracy</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">target_taxon</span><span class="p">)</span><span class="o">.</span><span class="n">common_name</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Enforce at least 10 observations</span>
+
+                <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">target_taxon</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Check at least two classes present with restriction</span>
+                    <span class="k">continue</span>
+
+                <span class="n">file_start</span> <span class="o">=</span> <span class="n">generate_file_name_start</span><span class="p">(</span><span class="n">restriction</span><span class="p">)</span>  <span class="c1"># Generate file_start_name based on the parent taxon level and the restriction (parent node)</span>
+
+                <span class="c1"># Print Information</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;------------------------------&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Taxonomic Parent level: &quot;</span><span class="p">,</span> <span class="n">taxon_parent_level</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Restriction: &quot;</span><span class="p">,</span> <span class="n">restriction</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target taxon: &#39;</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model: &#39;</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+                <span class="c1"># Execute the model training with the restricted and processed data</span>
+                <span class="n">model_simplification</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
+                                     <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                                     <span class="n">target_taxon</span><span class="o">=</span><span class="n">target_taxon</span><span class="p">,</span>
+                                     <span class="n">model_save_type</span><span class="o">=</span><span class="n">model_save_types</span><span class="p">[</span><span class="n">model</span><span class="p">],</span>
+                                     <span class="n">file_name_start</span><span class="o">=</span><span class="n">file_start</span><span class="p">)</span>
+                <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_start</span><span class="p">)</span>  <span class="c1"># Save the model file name for notebook input</span>
+                <span class="n">taxon_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_taxon</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">models</span><span class="p">,</span> <span class="n">taxon_targets</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="src.models.meta.model_training.train_base_model" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">train_base_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;base_meta&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method trains the root node of the taxonomic tree.</p>
+<p>The current model training requires the Felid and Elephant datasets to be kept separate to train all of their relevant taxonomic models.
+This however excludes the root classifier to determine between the two taxon families.
+This method ensures the taxonomic root is trained.
+Note, this method can be used to train a metadata global classifier by specifying the target taxom to the species level.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>model</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Specification of the model to be used to classify the taxonomic child nodes.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>target_taxon</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>file_name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The file name of the root classification model.</p></td>
+          <td>
+                <code>&#39;base_meta&#39;</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>src/models/meta/model_training.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">train_base_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_taxon</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;base_meta&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method trains the root node of the taxonomic tree.</span>
+
+<span class="sd">    The current model training requires the Felid and Elephant datasets to be kept separate to train all of their relevant taxonomic models.</span>
+<span class="sd">    This however excludes the root classifier to determine between the two taxon families.</span>
+<span class="sd">    This method ensures the taxonomic root is trained.</span>
+<span class="sd">    Note, this method can be used to train a metadata global classifier by specifying the target taxom to the species level.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (str): Specification of the model to be used to classify the taxonomic child nodes.</span>
+<span class="sd">        target_taxon (str): Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</span>
+<span class="sd">        file_name (str): The file name of the root classification model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df_felids</span> <span class="o">=</span> <span class="n">pipelines</span><span class="o">.</span><span class="n">aggregate_data</span><span class="p">(</span><span class="s1">&#39;felids_train.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;felids_meta.csv&#39;</span><span class="p">)</span>  <span class="c1"># Aggregate felid observations and metadata</span>
+    <span class="n">df_proboscidia</span> <span class="o">=</span> <span class="n">pipelines</span><span class="o">.</span><span class="n">aggregate_data</span><span class="p">(</span><span class="s1">&#39;proboscidia_train.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;proboscidia_meta.csv&#39;</span><span class="p">)</span>  <span class="c1"># Aggregate elephant observations and metadata</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_felids</span><span class="p">,</span> <span class="n">df_proboscidia</span><span class="p">])</span>  <span class="c1"># Joint both felid and elephant datasets into one</span>
+
+    <span class="n">silhouette_k_means</span><span class="o">.</span><span class="n">k_max</span> <span class="o">=</span> <span class="mi">84</span>  <span class="c1"># Modify silhouette score process to increase the range and interval due to the large amount of datapoints.</span>
+    <span class="n">silhouette_k_means</span><span class="o">.</span><span class="n">k_interval</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="n">model_suffix</span> <span class="o">=</span> <span class="n">model_abbreviations</span><span class="p">[</span><span class="n">model</span><span class="p">]</span>  <span class="c1"># Get model suffix</span>
+    <span class="n">model_selection_execution</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+                              <span class="n">df</span><span class="p">,</span>
+                              <span class="n">target_taxon</span><span class="p">,</span>
+                              <span class="n">file_name</span> <span class="o">+</span> <span class="s1">&#39;_model&#39;</span> <span class="o">+</span> <span class="n">model_suffix</span><span class="p">,</span>
+                              <span class="n">file_name</span> <span class="o">+</span> <span class="s1">&#39;_training_accuracy&#39;</span><span class="p">,</span>
+                              <span class="n">file_name</span> <span class="o">+</span> <span class="s1">&#39;_validation.csv&#39;</span><span class="p">)</span>  <span class="c1"># Train model on one model type at a time</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
