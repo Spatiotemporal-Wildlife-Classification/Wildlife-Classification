@@ -7,8 +7,19 @@
     to see how this is accomplished..
 
     This training process is structured to be run within a Docker container in order to train on a single GPU unit.
-    Please review the documentation how to run the training and validation processes.
+    Please review the documentation or README how to run the training and validation processes.
+    For easy access here is the command to run the model training:
+    ```
+    docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t model_train:latest
+    ```
 
+    Attributes:
+        model_name (str): The saved name of the model. The file name must have the following format. taxonomic name + _taxon_classifier. Example: `lynx_lynx_taxon_classifier`
+        img_path (str): The path to the taxonomic parent node within the `taxon` directory. Example" `felidae/lynx/lynx_lynx/`
+        save_path (str): The path to where the model will be saved. In this case the `models/image/` directory
+        img_size (int): The specified image size as input to the EfficientNet-B6 model (528)
+        batch_size (int): The number of images within a single batch (32)
+        epochs (int): The number of epochs in model training (25)
 """
 
 # Modelling
