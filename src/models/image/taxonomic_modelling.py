@@ -73,6 +73,18 @@ def import_dataset(file_path: str):
 
 
 def construct_model(classes: int):
+    """Method constructs an EfficientNet-B6 model to fit the specified number of classes.
+
+    The training makes use of transfer learning, so the EfficientNet-B6 model is created with ImageNet weights.
+    The top softmax layer is removed from the original model and replaced with a Global Average Pooling 2D Layer, followed
+    by a densely connected softmax layer classifying the specified number of classes.
+
+    Args:
+        classes (int): Integer specifying the number of classes to be classified. Instructs the size of the softmax output layer.
+
+    Returns:
+        (Keras.model): The complete model ready to be trained.
+    """
     inputs = layers.Input(shape=(img_size, img_size, 3))  # Construct the expected image input
     model = EfficientNetB6(include_top=False,
                            input_tensor=inputs,
@@ -87,14 +99,12 @@ def construct_model(classes: int):
     x = GlobalAveragePooling2D()(x)
     predictions = Dense(classes, activation='softmax')(x)
 
-    # Construct the model
-    model = Model(inputs=model.input, outputs=predictions, name='EfficientNet_Taxon_Classifier')
+    model = Model(inputs=model.input, outputs=predictions, name='EfficientNet_Taxon_Classifier')  # Construct the entire model
 
-    # optimizer = tf.keras.optimizers.experimental.SGD(learning_rate=0.02)
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)  # Initialize optimizer
     model.compile(optimizer=optimizer,
                   loss='categorical_crossentropy',
-                  metrics=['accuracy'])
+                  metrics=['accuracy'])  # Compile the model for use
 
     return model
 
