@@ -1,28 +1,57 @@
-import os
+"""This file contains all methods needed to make, train, and evaluate the EfficientNet B6 model on the specified dataset.
 
-import numpy as np
+    This file requires manual specification of the taxonomic parent node to model. Due to the massive memory and computational
+    requirements of training a large CNN, only a single model can be trained at a time.
+
+    Please note, the dataset must be structured within the taxonomic tree structure. Please review the `dataset_structure.py` file
+    to see how this is accomplished.
+
+"""
+
+# Modelling
 from keras import Sequential, Model
 from keras.applications import EfficientNetB6
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.utils import image_dataset_from_directory
-from matplotlib import pyplot as plt
 from sklearn.utils import compute_class_weight
 from tensorflow.python.data import AUTOTUNE
-
 from tensorflow.keras import layers
 import tensorflow as tf
 
+# General
+import os
+import numpy as np
+from matplotlib import pyplot as plt
+
+# Data Information
 model_name = 'lynx_lynx_taxon_classifier'
 img_path = os.path.join(os.getcwd(), 'data', 'taxon/felidae/lynx/lynx_lynx/')
 save_path = os.path.join(os.getcwd(), 'models/image/', model_name)
 checkpoint_path = os.path.join(os.getcwd(), 'models', 'checkpoints/sub_species')
 
+# Model details
 img_size = 528
 batch_size = 32
 epochs = 25
 
 
 def import_dataset(file_path: str):
+    """This method imports the dataset from the proposed directory forming both a train and test set.
+
+    This method uses the imaage_dataset_from_directory() method. For more information please visit:
+    https://www.tensorflow.org/api_docs/python/tf/keras/utils/image_dataset_from_directory
+
+    This method, allows specification of the file path and automatically determines the labels based on the directory
+    structure, hence the directory structure replicating the taxonomic tree of the dataset.
+    Additionally, the class names are dispayed when this method is called.
+
+    Args:
+        file_path (str): The path from the `taxon/` (including) directory. Example: `taxon/felidae/lynx/lynx_lynx/`
+
+    Returns:
+        train_ds (tf.data.Dataset): The training dataset which will be used to train the model
+        val_ds (tf.data.Dataset): The testing dataset used to test the trained model.
+    """
     train_ds = image_dataset_from_directory(directory=file_path,
                                             validation_split=0.2,
                                             subset='training',
@@ -40,7 +69,6 @@ def import_dataset(file_path: str):
                                           labels='inferred',
                                           label_mode='categorical')
     print(train_ds.class_names)
-
     return train_ds, val_ds
 
 
