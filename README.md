@@ -99,8 +99,8 @@ The below images serve as sample images from [iNaturalist](https://www.inaturali
 The link to the used dataset is provided [here]() (inactive)
 
 | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254323960/large.jpeg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254318111/large.jpeg) |
-|--------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254306053/large.jpg) | ![](https://static.inaturalist.org/photos/254074172/large.jpg)                                                                           |
+|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254306053/large.jpg)  | ![](https://static.inaturalist.org/photos/254074172/large.jpg)                  |
 
 
 ### Data Characteristics
