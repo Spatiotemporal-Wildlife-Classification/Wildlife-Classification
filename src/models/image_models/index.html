@@ -249,6 +249,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modelling" class="md-nav__link">
+    Modelling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-validation" class="md-nav__link">
+    Model Validation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-classification-test" class="md-nav__link">
+    Manual Classification Test
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -263,6 +292,25 @@
 
 
 <h1 id="image-classification">Image Classification</h1>
+<p>Please keep in mind the models are trained to form parent node classifiers within the cascading taxonomic structure. 
+Due to the massive memory and computational constraints of CNN training and the availability of a single Nvidia GeForce RTX 3060 GPU unit, 
+the models are required to be trained one at a time to avoid memory overloads on the CPU. </p>
+<p>The image classification modelling process is accomplished through the below scripts:</p>
+<h2 id="modelling"><a href="../image/modelling/">Modelling</a></h2>
+<p>This file performs the CNN Classification model training. It creates the EfficientNet-B6 model with ImageNet pre-trained weights and 
+modifies it to train the top weights on the new dataset as a form of transfer learning.
+Additionally, the model training and testing over the number of training epochs is visualized and saved if required.</p>
+<h2 id="model-validation"><a href="../image/validation/">Model Validation</a></h2>
+<p>This file performs the validation of the trained CNN model on an external validation set to determine the true performance metrics of the model. 
+The <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html">classificatio report</a> of the model and the 
+model's balanced accuracy are written to csv files for analysis and visualization. 
+Please view: <code>notebooks/image_classification/image_classification_visualization.ipynb</code>. 
+The data is saved in: <code>notebooks/image_classification/taxon_image_classification_cache/</code> directory</p>
+<h2 id="manual-classification-test"><a href="../image/manual_check/">Manual Classification Test</a></h2>
+<p>This file provides the capability to load a CNN model, and select an image to perform a classification prediction. 
+This is a simple manual check to confirm the model, data, and predictions are working as expected. 
+This file is not to be used extensively, but to rather provide a quick sanity check. 
+The images are sourced from the <code>taxon_test</code> directory, so the model has not been trained over them before.</p>
 
 
 
