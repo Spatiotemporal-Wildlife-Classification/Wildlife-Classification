@@ -3,8 +3,7 @@
     This file requires manual specification of the taxonomic parent node to model. Due to the massive memory and computational
     requirements of training a large CNN, only a single model can be trained at a time.
 
-    Please note, the dataset must be structured within the taxonomic tree structure. Please review the `dataset_structure.py` file
-    to see how this is accomplished..
+    Please review the Animal-Detector repository to create the required image directories in order to train the models.
 
     This training process is structured to be run within a Docker container in order to train on a single GPU unit.
     Please review the documentation or README how to run the training and validation processes.
