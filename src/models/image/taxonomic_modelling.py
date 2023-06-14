@@ -123,7 +123,7 @@ def construct_model(classes: int):
 
 
 def get_image_labels(ds: tf.data.Dataset, classes: list):
-    """Method generates class names from the dataset. This helps test the model
+    """Method generates class names from the dataset. This helps generate class weightings
 
     Args:
         ds (tf.data.Dataset): Either the train or test dataset which labels must be generated for.
