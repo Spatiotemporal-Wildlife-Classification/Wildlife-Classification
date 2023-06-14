@@ -22,7 +22,7 @@ docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classificatio
 2. In the terminal please execute the following command to train the CNN using an available GPU unit.
 
 ```angular2html
-docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t model_train:latest
+docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/train_image:latest
 ```
 You will see information updating you on the training process printed to terminal/
 
