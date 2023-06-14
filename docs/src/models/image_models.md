@@ -17,3 +17,9 @@ The [classificatio report](https://scikit-learn.org/stable/modules/generated/skl
 model's balanced accuracy are written to csv files for analysis and visualization. 
 Please view: `notebooks/image_classification/image_classification_visualization.ipynb`. 
 The data is saved in: `notebooks/image_classification/taxon_image_classification_cache/` directory
+
+## [Manual Classification Test](../../src/models/image/manual_check.md)
+This file provides the capability to load a CNN model, and select an image to perform a classification prediction. 
+This is a simple manual check to confirm the model, data, and predictions are working as expected. 
+This file is not to be used extensively, but to rather provide a quick sanity check. 
+The images are sourced from the `taxon_test` directory, so the model has not been trained over them before.
