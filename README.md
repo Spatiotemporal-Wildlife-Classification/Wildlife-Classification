@@ -2,7 +2,58 @@
 Bachelor's thesis investigating **if** and **how** observation **spatiotemporal metadata** can be used to improve 
 existing **wildlife image classification** processes. 
 
-## Summary
+# Development
+## Metadata Classification
+The metadata classification process is located at `src/models/meta/model_training.py`. 
+The process is automated to perform all required model training at all taxonomic levels. 
+Please review the documentation for more information. 
+
+The training process will make use of as many cores as available on the machine it is training on to 
+speed up the training process. 
+
+To analyze and visualize the results, please review `notebooks/meta_modelling/meta_data_model_comparison.ipynb`. 
+The data collected during the training process is available in the `notebooks/meta_modelling/model_comparison_cache/` directory.
+
+## Image Classification
+The image classification models executes model training and validation from two separate Docker images. 
+This allows for easy model training and validation using a GPU unit, on the same image as originally run. 
+Any code changes to any of the image classification files do not require the images to be rebuilt as the project directory is 
+copied into the container on execution. Any code changes are automatically picked up by the Docker container. 
+
+### Download Docker Images
+The docker images are packages in this repository, to download the latest train and validate packages execute the following: 
+```angular2html
+docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classification/image_train:latest
+docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classification/image_validate:latest
+```
+
+### Train New Model
+1. Specify the name of the model and the path to the appropriate image directory in `src/models/image/taxonomic_modelling.py`
+   - The documentation provides examples. 
+2. In the terminal please execute the following command to train the CNN using an available GPU unit.
+
+```angular2html
+docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/train_image:latest
+```
+You will see information updating you on the training process printed to terminal/
+
+### Validate New Model
+1. Specify the name of the model and the path to the appropriate directory in `src/model/image/evaluate_taxonomic_model.py`. 
+   - The documentation provides examples
+2. In the terminal please execute the following command to evaluate the CNN model using an available GPU unit
+```angular2html
+docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/validate_image:latest
+```
+The classification report will be displayed on the terminal. 
+Both the image classification report metrics and the model balanced accuracy metric are automatically recorded.
+
+### Analyze and Visualize Image Classification Metrics
+Please review the following notebook to analyze and visualize the model results: `notebooks/image_classification/image_classification_visualization.ipynb`. 
+The data is saved in the: `notebooks/image_classification/taxon_image_classification_cache/` directory
+
+
+
+# Information Summary
 Automated wildlife classification is essential within ecological studies, wildlife conservation and management, 
 specifically fulfilling the roles of species population estimates, individual identification, and behavioural patterns.
 
@@ -35,10 +86,10 @@ the taxonomic tree.
 #### Data Subject
 The data subject itself, wildlife species, make the classification process difficult, largely due to similar looking 
 species, and sub-species, in addition to sympatric species (species found in the same geographic area). 
-
+`
 | ![](http://static.inaturalist.org/photos/88383/medium.jpg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/9581740/medium.jpg) |
 |------------------------------------------------------------|-------------------------------------------------------------------------------|
-| Panthera pardus                                            | Panthera Onca                                                                 |
+| Panthera pardus                                            | Panthera Onca                                                                 |`
 
 ## Data
 The training data is obtained from [iNaturalist](https://www.inaturalist.org/), a citizen-science based platform tasked with generating global research-grade, annotated flora and fauna images to facilitate computer vision developement. 
@@ -48,8 +99,8 @@ The below images serve as sample images from [iNaturalist](https://www.inaturali
 The link to the used dataset is provided [here]() (inactive)
 
 | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254323960/large.jpeg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254318111/large.jpeg) |
-|--------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254306053/large.jpg) | ![](https://static.inaturalist.org/photos/254074172/large.jpg)                                                                           |
+|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254306053/large.jpg)  | ![](https://static.inaturalist.org/photos/254074172/large.jpg)                  |
 
 
 ### Data Characteristics
