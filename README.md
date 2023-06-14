@@ -27,7 +27,18 @@ docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /ap
 You will see information updating you on the training process printed to terminal/
 
 ### Validate New Model
+1. Specify the name of the model and the path to the appropriate directory in `src/model/image/evaluate_taxonomic_model.py`. 
+   - The documentation provides examples
+2. In the terminal please execute the following command to evaluate the CNN model using an available GPU unit
+```angular2html
+docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/validate_image:latest
+```
+The classification report will be displayed on the terminal. 
+Both the image classification report metrics and the model balanced accuracy metric are automatically recorded.
 
+### Analyze and Visualize Image Classification Metrics
+Please review the following notebook to analyze and visualize the model results: `notebooks/image_classification/image_classification_visualization.ipynb`. 
+The data is saved in the: `notebooks/image_classification/taxon_image_classification_cache/` directory
 
 
 

@@ -10,7 +10,7 @@
     Please review the documentation or README how to run the training and validation processes.
     For easy access here is the command to run the model training:
     ```
-    docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t model_train:latest
+    docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/train_image:latest
     ```
 
     Attributes:
@@ -216,13 +216,14 @@ def plot_hist(hist, title):
     plt.savefig(resources_path)
 
 
-def train_model(file_name: str, dataset_path: str):
+def train_model(file_name: str, dataset_path: str, visualize=False):
     """
     This model specifies the entire training process, and simplifies the model naming and dataset specification procedure for training.
 
     Args:
         file_name (str): The file name must have the following format. taxonomic name + _taxon_classifier. Example: `lynx_lynx_taxon_classifier`
         dataset_path (str): The path to the taxonomic parent node within the `taxon` directory. Example" `felidae/lynx/lynx_lynx/`
+        visualize (bool): A boolean value indicating whether the training and testing over the number of epochs should be visualized and saved in a figure.
     """
     setup_paths(file_name, dataset_path)  # Setup the model save and dataset paths
 
@@ -235,10 +236,11 @@ def train_model(file_name: str, dataset_path: str):
 
     model, hist = train_model_top_weights(model, train_ds, val_ds)  # Train the model's top weights
 
-    try:  # Attempt to plot and save visualization of training and test data
-        plot_hist(hist, "Lynx Lynx Classification Training")
-    except:
-        print('Not enough training epochs to generate display')
+    if visualize:
+        try:  # Attempt to plot and save visualization of training and test data
+            plot_hist(hist, "Lynx Lynx Classification Training")
+        except:
+            print('Not enough training epochs to generate display')
 
 
 def setup_paths(file_name: str, dataset_path: str):
@@ -258,4 +260,5 @@ def setup_paths(file_name: str, dataset_path: str):
 
 if __name__ == "__main__":
     train_model(file_name='elephantidae_taxon_classifier',
-                dataset_path='elephantidae/')
+                dataset_path='elephantidae/',
+                visualize=False)

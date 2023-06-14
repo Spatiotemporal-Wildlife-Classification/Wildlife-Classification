@@ -4,7 +4,14 @@
     To visualize and analyse the validation result metrics,
     please view `notebook/image_classification/image_classification_visualization`.
     The data collected in s placed within the `notebook/image_classificaiton/taxon_image_classification_cache/`
-     directory.
+    directory.
+
+    This validation process is structured to be run within a Docker container in order to train on a single GPU unit.
+    Please review the documentation or README how to run the training and validation processes.
+    For easy access here is the command to run the model training:
+    ```
+    docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/validate_image:latest
+    ```
 
     Attributes:
         img_size (int): The specified image size as input to the EfficientNet-B6 model (528)
@@ -186,7 +193,7 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
 
     test_ds = test_ds.prefetch(AUTOTUNE)  # Optimize for GPU running
 
-    preds = model.predict(test_ds) # Generate predictions for validation set
+    preds = model.predict(test_ds)  # Generate predictions for validation set
     preds = np.argmax(preds, axis=1)  # Get index value of the prediction
     predicted_labels = np.take(classes, preds)  # Extract class name from the index value
 
@@ -211,6 +218,9 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
 if __name__ == "__main__":
     """Method to execute the model validation process. 
     """
-    single_model_evaluation('elephantidae_taxon_classifier', 'elephantidae/', 'Genus', False)
+    single_model_evaluation(current_model='elephantidae_taxon_classifier',
+                            path='elephantidae/',
+                            taxon_level='Genus',
+                            display=False)
 
 
