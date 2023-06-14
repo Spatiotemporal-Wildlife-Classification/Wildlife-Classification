@@ -3,6 +3,17 @@ Bachelor's thesis investigating **if** and **how** observation **spatiotemporal 
 existing **wildlife image classification** processes. 
 
 # Development
+## Metadata Classification
+The metadata classification process is located at `src/models/meta/model_training.py`. 
+The process is automated to perform all required model training at all taxonomic levels. 
+Please review the documentation for more information. 
+
+The training process will make use of as many cores as available on the machine it is training on to 
+speed up the training process. 
+
+To analyze and visualize the results, please review `notebooks/meta_modelling/meta_data_model_comparison.ipynb`. 
+The data collected during the training process is available in the `notebooks/meta_modelling/model_comparison_cache/` directory.
+
 ## Image Classification
 The image classification models executes model training and validation from two separate Docker images. 
 This allows for easy model training and validation using a GPU unit, on the same image as originally run. 
