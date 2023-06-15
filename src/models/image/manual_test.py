@@ -19,7 +19,7 @@ from src.structure.Config import root_dir
 img_size = 528
 
 model_path = root_dir() + "/models/image/"   # Base model path. Specific model added in load_paths method
-img_path = root_dir() + "/data/taxon_validate/"  # Base image path
+img_path = root_dir() + "/data/images/taxon_validate/"  # Base image path
 
 
 def load_paths(model_name: str, image_path: str):
