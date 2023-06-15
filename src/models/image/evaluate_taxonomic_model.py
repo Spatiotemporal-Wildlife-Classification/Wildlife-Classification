@@ -25,6 +25,8 @@
     Please additionally changes the report and accuracy paths to access the `global_image_classification_results.csv`
     and `global_image_classification_accuracy.csv`
 
+    Please additionally change the dataset to `global_taxon` and `global_taxon_test` directories.
+
     Attributes:
         img_size (int): The specified image size as input to the EfficientNet-B6 model (528)
         model_name (str): The name of the CNN model to evaluate against a validation set.
@@ -215,9 +217,9 @@ def set_paths(current_model, path):
     global model_name, test_path, training_path, model_path
 
     model_name = current_model
-    test_path = os.path.join(os.getcwd(), 'data', 'global_taxon_test/' + path)
-    training_path = os.path.join(os.getcwd(), 'data', 'global_taxon/' + path)
-    model_path = os.path.join(os.getcwd(), 'models/global/', model_name)
+    test_path = os.path.join(os.getcwd(), 'data', 'taxon_test/' + path)
+    training_path = os.path.join(os.getcwd(), 'data', 'taxon/' + path)
+    model_path = os.path.join(os.getcwd(), 'models/image/', model_name)  # For global models change to 'models/global`
 
 
 def single_model_evaluation(current_model, path, taxon_level, display=False):
@@ -273,7 +275,7 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
 if __name__ == "__main__":
     """Method to execute the model validation process. 
     """
-    single_model_evaluation(current_model='global_taxon_classifier',
-                            path='',
-                            taxon_level='Global',
+    single_model_evaluation(current_model='elephantidae_taxon_classifier',
+                            path='elephantidae',
+                            taxon_level='Genus',
                             display=False)
