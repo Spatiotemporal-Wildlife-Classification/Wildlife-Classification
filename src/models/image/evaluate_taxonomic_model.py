@@ -55,11 +55,11 @@ model_path = ''
 
 # Data collection paths
 report_path = os.path.join(os.getcwd(),
-                          'notebooks',
-                          'image_classification/taxon_image_classification_cache/global_image_classification_evaluation.csv')
+                           'notebooks',
+                           'image_classification/taxon_image_classification_cache/image_classification_evaluation.csv')
 accuracy_path = os.path.join(os.getcwd(),
-                          'notebooks',
-                          'image_classification/taxon_image_classification_cache/global_image_classification_accuracies.csv')
+                             'notebooks',
+                             'image_classification/taxon_image_classification_cache/image_classification_accuracies.csv')
 
 
 def generate_test_set():
@@ -134,11 +134,13 @@ def add_model_report(y_true, y_pred, taxon_level, classes):
         taxon_level (str): The taxonomic target level.
         classes (list): The list of classes (alphabetical order) over which the model was trained.
     """
-    report = classification_report(y_true, y_pred, output_dict=True, zero_division=0)  # Generate the classification report
+    report = classification_report(y_true, y_pred, output_dict=True,
+                                   zero_division=0)  # Generate the classification report
 
     report_df = pd.DataFrame(report).transpose()  # Format the report into a dataframe
     report_df['taxon_level'] = taxon_level  # Add additional columns
-    report_df = report_df.head(len(classes))  # Specify the row cutoff to avoid including the last 3 rows (accuracy, macro avg, weighted avg)
+    report_df = report_df.head(
+        len(classes))  # Specify the row cutoff to avoid including the last 3 rows (accuracy, macro avg, weighted avg)
 
     report_df.to_csv(report_path, mode='a', header=False)
 
@@ -166,27 +168,41 @@ def add_model_accuracy(y_true, y_pred, taxon_level, taxon_name):
 
 
 def global_mean_image_prediction(image_paths: list, predicted_labels: list, true_labels: list):
-    files_modified = [image_path[:-6] for image_path in image_paths]
-    accumulation_store = dict()
-    path_counter = dict()
-    individual_file_label = []
+    """This method is used within the Flat-classification models to aggregate, and normalize the sub-image predictions
+    into a single prediction for each image
+
+    Args:
+        image_paths (list): A list of file paths for each image in the dataset. Read main file documentation for additional info. The code to generate the filenames is `file_paths = test_ds.file_paths`
+        predicted_labels (list): The list of predicted labels for all sub-images
+        true_labels (list): The list of true labels for all sub-images. They are in the same order.
+
+    Returns:
+        mean_predictions (list): The summed, averaged, and normalized predictions for a single image (not a sub-image).
+        individual_file_label (list): The list of true labels for each image. Of the same size and order as the mean_predictions.
+    """
+    files_modified = [image_path[:-6] for image_path in
+                      image_paths]  # Modify file paths to exclude the _a.png, _b.png, ...
+
+    accumulation_store = dict()  # Keep track of each image sum predictions
+    path_counter = dict()  # Keep track of the number of sub-images for each image
+    individual_file_label = []  # Keep track of the single true labels for each file
 
     for image_path, predicted_label, true_label in zip(files_modified, predicted_labels, true_labels):
-        if image_path in accumulation_store:
+        if image_path in accumulation_store:  # Image file has been predicted before, add to the prediction sum and increase coutner
             accumulation_store[image_path] = accumulation_store[image_path] + predicted_label
             path_counter[image_path] = path_counter[image_path] + 1
-        else:
+        else:  # New image detected. Add to dictionary and place initial prediction. Increase counter
             accumulation_store[image_path] = predicted_label
             path_counter[image_path] = 1
-            individual_file_label.append(true_label)
+            individual_file_label.append(true_label)  # Append true label
 
-    mean_predictions = []
+    mean_predictions = []  # Store of mean and normalized predictions (maintain softmax output)
     for key, value in accumulation_store.items():
-        mean_prediction = value / path_counter[key]
-        normalized_prediction = mean_prediction / np.sum(mean_prediction)
+        mean_prediction = value / path_counter[key]  # Create the mean prediction
+        normalized_prediction = mean_prediction / np.sum(mean_prediction)  # normalize the results
         mean_predictions.append(normalized_prediction)
 
-    return mean_predictions, individual_file_label
+    return mean_predictions, individual_file_label  # Return the predictions for each image and the true labels (same size)
 
 
 def set_paths(current_model, path):
@@ -242,7 +258,8 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
         plt.title(taxon_name + taxon_level + ' Level Classification')
         plt.show()
 
-        resources_path = os.path.join(os.getcwd(), 'resources', taxon_name.lower() + taxon_level.lower() + '_cm.jpg')  # Save confusion matrix
+        resources_path = os.path.join(os.getcwd(), 'resources',
+                                      taxon_name.lower() + taxon_level.lower() + '_cm.jpg')  # Save confusion matrix
         plt.savefig(resources_path)
 
     report = classification_report(true_labels, predicted_labels)  # Create classification report
@@ -260,5 +277,3 @@ if __name__ == "__main__":
                             path='',
                             taxon_level='Global',
                             display=False)
-
-
