@@ -30,7 +30,7 @@ from global_land_mask import globe
 
 # Config and local
 from src.structure.Config import root_dir
-import silhouette_k_means
+import src.models.meta.silhouette_k_means as silhouette_k_means
 
 # Paths
 root_path = root_dir()  # Root path of the project
@@ -99,7 +99,7 @@ def general_pipeline(df: pd.DataFrame, k_means: KMeans, taxon_target: str):
     Args:
         df (DataFrame): The dataframe containing all observation data from the processed data directory.
         k_means (KMeans): The trained K-means model that performs the location encoding
-        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        taxon_target (str): The taxonomic level at which to extract the taxon_train labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
 
     Returns:
         (DataFrame): A dataframe containing cleaned, transformed, and new data features for further specified processing depending on the model.
@@ -142,7 +142,7 @@ def tree_pipeline(df, k_means, taxon_target, validation_file: str):
     Args:
         df (DataFrame): The dataframe containing all observation data from the processed data directory.
         k_means (KMeans): The trained K-means model that performs the location encoding
-        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        taxon_target (str): The taxonomic level at which to extract the taxon_train labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
         validation_file (str): The name of file to store validation data. Informs model naming as well.
 
     Returns:
@@ -178,7 +178,7 @@ def xgb_pipeline(df, k_means, taxon_target, validation_file: str):
     Args:
         df (DataFrame): The dataframe containing all observation data from the processed data directory.
         k_means (KMeans): The trained K-means model that performs the location encoding
-        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        taxon_target (str): The taxonomic level at which to extract the taxon_train labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
         validation_file (str): The name of file to store validation data. Informs model naming as well.
 
     Returns:
@@ -201,7 +201,7 @@ def nn_pipeline(df, k_means, taxon_target, validation_file: str):
     Args:
         df (DataFrame): The dataframe containing all observation data from the processed data directory.
         k_means (KMeans): The trained K-means model that performs the location encoding
-        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        taxon_target (str): The taxonomic level at which to extract the taxon_train labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
         validation_file (str): The name of file to store validation data. Informs model naming as well.
 
     Returns:
@@ -279,7 +279,7 @@ def validation_set(df: pd.DataFrame, taxon_target: str, file_name: str):
 
     Args:
         df (DataFrame): The dataframe containing all observation data from the processed data directory.
-        taxon_target (str): The taxonomic level at which to extract the taxon labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+        taxon_target (str): The taxonomic level at which to extract the taxon_train labels (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
         file_name (str): The name of the file in which the validation data will be stored.
 
     Returns:

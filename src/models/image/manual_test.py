@@ -6,7 +6,7 @@
 
     Attributes:
         img_size (int): The specified image size as input to the EfficientNet-B6 model (528).
-        img_path (str): The path to the image to be predicted using the CNN model. Please note the image should be in `taxon_test` directory.
+        img_path (str): The path to the image to be predicted using the CNN model. Please note the image should be in `taxon_validate` directory.
         model_path (str): The path to the model to be used to evaluate the image.
 """
 # General
@@ -19,7 +19,7 @@ from src.structure.Config import root_dir
 img_size = 528
 
 model_path = root_dir() + "/models/image/"   # Base model path. Specific model added in load_paths method
-img_path = root_dir() + "/data/taxon_test/"  # Base image path
+img_path = root_dir() + "/data/taxon_validate/"  # Base image path
 
 
 def load_paths(model_name: str, image_path: str):
@@ -27,7 +27,7 @@ def load_paths(model_name: str, image_path: str):
 
     Args:
         model_name (str): The name of the model to be loaded in order to predict the image. Example: `family_taxon_classifier`
-        image_path (str): The path to the image to be predicted. This originates from the `taxon_test` directory. Example: `elephantidae/loxodonta/4321448_a.jpg`
+        image_path (str): The path to the image to be predicted. This originates from the `taxon_validate` directory. Example: `elephantidae/loxodonta/4321448_a.jpg`
     """
     global img_path, model_path
     img_path = img_path + image_path
@@ -38,15 +38,15 @@ def predict(model_name: str, image_path: str):
     """This method provides a simplified prediction process, where the model name and image path are required,
     and it will print the models prediction for viewing.
 
-    In the provided example, the family taxon classification model is used to test if Elephantidae is predicted over Felidae.
+    In the provided example, the family taxon_train classification model is used to test if Elephantidae is predicted over Felidae.
     Due to the alphabetical ordering that Elephantidae comes before Felidae,
     we know it should be the first value will represent the Elephantidae class.
-    Use the taxon directory to determine which class is predicted.
+    Use the taxon_train directory to determine which class is predicted.
     This is a rough and quick method to confirm the model is working correctly.
 
     Args:
         model_name (str): The name of the model to be loaded in order to predict the image. Example: `family_taxon_classifier`
-        image_path (str): The path to the image to be predicted. This originates from the `taxon_test` directory. `elephantidae/loxodonta/4321448_a.jpg`
+        image_path (str): The path to the image to be predicted. This originates from the `taxon_validate` directory. `elephantidae/loxodonta/4321448_a.jpg`
     """
     load_paths(model_name, image_path)
 
