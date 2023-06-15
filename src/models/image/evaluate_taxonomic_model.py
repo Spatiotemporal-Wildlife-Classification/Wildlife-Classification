@@ -19,9 +19,12 @@
     The following lines should also be included:
 
     `file_paths = test_ds.file_paths` before the dataset prefetching.
+
     `accumulated_score, file_true = global_mean_image_prediction(file_paths, preds, true_labels)` after the model predictions.
+
     These methods produce an averaged and uniform softmax prediction per image. Use the accumulated_score as a replacement
     within the `preds = np.argmax(accumulated_score, axis=1)` code.
+
     Please additionally changes the report and accuracy paths to access the `global_image_classification_results.csv`
     and `global_image_classification_accuracy.csv`
 
