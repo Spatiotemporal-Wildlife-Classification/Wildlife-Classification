@@ -3,7 +3,7 @@
 
     To visualize and analyse the validation result metrics,
     please view `notebook/image_classification/image_classification_visualization`.
-    The data collected in s placed within the `notebook/image_classificaiton/taxon_image_classification_cache/`
+    The data collected is placed within the `notebook/image_classificaiton/taxon_image_classification_cache/`
     directory.
 
     This validation process is structured to be run within a Docker container in order to train on a single GPU unit.
@@ -12,6 +12,18 @@
     ```
     docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/validate_image:latest
     ```
+    -------------------------------------------------------------------------------------------------------------------
+
+    Please note, when using this file to evaluate a flat-classification model, make use of the `global_mean_image_prediction()` method.
+    This averages the predictions for sub-images into a single image.
+    The following lines should also be included:
+
+    `file_paths = test_ds.file_paths` before the dataset prefetching.
+    `accumulated_score, file_true = global_mean_image_prediction(file_paths, preds, true_labels)` after the model predictions.
+    These methods produce an averaged and uniform softmax prediction per image. Use the accumulated_score as a replacement
+    within the `preds = np.argmax(accumulated_score, axis=1)` code.
+    Please additionally changes the report and accuracy paths to access the `global_image_classification_results.csv`
+    and `global_image_classification_accuracy.csv`
 
     Attributes:
         img_size (int): The specified image size as input to the EfficientNet-B6 model (528)
@@ -44,10 +56,10 @@ model_path = ''
 # Data collection paths
 report_path = os.path.join(os.getcwd(),
                           'notebooks',
-                          'taxon_image_classification_cache/global_image_classification_evaluation.csv')
+                          'image_classification/taxon_image_classification_cache/global_image_classification_evaluation.csv')
 accuracy_path = os.path.join(os.getcwd(),
                           'notebooks',
-                          'taxon_image_classification_cache/global_image_classification_accuracies.csv')
+                          'image_classification/taxon_image_classification_cache/global_image_classification_accuracies.csv')
 
 
 def generate_test_set():
@@ -128,7 +140,7 @@ def add_model_report(y_true, y_pred, taxon_level, classes):
     report_df['taxon_level'] = taxon_level  # Add additional columns
     report_df = report_df.head(len(classes))  # Specify the row cutoff to avoid including the last 3 rows (accuracy, macro avg, weighted avg)
 
-    # report_df.to_csv(report_path, mode='a', header=False)
+    report_df.to_csv(report_path, mode='a', header=False)
 
 
 def add_model_accuracy(y_true, y_pred, taxon_level, taxon_name):
@@ -150,7 +162,7 @@ def add_model_accuracy(y_true, y_pred, taxon_level, taxon_name):
     accuracy_df['taxon_level'] = [taxon_level]
     accuracy_df['taxon_name'] = taxon_name
 
-    # accuracy_df.to_csv(accuracy_path, mode='a', header=False, index=False)
+    accuracy_df.to_csv(accuracy_path, mode='a', header=False, index=False)
 
 
 def global_mean_image_prediction(image_paths: list, predicted_labels: list, true_labels: list):
@@ -175,8 +187,6 @@ def global_mean_image_prediction(image_paths: list, predicted_labels: list, true
         mean_predictions.append(normalized_prediction)
 
     return mean_predictions, individual_file_label
-
-
 
 
 def set_paths(current_model, path):
@@ -218,14 +228,11 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
 
     model = tf.keras.models.load_model(model_path)  # Load the saved model
 
-    file_paths = test_ds.file_paths
     test_ds = test_ds.prefetch(AUTOTUNE)  # Optimize for GPU running
 
     preds = model.predict(test_ds)  # Generate predictions for validation set
 
-    accumulated_score, file_true = global_mean_image_prediction(file_paths, preds, true_labels)
-
-    preds = np.argmax(accumulated_score, axis=1)  # Get index value of the prediction
+    preds = np.argmax(preds, axis=1)  # Get index value of the prediction
     predicted_labels = np.take(classes, preds)  # Extract class name from the index value
 
     if display:  # Create confusion matrix
@@ -238,12 +245,12 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
         resources_path = os.path.join(os.getcwd(), 'resources', taxon_name.lower() + taxon_level.lower() + '_cm.jpg')  # Save confusion matrix
         plt.savefig(resources_path)
 
-    report = classification_report(file_true, predicted_labels)  # Create classification report
+    report = classification_report(true_labels, predicted_labels)  # Create classification report
     print(report)
 
     # Save results to file
-    add_model_report(file_true, predicted_labels, taxon_level, classes)  # Save report to file
-    add_model_accuracy(file_true, predicted_labels, taxon_level, taxon_name)  # Save balanced accuracy to file
+    add_model_report(true_labels, predicted_labels, taxon_level, classes)  # Save report to file
+    add_model_accuracy(true_labels, predicted_labels, taxon_level, taxon_name)  # Save balanced accuracy to file
 
 
 if __name__ == "__main__":
