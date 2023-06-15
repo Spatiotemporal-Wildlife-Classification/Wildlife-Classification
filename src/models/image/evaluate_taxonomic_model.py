@@ -28,7 +28,7 @@
     Please additionally changes the report and accuracy paths to access the `global_image_classification_results.csv`
     and `global_image_classification_accuracy.csv`
 
-    Please additionally change the dataset to `global_taxon` and `global_taxon_test` directories.
+    Please additionally change the dataset to `species_train` and `species_validate` directories.
 
     Attributes:
         img_size (int): The specified image size as input to the EfficientNet-B6 model (528)
