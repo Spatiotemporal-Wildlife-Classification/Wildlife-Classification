@@ -14,7 +14,7 @@ from src.structure import Config
 
 # Paths
 root_path = Config.root_dir()
-data_path = '/data/processed/'
+data_path = '/data/obs_and_meta/processed/'
 dsn_endpoint = "http://139.144.179.74:5000/"
 
 
