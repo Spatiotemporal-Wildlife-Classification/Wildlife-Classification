@@ -20,7 +20,7 @@ from src.structure.Config import root_dir
 import gc
 import os
 
-data_path = root_dir() + '/data/processed/final_test_observations.csv'
+data_path = root_dir() + '/data/obs_and_meta/processed/final_test_observations.csv'
 results_path = root_dir() + '/notebooks/ensemble_model/ensemble_cache/'
 image_path = root_dir() + '/data/images/validation/'
 model_path = root_dir() + '/models/'
