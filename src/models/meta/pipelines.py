@@ -34,7 +34,7 @@ import src.models.meta.silhouette_k_means as silhouette_k_means
 
 # Paths
 root_path = root_dir()  # Root path of the project
-data_path = '/data/processed/'  # Path to where data is stored
+data_path = '/data/obs_and_meta/processed/'  # Path to where data is stored
 save_path = '/models/meta/'  # '/notebooks/meta_modelling/model_comparison_cache/' to produce models for evaluation within the meta_data_model_comparison notebook
 
 # Boolean Flags
