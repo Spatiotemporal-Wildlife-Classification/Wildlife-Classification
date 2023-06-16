@@ -1,32 +1,52 @@
-#!/usr/bin/env python3
+"""This file forms the novel ensemble classifier.
 
-import pickle
-import sys
-import time
+    The novel ensemble classifier is a combination of two cascading taxonomic classification trees, using
+    the metadata and image classifiers respectively at each parent node.
+    The two trees, form a combined result which best evaluates the optimal prediction based on the classifiers strengths
+    and when mitigating their weaknesses.
 
-import pandas as pd
-import numpy as np
-import schedule
+    This classifier operates to classify the validation dataset.
+    The results serve as a comparison against baseline traditional image flat-classification methodologies.
+
+    Attributes:
+        data_path (str): The path to where the `validate.csv` dataset it. This is located in `data/obs_and_meta/processed/validation/`
+        results_path (str): The path to where the results are stored. The results are stored within `notebooks/ensemble_model/ensemble_cache/` for easy visualizaiton in the Notebook.
+        image_path (str): The path to the directory containing the validation images. The validation images and the data path sets are linked by observation id.
+        model_path (str): The path to the base directory containing image and metadata classification models.
+        image_model_path (str): The specific directory containing all image models (using `model_path` as the base path)
+        meta_model_path (str): The specific directory containing all metadata models (using `model_path` as the base path)
+"""
+
+
+# Modelling
 import tensorflow as tf
 import xgboost as xgb
-import pytz
 
-from csv import DictWriter
-
+# Project
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
     sub_species_detection
 from src.structure.Config import root_dir
 
+# General
 import gc
 import os
+import pytz
+import pandas as pd
+import numpy as np
+import pickle
+import sys
+from csv import DictWriter
 
+# Data paths
 data_path = root_dir() + '/data/obs_and_meta/processed/validation.csv'
 results_path = root_dir() + '/notebooks/ensemble_model/ensemble_cache/'
 image_path = root_dir() + '/data/images/validation/'
+
+# Model paths
 model_path = root_dir() + '/models/'
 image_model_path = model_path + 'image/'
 meta_model_path = model_path + 'meta/'
-cluster_model_path = model_path + 'meta/'
+cluster_model_path = model_path + 'k_clusters/'
 
 # Load base image classifier
 base_image_classifier_path = image_model_path + 'family_taxon_classifier'
