@@ -272,6 +272,7 @@ def preprocess_meta_data(df: pd.DataFrame, k_means: KMeans, taxon_target: str):
 
 
 def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
+    """"""
     meta_weighting = taxon_weighting[taxon_level]
     image_weighting = 1 - meta_weighting
     weighted_meta = meta_prediction * meta_weighting
