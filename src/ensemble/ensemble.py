@@ -20,10 +20,9 @@ from src.structure.Config import root_dir
 import gc
 import os
 
-data_path = root_dir() + '/data/processed/final_test_observations.csv'
-results_path = root_dir() + '/notebooks/ensemble_cache_2/'
-# results_path = root_dir() + '/notebooks/ensemble_comparison_cache/'
-image_path = root_dir() + '/data/final_images/'
+data_path = root_dir() + '/data/obs_and_meta/processed/validation.csv'
+results_path = root_dir() + '/notebooks/ensemble_model/ensemble_cache/'
+image_path = root_dir() + '/data/images/validation/'
 model_path = root_dir() + '/models/'
 image_model_path = model_path + 'image/'
 meta_model_path = model_path + 'meta/'
@@ -382,6 +381,7 @@ def read_position():
     with open('position.csv', 'r') as f:
         data = f.read()
         return int(data)
+
 
 def update_position(prev_position):
     with open('position.csv', 'w') as f:

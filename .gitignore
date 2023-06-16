@@ -128,9 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# CSV files are not to be tracked
-*.csv
-
 # Notebook data caches
 notebooks/meta_modelling/model_comparison_cache
 notebooks/meta_modelling/felid_data_cache
@@ -150,15 +147,16 @@ notebooks/meta_modelling/oversample_data_cache
 .idea/.gitignore
 
 notebooks/meta_modelling/model_comparison_cache
-notebooks/model_comparison_cache_2
 
 models/checkpoints
 models/image
 models/k_clusters
 models/meta
 models/global
+
+# Images should not be tracked
 *.jpg
 
-
-data/
+# CSV files are not to be tracked
+*.csv
 

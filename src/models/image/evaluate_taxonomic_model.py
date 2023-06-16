@@ -28,7 +28,7 @@
     Please additionally changes the report and accuracy paths to access the `global_image_classification_results.csv`
     and `global_image_classification_accuracy.csv`
 
-    Please additionally change the dataset to `global_taxon` and `global_taxon_test` directories.
+    Please additionally change the dataset to `species_train` and `species_validate` directories.
 
     Attributes:
         img_size (int): The specified image size as input to the EfficientNet-B6 model (528)
@@ -215,13 +215,13 @@ def set_paths(current_model, path):
 
     Args:
         current_model (str): The name of the model to validate. Must adhere to naming conventions of taxonomic modelling. Example: `elephantidae_taxon_classifier`
-        path (str): The path to the validation directory. This is the path within `taxon_test` to the correct directory. Example: `elephantidae/`
+        path (str): The path to the validation directory. This is the path within `taxon_validate` to the correct directory. Example: `elephantidae/`
     """
     global model_name, test_path, training_path, model_path
 
     model_name = current_model
-    test_path = os.path.join(os.getcwd(), 'data', 'taxon_test/' + path)
-    training_path = os.path.join(os.getcwd(), 'data', 'taxon/' + path)
+    test_path = os.path.join(os.getcwd(), 'data', 'images/taxon_validate/' + path)
+    training_path = os.path.join(os.getcwd(), 'data', 'images/taxon_train/' + path)
     model_path = os.path.join(os.getcwd(), 'models/image/', model_name)  # For global models change to 'models/global`
 
 
@@ -232,7 +232,7 @@ def single_model_evaluation(current_model, path, taxon_level, display=False):
 
     Args:
         current_model (str): The name of the model to validate. Must adhere to naming conventions of taxonomic modelling. Example: `elephantidae_taxon_classifier`
-        path (str): The path to the validation directory. This is the path within `taxon_test` to the correct directory. Example: `elephantidae/`
+        path (str): The path to the validation directory. This is the path within `taxon_validate` to the correct directory. Example: `elephantidae/`
         taxon_level (str): The taxonomic level at which classification takes place (Family, Genus, Species, Subspecies). This is the level of the taxonomic children being classified.
         display (bool): A boolean value indicating whether the Confusion matrix of the model validation should be created and saved.
     """

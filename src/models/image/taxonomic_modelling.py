@@ -14,7 +14,7 @@
 
     Attributes:
         model_name (str): The saved name of the model. The file name must have the following format. taxonomic name + _taxon_classifier. Example: `lynx_lynx_taxon_classifier`
-        img_path (str): The path to the taxonomic parent node within the `taxon` directory. Example" `felidae/lynx/lynx_lynx/`
+        img_path (str): The path to the taxonomic parent node within the `taxon_train` directory. Example" `felidae/lynx/lynx_lynx/`
         save_path (str): The path to where the model will be saved. In this case the `models/image/` directory
         img_size (int): The specified image size as input to the EfficientNet-B6 model (528)
         batch_size (int): The number of images within a single batch (32)
@@ -50,15 +50,15 @@ epochs = 25
 def import_dataset(file_path: str):
     """This method imports the dataset from the proposed directory forming both a train and test set.
 
-    This method uses the imaage_dataset_from_directory() method. For more information please visit:
+    This method uses the image_dataset_from_directory() method. For more information please visit:
     https://www.tensorflow.org/api_docs/python/tf/keras/utils/image_dataset_from_directory
 
     This method, allows specification of the file path and automatically determines the labels based on the directory
     structure, hence the directory structure replicating the taxonomic tree of the dataset.
-    Additionally, the class names are dispayed when this method is called.
+    Additionally, the class names are displayed when this method is called.
 
     Args:
-        file_path (str): The path from the `taxon/` (including) directory. Example: `taxon/felidae/lynx/lynx_lynx/`
+        file_path (str): The path from the `taxon_train/` (including) directory. Example: `taxon_train/felidae/lynx/lynx_lynx/`
 
     Returns:
         train_ds (tf.data.Dataset): The training dataset which will be used to train the model
@@ -221,7 +221,7 @@ def train_model(file_name: str, dataset_path: str, visualize=False):
 
     Args:
         file_name (str): The file name must have the following format. taxonomic name + _taxon_classifier. Example: `lynx_lynx_taxon_classifier`
-        dataset_path (str): The path to the taxonomic parent node within the `taxon` directory. Example" `felidae/lynx/lynx_lynx/`
+        dataset_path (str): The path to the taxonomic parent node within the `taxon_train` directory. Example" `felidae/lynx/lynx_lynx/`
         visualize (bool): A boolean value indicating whether the training and testing over the number of epochs should be visualized and saved in a figure.
     """
     setup_paths(file_name, dataset_path)  # Setup the model save and dataset paths
@@ -249,11 +249,11 @@ def setup_paths(file_name: str, dataset_path: str):
 
     Args:
         file_name (str): The file name must have the following format. taxonomic name + _taxon_classifier. Example: `lynx_lynx_taxon_classifier`
-        dataset_path (str): The path to the taxonomic parent node within the `taxon` directory. Example" `felidae/lynx/lynx_lynx/`
+        dataset_path (str): The path to the taxonomic parent node within the `taxon_train` directory. Example" `felidae/lynx/lynx_lynx/`
     """
     global model_name, img_path, save_path
     model_name = file_name
-    img_path = os.path.join(os.getcwd(), 'data', 'taxon/' + dataset_path)
+    img_path = os.path.join(os.getcwd(), 'data', 'images/taxon_train/' + dataset_path)
     save_path = os.path.join(os.getcwd(), 'models/image/', model_name)
 
 

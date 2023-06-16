@@ -24,12 +24,12 @@ class Pipeline:
         start_time (DateTime): Records the start time of pipeline processing
         TEST (bool): A flag indicating values should be initialized for testing purposes.
         test_df (DataFrame): A direct dataframe insert for pipeline testing purposes
-        interim_file (str): Specification of the file to write data to after cleaning process.
+        interim_file (str): Specification of the file to write data to after cleaning process. The naming convention is `<taxon_parent_name>_interim.csv`
         bad_file (str): Specification of the file to write identified potentially bad observation images to.
         batch_size (int): Size of individual batches that aggregate observations are broken down into.
     """
 
-    interim_file = "felids_final.csv"
+    interim_file = "felidae_interim.csv"
     bad_file = 'bad_quality.csv'
     batch_size = 1000
 
@@ -47,8 +47,8 @@ class Pipeline:
             self.df_whole = pd.DataFrame()
             self.df = pd.DataFrame()
             self.datasets = datasets
-            self.resource_path = root_dir() + "/data/raw/"
-            self.write_path = root_dir() + "/data/interim/"
+            self.resource_path = root_dir() + "/data/obs_and_meta/raw/"
+            self.write_path = root_dir() + "/data/obs_and_meta/interim/"
             self.interim_exists = os.path.isfile(self.write_path + self.interim_file)
             self.bad_data_exists = os.path.isfile(self.write_path + self.bad_file)
             self.row_sum = 0
@@ -341,7 +341,7 @@ class Pipeline:
 
 if __name__ == "__main__":
     # Create Pipeline object
-    pipeline = Pipeline(datasets=['felids.csv'])
+    pipeline = Pipeline(datasets=['felidae.csv'])
 
     # Activate pipeline flow
     pipeline.activate_flow()
