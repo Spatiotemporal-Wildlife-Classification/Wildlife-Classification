@@ -8,6 +8,13 @@
     This classifier operates to classify the validation dataset.
     The results serve as a comparison against baseline traditional image flat-classification methodologies.
 
+    Please note, the hierarchy is hard coded due to the difficulty in getting the metadata and image classification models
+    containing the same number of predicted children. This was hardcoded to achieve a result used to determine if this avenue of
+    classification was worth pursuing. It is, so this method will need to be refined to be scalable, efficient, and distributed to
+    be of use as a real-time classifier.
+    For now, this script operates as a Proof of concept on the database.
+    Adjust the hardcoded hierarchy if classifying wildlife on a different dataset.
+
     Attributes:
         data_path (str): The path to where the `validate.csv` dataset it. This is located in `data/obs_and_meta/processed/validation/`
         results_path (str): The path to where the results are stored. The results are stored within `notebooks/ensemble_model/ensemble_cache/` for easy visualizaiton in the Notebook.
@@ -15,6 +22,15 @@
         model_path (str): The path to the base directory containing image and metadata classification models.
         image_model_path (str): The specific directory containing all image models (using `model_path` as the base path)
         meta_model_path (str): The specific directory containing all metadata models (using `model_path` as the base path)
+        cluster_model_path (str): The specific directory containing all K-means model used to encode the observation locations. (using `model_path` as a base path)
+        base_image_classifier_path (str): The path to the base image classifier. (The root image classifier classifying Felidae and Elephantidae as child classes)
+        base_meta_classifier_path  (str): The path to the base metadata classifier. (The root metadata classifier classifying Felidae and Elephantidae as child classes)
+        base_cluster_path (str): The path to the base K-means cluster model. (The models encoding the Felidae and Elephantidae possitions at the Family taxon level)
+        multiple_detections_id (list): The list of possible image suffixes due to multiple sub-images per observation.
+        img_size (int): The size of the input images to the image classifier (528, 528, 3)
+        taxonomic_levels (list): The list of taxonomic levels at which classification occurs in the dataset from family to subspecies in order.
+        hierarchy (dict): The taxonomic breakdown of the dataset.
+        taxon_weighting (dict): The weighting of the metadata model predictions. The inverse presents the image classification predictions. These values are presented after observing the metadata and image classification taxonomic level experiment results.
 """
 
 
@@ -48,18 +64,16 @@ image_model_path = model_path + 'image/'
 meta_model_path = model_path + 'meta/'
 cluster_model_path = model_path + 'k_clusters/'
 
-# Load base image classifier
-base_image_classifier_path = image_model_path + 'family_taxon_classifier'
+# Models
+base_image_classifier_path = image_model_path + 'family_taxon_classifier'  # Root image classifier path
+base_meta_classifier_path = meta_model_path + 'base_xgb_model.json'  # Root metadata classifier path
+base_cluster_path = cluster_model_path + 'base_xgb_k_means.sav'  # Root location encoding K-means model.
 
-# Load base meta-classifier
-base_meta_classifier_path = meta_model_path + 'base_xgb_model.json'
-
-# Load base k_cluster
-base_cluster_path = cluster_model_path + 'base_xgb_k_means.sav'
-
-multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
+# Image details
+multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']  # Sub-image suffixes
 img_size = 528
 
+# Dataset taxonomy breakdown into nested dictionaries.
 taxonomic_levels = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
 hierarchy = {'base':
                  {'Elephantidae': {'Elephas':
@@ -171,7 +185,7 @@ hierarchy = {'base':
                                        {'Puma concolor concolor': '',
                                         'Puma concolor couguar': ''}}}}}
 
-# Meta data prediction weighting by taxonomic level
+# Metadata prediction weighting by taxonomic level
 taxon_weighting = {'taxon_family_name': 0.1,
                    'taxon_genus_name': 0.2,
                    'taxon_species_name': 0.5,
