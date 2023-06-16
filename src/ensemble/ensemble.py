@@ -37,6 +37,7 @@
 # Modelling
 import tensorflow as tf
 import xgboost as xgb
+from sklearn.cluster import KMeans
 
 # Project
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
@@ -194,8 +195,19 @@ taxon_weighting = {'taxon_family_name': 0.1,
 
 # Method to identify multiple wildlife instances detected within a single image
 def multiple_image_detections(index):
+    """This method gathers all sub-images per a single observation
+
+    Due to the image pre-processing multiple sub-images can occur. Each sub-image centers and focuses on a identified
+    wildlife individual. This method accumulated all file names based on the observation id.
+    Sub-images are structured in the following format: `<id>_<alphabetical suffix>.jpg`
+
+    Args:
+        index (int): This is the unique id value of each observation.
+    Returns:
+        (list): A list of file names leading to sub-images of the specified observation id (index)
+    """
     images = []
-    for possibility in multiple_detections_id:
+    for possibility in multiple_detections_id:  # Loop through the possible suffixes
         name = str(index) + '_' + possibility + '.jpg'  # Generate a possible image name and path
         file_path = image_path + name
         if os.path.exists(file_path):  # If the file exists, add it to images
@@ -205,58 +217,57 @@ def multiple_image_detections(index):
     return images
 
 
-def preprocess_meta_data(df, k_means, taxon_target):
-    # Remove non-essential columns
-    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'lat', 'long', 'time', 'observed_on_y',
-                          'license', 'image_url', 'local_time_observed_at', 'positional_accuracy'])
+def preprocess_meta_data(df: pd.DataFrame, k_means: KMeans, taxon_target: str):
+    """This method processes and formats the metadata for model prediction, based on the taxon target the
+    location encoding K-means model.
 
-    # Positional Accuracy Restriction
+    This processing pipeline is essential for each dataset, as it processes and prepares the data based on the taxonomic level
+    and the models pre-trained to suit the taxon level.
+    This method looks similar to the data pipelines, but is modified due to the validation dataset already being processed.
+    This pipeline formats the data into the required form for use.
+
+    Args:
+        df (DataFrame): The dataframe to be processed into features and labels.
+        k_means (KMeans): The pre-trained location encoding model. This is trained based on the appropriate taxon parent node and taxon target, to be most effective within this dataset.
+        taxon_target (str): The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)
+
+    Returns:
+        X (DataFrame): The dataframe of features to be used by the metadata models
+        y (Series): The labels of each observation, extracted at the taxonomic target level.
+    """
+    df = df.drop(columns=['geoprivacy', 'taxon_geoprivacy', 'taxon_id', 'lat', 'long', 'time', 'observed_on_y',
+                          'license', 'image_url', 'local_time_observed_at', 'positional_accuracy'])  # Remove non-essential columns
+
+    df = df[df['public_positional_accuracy'] <= 40000]  # Positional Accuracy Restriction
     df = df.drop(columns=['public_positional_accuracy'])
 
-    # Generate sub-species and drop scientific name
+    # Generate subspecies and drop scientific name
     df = df.apply(lambda x: sub_species_detection(x), axis=1)
     df = df.drop(columns=['scientific_name'])
 
-    # Location Centroid Feature
-    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])
+    df['location_cluster'] = k_means.predict(df[['latitude', 'longitude']])  # Location encoding using K-means
 
-    # Terrestrial vs Land Feature
-    df['land'] = 1
+    df['land'] = 1  # All observations from dataset are terrestrial. For unknown datasets use the `land_mask()` method to automate the feature value
 
-    # Elevation Logical Path, dependent on land
-    df = df.apply(lambda x: elevation_clean(x), axis=1)
+    df = df.apply(lambda x: elevation_clean(x), axis=1)   # Clean elevation values. In aquatic observations, the max elevation is sea level 0m
     df['elevation'] = df['elevation'].fillna(df.groupby('taxon_species_name')['elevation'].transform('mean'))
 
-    # Northern and Southern Hemisphere OHE
-    df['hemisphere'] = (df['latitude'] >= 0).astype(int)
+    df['hemisphere'] = (df['latitude'] >= 0).astype(int)  # Northern and Southern Hemisphere OHE
     df = df.drop(columns=['latitude', 'longitude'])
 
-    # Datetime Transformation
-    df['observed_on'] = pd.to_datetime(df['observed_on'],
-                                       format="%Y-%m-%d %H:%M:%S%z",
-                                       utc=True)
+    df['observed_on'] = pd.to_datetime(df['observed_on'], format="%Y-%m-%d %H:%M:%S%z", utc=True)  # Datetime transform into datetime object
+    df['month'] = df['observed_on'].dt.month  # Month Feature
+    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)  # Hour Feature (local time)
+    df = day_night_calculation(df)  # Day/Night Feature
+    df = df.apply(lambda x: season_calc(x), axis=1)  # Season feature into categorical values
+    df = ohe_season(df)  # One-hot-encode the categorical season values
 
-    # Month Feature
-    df['month'] = df['observed_on'].dt.month
-
-    # Hour Feature
-    df['hour'] = df.apply(lambda x: x['observed_on'].astimezone(pytz.timezone(x['time_zone'])).hour, axis=1)
-
-    # Day/Night Feature
-    df = day_night_calculation(df)
-
-    # Season Feature
-    df = df.apply(lambda x: season_calc(x), axis=1)
-    df = ohe_season(df)
-
-    # Drop observed on column as date & time transformations are complete
-    df = df.drop(columns=['observed_on', 'time_zone'])
+    df = df.drop(columns=['observed_on', 'time_zone'])  # Drop observed on column as date & time transformations are complete
 
     y = df[taxon_target]
     X = df.drop(columns=['taxon_kingdom_name', 'taxon_phylum_name',
                          'taxon_class_name', 'taxon_order_name', 'taxon_family_name',
                          'taxon_genus_name', 'taxon_species_name', 'sub_species', 'common_name'])
-
     return X, y
 
 

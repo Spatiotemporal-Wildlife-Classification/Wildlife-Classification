@@ -13,14 +13,17 @@
         k_init (int): The initial number of centroids to be considered within the K-means algorithm performing location encoding
         save_path (str): The directory in which K-means models are saved. The `models/k_clusters/` directory.
 """
+
+# General
 import pickle
 import numpy as np
-
 import pandas as pd
 
+# Modelling
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
+# Project
 from src.models.meta import pipelines
 
 # K-means centroid range
