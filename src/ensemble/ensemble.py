@@ -449,11 +449,21 @@ def metadata_prediction(X: pd.DataFrame, index: int, meta_model: xgb):
     """
     obs = X.loc[index]  # Access current row (current observation)
     obs = obs.to_numpy()  # Convert meta-data sample to numpy array
-    meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
+    meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))  # Generate prediction
     return meta_prediction
 
 
 def predict(index, data):
+    """This method performs a cascading prediction for the specified observation.
+
+    This method cascades from the family taxon to the subspecies taxon if labels are provided to that depth.
+    The method documents the component, combined classifications, and true labels at each taxon level for analysis.
+    The cascading process halts, when a miss-classification occurs.
+
+    Args:
+        index (int): The unique id of the current observation to be classified.
+        data (pd.DataFrame): The dataframe containing all observation and metadata.
+    """
     print('---Image index: ', index, ' ---')
 
     writer, f = instantiate_save_file()
@@ -492,13 +502,11 @@ def predict(index, data):
         # Update hierarchy level
         current_level = current_level[labels[np.argmax(joint_prediction)]]
 
-        # True label
-
-        if pd.isnull(y[index]):
+        if pd.isnull(y[index]):  # There is no taxon label provided at this level. This is to accomodate for subspecies where not every observation has a label
             print(f"No label provided at {level}")
             break
 
-        true_label = y[index]
+        true_label = y[index]  # True label
 
         # Display
         print('Mean image prediction: ', mean_img_prediction)
@@ -513,9 +521,9 @@ def predict(index, data):
                    'image_prediction': labels[np.argmax(mean_img_prediction)],
                    'meta_prediction': labels[np.argmax(meta_prediction)],
                    'true_label': true_label}
-        writer.writerow(results)
+        writer.writerow(results)  # Save results to file
 
-        del meta_model
+        del meta_model  # Clear memory so the next model can be loaded
         del cluster_model
         del image_model
         gc.collect()
