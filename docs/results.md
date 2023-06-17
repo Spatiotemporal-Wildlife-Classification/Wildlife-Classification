@@ -49,3 +49,10 @@ The percentile intervals increase with decreasing taxonomic depth, with the subs
 The below figure showcases a similar decreasing trend across the precision, recall, and f1-score performance metrics. 
 
 <img height="490" src="../images/image_model_performance.png" width="567" alt="Metadata accuracy comparison" style="display: block; margin: 0 auto"/>
+
+### Cascading Ensemble Classifier Baseline Comparison
+The below figure showcases the baseline performance of the traditional image and metadata flat-classification on the dataset
+in comparison to the novel cascading ensemble classifier. The metadata classification achieves an array of approximately 38%,
+the image classifier achieves an accuracy of approximately 8&, and the cascading ensemble classifier achieves an accuracy of approximately 84%. 
+This is a performance of nearly 10 times that of the baseline image classifier. 
+<img height="570" src="../images/global_baseline.png" width="591" alt="Baseline comparison" style="display: block; margin: 0 auto"/>
