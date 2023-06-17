@@ -436,16 +436,32 @@ def image_prediction(index: int, image_model: keras.Sequential):
     return mean_img_prediction
 
 
+def metadata_prediction(X: pd.DataFrame, index: int, meta_model: xgb):
+    """This method handles the formatting of metadata and the model prediction
+
+    Args:
+        X (pd.DataFrame): The input features to the metadata model.
+        index (int): The unique id of each observation.
+        meta_model (xgb): The metadata model to predict the wildlife classes of the current taxon parent node.
+
+    Returns:
+        (list): The metadata model softmax prediction.
+    """
+    obs = X.loc[index]  # Access current row (current observation)
+    obs = obs.to_numpy()  # Convert meta-data sample to numpy array
+    meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
+    return meta_prediction
+
+
 def predict(index, data):
     print('---Image index: ', index, ' ---')
 
     writer, f = instantiate_save_file()
 
     current_level = hierarchy['base']  # Generate base hierarchy level
+    label = 'base'  # Current taxon label (parent taxon node)
 
-    label = 'base'
-
-    for level in taxonomic_levels:
+    for level in taxonomic_levels:  # Decrease down the taxon levels predicting at each level, until a miss-classification or correctly classified
         print('-> ', level)
         try:
             labels = (list(current_level.keys()))  # Prepare prediction labels
@@ -463,14 +479,11 @@ def predict(index, data):
 
         mean_img_prediction = image_prediction(index, image_model)  # Image prediction
 
-        # Meta prediction
-        X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each level
-        if X.isnull().values.any():
+        X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each taxon level
+        if X.isnull().values.any():  # Emergency case where null values may interrupt process
             print("Meta data contains null values ")
             break
-        obs = X.loc[index]  # Access current row
-        obs = obs.to_numpy()  # Convert meta-data sample to numpy array
-        meta_prediction = meta_model.predict_proba(obs.reshape(1, -1))
+        meta_prediction = metadata_prediction(X, index, meta_model)  # Metadata prediction
 
         # Decision
         joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)
