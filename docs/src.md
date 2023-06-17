@@ -17,6 +17,6 @@ The code is structured within 5 directories:
 
     A module detailing the construction, training, and evaluation of both image and meta classifiers
 
-5. Structure
+5. [Structure](src/configuration.md)
 
     A module enabling access to the projects structure for easy file access.
