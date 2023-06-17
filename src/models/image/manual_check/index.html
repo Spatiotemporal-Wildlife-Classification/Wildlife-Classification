@@ -327,7 +327,7 @@ working as expected, and to test the predictions of difficult images.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the image to be predicted using the CNN model. Please note the image should be in <code>taxon_test</code> directory.</p></td>
+          <td><p>The path to the image to be predicted using the CNN model. Please note the image should be in <code>taxon_validate</code> directory.</p></td>
         </tr>
         <tr>
           <td><code>model_path</code></td>
@@ -391,7 +391,7 @@ working as expected, and to test the predictions of difficult images.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the image to be predicted. This originates from the <code>taxon_test</code> directory. Example: <code>elephantidae/loxodonta/4321448_a.jpg</code></p></td>
+          <td><p>The path to the image to be predicted. This originates from the <code>taxon_validate</code> directory. Example: <code>elephantidae/loxodonta/4321448_a.jpg</code></p></td>
           <td>
               <em>required</em>
           </td>
@@ -415,7 +415,7 @@ working as expected, and to test the predictions of difficult images.</p>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model_name (str): The name of the model to be loaded in order to predict the image. Example: `family_taxon_classifier`</span>
-<span class="sd">        image_path (str): The path to the image to be predicted. This originates from the `taxon_test` directory. Example: `elephantidae/loxodonta/4321448_a.jpg`</span>
+<span class="sd">        image_path (str): The path to the image to be predicted. This originates from the `taxon_validate` directory. Example: `elephantidae/loxodonta/4321448_a.jpg`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">img_path</span><span class="p">,</span> <span class="n">model_path</span>
     <span class="n">img_path</span> <span class="o">=</span> <span class="n">img_path</span> <span class="o">+</span> <span class="n">image_path</span>
@@ -440,10 +440,10 @@ working as expected, and to test the predictions of difficult images.</p>
   
       <p>This method provides a simplified prediction process, where the model name and image path are required,
 and it will print the models prediction for viewing.</p>
-<p>In the provided example, the family taxon classification model is used to test if Elephantidae is predicted over Felidae.
+<p>In the provided example, the family taxon_train classification model is used to test if Elephantidae is predicted over Felidae.
 Due to the alphabetical ordering that Elephantidae comes before Felidae,
 we know it should be the first value will represent the Elephantidae class.
-Use the taxon directory to determine which class is predicted.
+Use the taxon_train directory to determine which class is predicted.
 This is a rough and quick method to confirm the model is working correctly.</p>
 
   <p><strong>Parameters:</strong></p>
@@ -472,7 +472,7 @@ This is a rough and quick method to confirm the model is working correctly.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the image to be predicted. This originates from the <code>taxon_test</code> directory. <code>elephantidae/loxodonta/4321448_a.jpg</code></p></td>
+          <td><p>The path to the image to be predicted. This originates from the <code>taxon_validate</code> directory. <code>elephantidae/loxodonta/4321448_a.jpg</code></p></td>
           <td>
               <em>required</em>
           </td>
@@ -508,15 +508,15 @@ This is a rough and quick method to confirm the model is working correctly.</p>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method provides a simplified prediction process, where the model name and image path are required,</span>
 <span class="sd">    and it will print the models prediction for viewing.</span>
 
-<span class="sd">    In the provided example, the family taxon classification model is used to test if Elephantidae is predicted over Felidae.</span>
+<span class="sd">    In the provided example, the family taxon_train classification model is used to test if Elephantidae is predicted over Felidae.</span>
 <span class="sd">    Due to the alphabetical ordering that Elephantidae comes before Felidae,</span>
 <span class="sd">    we know it should be the first value will represent the Elephantidae class.</span>
-<span class="sd">    Use the taxon directory to determine which class is predicted.</span>
+<span class="sd">    Use the taxon_train directory to determine which class is predicted.</span>
 <span class="sd">    This is a rough and quick method to confirm the model is working correctly.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model_name (str): The name of the model to be loaded in order to predict the image. Example: `family_taxon_classifier`</span>
-<span class="sd">        image_path (str): The path to the image to be predicted. This originates from the `taxon_test` directory. `elephantidae/loxodonta/4321448_a.jpg`</span>
+<span class="sd">        image_path (str): The path to the image to be predicted. This originates from the `taxon_validate` directory. `elephantidae/loxodonta/4321448_a.jpg`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">load_paths</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">image_path</span><span class="p">)</span>
 

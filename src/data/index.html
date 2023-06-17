@@ -554,7 +554,7 @@
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the file to write data to after cleaning process.</p></td>
+          <td><p>Specification of the file to write data to after cleaning process. The naming convention is <code>&lt;taxon_parent_name&gt;_interim.csv</code></p></td>
         </tr>
         <tr>
           <td><code>bad_file</code></td>
@@ -916,12 +916,12 @@
 <span class="sd">        start_time (DateTime): Records the start time of pipeline processing</span>
 <span class="sd">        TEST (bool): A flag indicating values should be initialized for testing purposes.</span>
 <span class="sd">        test_df (DataFrame): A direct dataframe insert for pipeline testing purposes</span>
-<span class="sd">        interim_file (str): Specification of the file to write data to after cleaning process.</span>
+<span class="sd">        interim_file (str): Specification of the file to write data to after cleaning process. The naming convention is `&lt;taxon_parent_name&gt;_interim.csv`</span>
 <span class="sd">        bad_file (str): Specification of the file to write identified potentially bad observation images to.</span>
 <span class="sd">        batch_size (int): Size of individual batches that aggregate observations are broken down into.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">interim_file</span> <span class="o">=</span> <span class="s2">&quot;felids_final.csv&quot;</span>
+    <span class="n">interim_file</span> <span class="o">=</span> <span class="s2">&quot;felidae_interim.csv&quot;</span>
     <span class="n">bad_file</span> <span class="o">=</span> <span class="s1">&#39;bad_quality.csv&#39;</span>
     <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1000</span>
 
@@ -939,8 +939,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">df_whole</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="n">datasets</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">resource_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/raw/&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/interim/&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/obs_and_meta/raw/&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/obs_and_meta/interim/&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">interim_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">interim_file</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bad_data_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad_file</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">row_sum</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1334,8 +1334,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">df_whole</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="n">datasets</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resource_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/raw/&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/interim/&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/obs_and_meta/raw/&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/data/obs_and_meta/interim/&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interim_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">interim_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bad_data_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">row_sum</span> <span class="o">=</span> <span class="mi">0</span>
