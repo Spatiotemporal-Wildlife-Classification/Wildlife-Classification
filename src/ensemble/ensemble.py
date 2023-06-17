@@ -272,12 +272,26 @@ def preprocess_meta_data(df: pd.DataFrame, k_means: KMeans, taxon_target: str):
 
 
 def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
-    """"""
-    meta_weighting = taxon_weighting[taxon_level]
-    image_weighting = 1 - meta_weighting
-    weighted_meta = meta_prediction * meta_weighting
+    """This method weights the metadata and image predictions based on the determined taxonomic weighting to produce
+    a single softmax output to correctly predict the wildlife taxon
+
+    The output is constrained to a valid probability distribution to match a softmax output.
+
+    Args:
+        meta_prediction (list): A list of metadata class probabilities. Note, the classes must match the image prediction
+        image_prediction (list): A list of image class probabilities. Note, the classes must match the meta prediction.
+        taxon_level (str): Specification of the taxon level, to specify the component weighting. (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)
+
+    Returns:
+        (list): A constrained softmax output constructed from the weighted influence of the individual metadata and image prediction components.
+    """
+    meta_weighting = taxon_weighting[taxon_level]  # Metadata prediction weight
+    image_weighting = 1 - meta_weighting  # Image prediction weight is the inverse
+    
+    weighted_meta = meta_prediction * meta_weighting  # Apply weightings
     weighted_image = image_prediction * image_weighting
-    combined = weighted_meta + weighted_image
+
+    combined = weighted_meta + weighted_image  # Combined and constrain weightings
     combined = combined / np.sum(combined)  # Ensure a valid probability distribution
     return combined
 
