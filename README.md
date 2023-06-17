@@ -3,6 +3,46 @@ Bachelor's thesis investigating **if** and **how** observation **spatiotemporal 
 existing **wildlife image classification** processes. 
 
 # Development
+## Environments
+All processes make use of a virtual environment to ensure all dependencies are accounted for. 
+This project provides alternative possibilities depending on the your needs. 
+
+### Conda Virtual Environment
+1. Navigate into your directory root from the terminal
+2. Execute the following command: `conda env create -f spatiotemp_class_env.yml`
+3. Ensure that whichever IDE you are using, uses the virtual environment to execute any code. 
+
+### Docker Image
+A docker image has been made to allow running of the code apart from the image classification training and validation due to the requirement of 
+GPUs in that instance. 
+
+Please download the docker image be executing the following command: 
+```angular2html
+docker pull ghcr.io/trav-d13/spatiotemporal_wildlife_classification/main:latest
+```
+
+To execute a file please execute the following command from the terminal (at the root of the project):
+```angular2html
+docker run -v "$(pwd)":/app -e PYTHONPATH=/app ghcr.io/trav-d13/spatiotemporal_wildlife_classification/main:latest python /app/src/script.py
+```
+
+Here is an example to train the metadata models:
+```angular2html
+ docker run -v "$(pwd)":/app -e PYTHONPATH=/app ghcr.io/trav-d13/spatiotemporal_wildlife_classification/main:latest python /app/src/models/meta/model_training.py
+```
+Please note, that only upon completed running will the printouts to the terminal be displayed.
+
+### Notebook Environments
+This method only works with an already constructed Conda virtual environment. 
+Please perform the following steps: 
+1. Activate the environment in your terminal
+2. Execute the following command to install the required package: `conda install -c anaconda ipykernel`
+3. Execute the following command to create the ipykernel: `python -m ipykernel install --user --name=spatiotemp_class_env`
+4. In your jupyter notebooks, there will be the new option when selecting the kernel of `spatiotemp_class_env`
+
+This kernel will provide the notebook with access to all dependencies of the virtual environment.
+
+
 ## Metadata Classification
 The metadata classification process is located at `src/models/meta/model_training.py`. 
 The process is automated to perform all required model training at all taxonomic levels. 
@@ -33,7 +73,7 @@ docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classificatio
 2. In the terminal please execute the following command to train the CNN using an available GPU unit.
 
 ```angular2html
-docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/train_image:latest
+docker run --gpus all -u $(id -u):$(id -g) -v "$(pwd)":/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/train_image:latest
 ```
 You will see information updating you on the training process printed to terminal/
 
@@ -42,7 +82,7 @@ You will see information updating you on the training process printed to termina
    - The documentation provides examples
 2. In the terminal please execute the following command to evaluate the CNN model using an available GPU unit
 ```angular2html
-docker run --gpus all -u $(id -u):$(id -g) -v /path/to/project/root:/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/validate_image:latest
+docker run --gpus all -u $(id -u):$(id -g) -v "$(pwd)":/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/validate_image:latest
 ```
 The classification report will be displayed on the terminal. 
 Both the image classification report metrics and the model balanced accuracy metric are automatically recorded.

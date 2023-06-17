@@ -1,5 +1,4 @@
 pip==23.1.2
-python==3.10.9
 geopandas==0.12.2
 geopy==2.3.0
 global-land-mask==1.0.0
@@ -12,7 +11,7 @@ mkdocs==1.4.3
 mkdocs-material==9.1.15
 mkdocs-autorefs==0.4.1
 mkdocstrings==0.22.0
-opencv==4.6.0
+opencv-python==4.7.0.72
 pandas==1.5.2
 pickle5==0.0.11
 scikit-learn==1.2.0
