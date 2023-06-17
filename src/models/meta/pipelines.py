@@ -13,10 +13,10 @@
        save_path (str): The path to where models and validation data (if created) is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`
        validation_set_flag (bool): A boolean flag indicating whether a validation set should be created and saved. The validation set is saved to save_path. Each file will have suffixx `_validation.csv`
 """
-from sklearn.cluster import KMeans
+
 # Modelling
 from sklearn.preprocessing import LabelBinarizer, StandardScaler
-
+from sklearn.cluster import KMeans
 from imblearn.over_sampling import RandomOverSampler
 
 # General
@@ -89,7 +89,7 @@ def neural_network_data(df: pd.DataFrame, taxon_target: str, validation_file: st
         classes (int): The number of classes data labels
     """
     k_means = silhouette_k_means.silhouette_process(df, validation_file)
-    X, y, lb, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
+    X, y, classes = nn_pipeline(df, k_means, taxon_target, validation_file)
     return X, y, classes
 
 
