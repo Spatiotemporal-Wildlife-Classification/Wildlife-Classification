@@ -147,7 +147,10 @@ def add_model_report(y_true, y_pred, taxon_level, classes):
     report_df = report_df.head(
         len(classes))  # Specify the row cutoff to avoid including the last 3 rows (accuracy, macro avg, weighted avg)
 
-    report_df.to_csv(report_path, mode='a', header=False)
+    if os.path.exists(report_path):
+        report_df.to_csv(report_path, mode='a', header=False)
+    else:
+        report_df.to_csv(report_path, mode='w', header=True)
 
 
 def add_model_accuracy(y_true, y_pred, taxon_level, taxon_name):
@@ -162,14 +165,17 @@ def add_model_accuracy(y_true, y_pred, taxon_level, taxon_name):
     """
     accuracy_df = pd.DataFrame()  # Initialize dataframe
     accuracy = balanced_accuracy_score(y_true, y_pred)  # Generate balanced accuracy metric
-    print(accuracy)
+    print("Balanced accuracy: ", accuracy)
 
     # Write additional columns
     accuracy_df['accuracy'] = [accuracy]
     accuracy_df['taxon_level'] = [taxon_level]
     accuracy_df['taxon_name'] = taxon_name
 
-    accuracy_df.to_csv(accuracy_path, mode='a', header=False, index=False)
+    if os.path.exists(accuracy_path):
+        accuracy_df.to_csv(accuracy_path, mode='a', header=False, index=False)
+    else:
+        accuracy_df.to_csv(accuracy_path, mode='w', header=True, index=False)
 
 
 def global_mean_image_prediction(image_paths: list, predicted_labels: list, true_labels: list):

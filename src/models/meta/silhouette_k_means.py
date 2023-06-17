@@ -11,21 +11,28 @@
         k_max (int): The maximum number of centroids to be considered within the K-means algorithm performing location encoding.
         k_interval (int): The centroid increasing interval so from k_init to k_max intervals of k_interval are used.
         k_init (int): The initial number of centroids to be considered within the K-means algorithm performing location encoding
+        save_path (str): The directory in which K-means models are saved. The `models/k_clusters/` directory.
 """
+
+# General
 import pickle
 import numpy as np
-
 import pandas as pd
 
+# Modelling
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
+# Project
 from src.models.meta import pipelines
 
 # K-means centroid range
 k_max = 60
 k_interval = 2
 k_init = 4
+
+# Model save path
+save_path = '/models/k_clusters/'
 
 
 def silhouette_process(df: pd.DataFrame, validation_file: str):
@@ -96,5 +103,5 @@ def save_k_means(k_means: KMeans, model_name: str):
         k_means (KMeans): The trained K-means model to be saved.
         model_name (str): The name of the file in which the model will be saved.
     """
-    pickle.dump(k_means, open(pipelines.root_path + pipelines.save_path + model_name + 'k_means.sav', 'wb'))
+    pickle.dump(k_means, open(pipelines.root_path + save_path + model_name + 'k_means.sav', 'wb'))
 

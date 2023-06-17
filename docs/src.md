@@ -5,7 +5,7 @@ The code is structured within 5 directories:
 
     A module performing the cleaning, processing, and structuring of the iNaturalist observations
 
-2. Ensemble
+2. [Ensemble](src/ensemble.md)
 
     A module detailing the novel cascading ensemble classifier and performing its evaluation against a validation set.
 
@@ -17,12 +17,6 @@ The code is structured within 5 directories:
 
     A module detailing the construction, training, and evaluation of both image and meta classifiers
 
-5. Structure
+5. [Structure](src/configuration.md)
 
     A module enabling access to the projects structure for easy file access.
-
-#### Data
-The data directory serves to process, clean, and structure the data sourced from [iNaturalist](https://www.inaturalist.org/). 
-The cleaning process forms a Data Pipeline, writing the processed data into 
-the `data/interim` directory within the project root folder, for further feature extraction.
-

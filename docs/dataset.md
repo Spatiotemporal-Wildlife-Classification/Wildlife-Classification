@@ -1,11 +1,12 @@
 # Dataset
 
-The dataset encompasses the observations and the encompassing spatiotemporal snapshot. 
+This dataset aimed to provide wildlife observations with a complete set of spatiotemporal metadata, to support the development of 
+a novel cascading ensemble classification method. 
 Each section below details the relevant essential information regarding the components of the dataset, and the 
 final dataset taxonomic count breakdown for observations and images. Note the distinction between observations and images
 as observations may contain erroneous or mislabelled images. 
 
-The dataset is published and publicly available at the following link: ...
+The dataset is published and publicly available at the following link: [https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset](https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset)
 
 The below figure displays the geographic distribution of the published dataset:
 <img height="545" src="../images/dataset_distribution.png" width="1001" alt="dataset distribution on dataset page" style="display: block; margin: 0 auto"/>
