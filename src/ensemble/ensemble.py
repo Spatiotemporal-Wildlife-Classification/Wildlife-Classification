@@ -32,8 +32,7 @@
         hierarchy (dict): The taxonomic breakdown of the dataset.
         taxon_weighting (dict): The weighting of the metadata model predictions. The inverse presents the image classification predictions. These values are presented after observing the metadata and image classification taxonomic level experiment results.
 """
-
-
+import keras
 # Modelling
 import tensorflow as tf
 import xgboost as xgb
@@ -287,7 +286,7 @@ def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
     """
     meta_weighting = taxon_weighting[taxon_level]  # Metadata prediction weight
     image_weighting = 1 - meta_weighting  # Image prediction weight is the inverse
-    
+
     weighted_meta = meta_prediction * meta_weighting  # Apply weightings
     weighted_image = image_prediction * image_weighting
 
@@ -297,60 +296,144 @@ def taxon_weighted_decision(meta_prediction, image_prediction, taxon_level):
 
 
 def avg_multi_image_predictions(images, model):
-    output_shape = model.output_shape[1:]
-    mean_predictions = [0] * output_shape[0]
-    for i in images:
-        img = tf.keras.utils.load_img(image_path + i, target_size=(img_size, img_size))
+    """This model averages the predictions of sub-images to produce a single prediction per observation.
+
+    This method combines the sub-image wildlife predictions together, averages them, and constrains them to a valid
+    probability distribution to represent a softmax output, in order to provide a single prediction per
+    observation (original image).
+
+    Args:
+         images (list): A list of sub-image paths of which predictions will be combined.
+         model (keras.Sequential): The image classification model to classify the sub-images as the correct taxonomic level.
+
+    Returns:
+        (list): A summed, averaged, and constrained softmax output to provide a single image classification per observation.
+    """
+    output_shape = model.output_shape[1:]  # Determine the number of classes in the prediction
+    mean_predictions = [0] * output_shape[0]  # Generate a container for the mean prediction
+
+    for i in images:  # Loop through sub-images
+        img = tf.keras.utils.load_img(image_path + i, target_size=(img_size, img_size))  # Format image
         img = tf.keras.utils.img_to_array(img)
         input_arr = np.array([img])
-        del img
+        del img  # Remove original image to save memory
 
-        prediction = model.predict(input_arr, verbose=0)
-        mean_predictions = mean_predictions + prediction
-    mean_predictions = mean_predictions / len(images)
-    return mean_predictions / np.sum(mean_predictions)
+        prediction = model.predict(input_arr, verbose=0)  # Classify image
+        mean_predictions = mean_predictions + prediction  # Sum with previous predictions
+
+    mean_predictions = mean_predictions / len(images)  # Average predictions
+    return mean_predictions / np.sum(mean_predictions)  # Return constrained prediction
 
 
 def load_next_meta_model(decision):
-    if decision == 'base':
+    """This method handles the loading of the correct metadata model, based on the provided decision
+
+    Args:
+        decision (str): The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.
+
+    Returns:
+        (xgboost): The pre-trained xgboost model classifying the children of the provided decision.
+    """
+    if decision == 'base':  # Root metadata model
         model = xgb.XGBClassifier()
         model.load_model(base_meta_classifier_path)
         return model
-    name = decision.replace(" ", "_")
+
+    name = decision.replace(" ", "_")  # Format taxon name to match model naming convention
     name = name.lower()
     name = meta_model_path + name + '_xgb_model.json'
-    model = xgb.XGBClassifier()
+
+    model = xgb.XGBClassifier()  # Load the model
     model.load_model(name)
     return model
 
 
 def load_next_cluster_model(decision):
-    if decision == 'base':
+    """This method handles the loading of the correct K-means model, based on the decision
+
+    Args:
+        decision (str): The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.
+
+    Returns:
+        (KMeans): The pre-trained K-means model encoding the locations of the child nodes.
+    """
+    if decision == 'base':  # Root K-means encoding model
         model = pickle.load(open(base_cluster_path, 'rb'))
         return model
-    name = decision.replace(" ", "_")
+
+    name = decision.replace(" ", "_")  # Format taxon name to match model naming convention
     name = name.lower()
     name = cluster_model_path + name + '_xgb_k_means.sav'
-    model = pickle.load(open(name, 'rb'))
+
+    model = pickle.load(open(name, 'rb'))  # Load the model
     return model
 
 
 def load_next_image_model(decision):
-    if decision == 'base':
+    """This method handles the loading of the correct image model, based on the provided decision
+
+    Args:
+        decision (str): The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.
+
+    Returns:
+        (keras.Sequential): The pre-trained EfficientNet-B6 model classifying the children of the provided decision.
+    """
+    if decision == 'base':  # Root image classification model
         model = tf.keras.models.load_model(base_image_classifier_path)
         return model
-    name = decision.replace(" ", "_")
+
+    name = decision.replace(" ", "_")  # Format taxon name to match model naming convention
     name = name.lower()
     name = image_model_path + name + '_taxon_classifier'
-    model = tf.keras.models.load_model(name)
+
+    model = tf.keras.models.load_model(name)  # Load the model
     return model
 
 
 def instantiate_save_file():
+    """This method instantiates the file saving and documenting the predictions of the ensemble model,
+    its components, and the true labels.
+
+    Returns:
+        dictwriter (DictWriter): A dictionary writer object enabling dictionaries to be written to file f.
+        f (file_handle): The file handle of the file to which the prediction data is being stored.
+    """
     headings = ['id', 'taxonomic_level', 'joint_prediction', 'image_prediction', 'meta_prediction', 'true_label']
     f = open(results_path + 'ensemble_results.csv', 'a')
     dictwriter = DictWriter(f, fieldnames=headings)
     return dictwriter, f
+
+
+def update_models(label: str):
+    """This method serves to update all three models, based on the provided taxon label
+
+    Args:
+        label (str): The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.
+
+    Returns:
+        meta_model (KMeans): The metadata classification model for the label taxon parent node.
+        image_model (keras.Sequential): The image classification model for the label taxon parent node.
+        cluster_model (KMeans): The K-means encoding model for the children of the label taxon parent node.
+    """
+    meta_model = load_next_meta_model(label)
+    image_model = load_next_image_model(label)
+    cluster_model = load_next_cluster_model(label)
+    return meta_model, image_model, cluster_model
+
+
+def image_prediction(index: int, image_model: keras.Sequential):
+    """This method handles the detection of sub-images and their mean image prediction.
+
+    Args:
+        index (int): The observation id providing the unique based identifier for sub-images of the original observation.
+        image_model (keras.Sequential): The image classification model, for the current taxon parent node,
+
+    Returns:
+        (list): A summed, averaged, and constrained softmax output to provide a single image classification per observation.
+    """
+    images = multiple_image_detections(index)
+    mean_img_prediction = avg_multi_image_predictions(images, image_model)
+    return mean_img_prediction
 
 
 def predict(index, data):
@@ -370,20 +453,15 @@ def predict(index, data):
             print(f"No {level} to be predicted")
             break
 
-        if len(labels) == 1:
+        if len(labels) == 1:  # There exists only a single possibility in the taxon tree, no need to predict
             label = labels[0]
             print('Single possibility: ', label)
             current_level = current_level[label]  # Update the current level based on the label
             continue
 
-        # Update models based on next model
-        meta_model = load_next_meta_model(label)
-        image_model = load_next_image_model(label)
-        cluster_model = load_next_cluster_model(label)
+        meta_model, image_model, cluster_model = update_models(label)  # Update models based on next model
 
-        # Image prediction
-        images = multiple_image_detections(index)
-        mean_img_prediction = avg_multi_image_predictions(images, image_model)
+        mean_img_prediction = image_prediction(index, image_model)  # Image prediction
 
         # Meta prediction
         X, y = preprocess_meta_data(data, cluster_model, level)  # Preprocess data for each level
