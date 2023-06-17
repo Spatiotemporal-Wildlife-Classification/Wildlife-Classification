@@ -34,7 +34,7 @@ Notably, the XGBoost model outperformed all others at all taxonomic levels in te
 The below figure shows a similar trend in the model's f1-scores. The XGBoost model remains the highest performing metadata classifier, 
 across both metrics and all models of comparison.
 
-<img height="547" src="../images/meta_f1_model_comp.png" width="671" alt="Metadata accuracy comparison" style="display: block; margin: 0 auto"/>
+<img height="547" src="../images/meta_f1_model_comp.png" width="640" alt="Metadata f1-score comparison" style="display: block; margin: 0 auto"/>
 
 ### Taxonomic Image Classification Trend
 The below figure visualizes the mean balanced accuracy of the image classification model at each taxonomic level. 
@@ -43,3 +43,9 @@ to that discovered from metadata classification.
 However, there seems to be an increase at the subspecies taxonomy. 
 The bars represent the percentile interval for each taxonomic level, showing the 95% confidence interval of where the data falls. 
 The percentile intervals increase with decreasing taxonomic depth, with the subspecies taxonomy having the largest percentile interval. 
+
+<img height="547" src="../images/image_model_accuracy.png" width="540" alt="Image accuracy" style="display: block; margin: 0 auto"/>
+
+The below figure showcases a similar decreasing trend across the precision, recall, and f1-score performance metrics. 
+
+<img height="490" src="../images/image_model_performance.png" width="567" alt="Metadata accuracy comparison" style="display: block; margin: 0 auto"/>
