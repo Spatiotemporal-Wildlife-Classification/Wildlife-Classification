@@ -495,12 +495,10 @@ def predict(index, data):
             break
         meta_prediction = metadata_prediction(X, index, meta_model)  # Metadata prediction
 
-        # Decision
-        joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)
+        joint_prediction = taxon_weighted_decision(meta_prediction, mean_img_prediction, level)  # Joint decision
         label = (labels[np.argmax(joint_prediction)])
 
-        # Update hierarchy level
-        current_level = current_level[labels[np.argmax(joint_prediction)]]
+        current_level = current_level[labels[np.argmax(joint_prediction)]]  # Update hierarchy level
 
         if pd.isnull(y[index]):  # There is no taxon label provided at this level. This is to accomodate for subspecies where not every observation has a label
             print(f"No label provided at {level}")
@@ -537,33 +535,45 @@ def predict(index, data):
 
 
 def read_position():
+    """This method reads the position from the `position.csv` as a way of keeping track of which observation it is
+    currently on in the validation dataset.
+
+    Returns:
+        (int): The row location of the current observation to classify.
+    """
     with open('position.csv', 'r') as f:
         data = f.read()
         return int(data)
 
 
-def update_position(prev_position):
+def update_position(prev_position: int):
+    """This method updates the saved row location of the observation to point to the next observation from previous.
+
+    Args:
+        prev_position (int): The row location of the previous observation that has been classified.
+    """
     with open('position.csv', 'w') as f:
         f.write(str(prev_position + 1))
         f.close()
 
 
 def ensemble_iteration():
-    observation_no = read_position()
+    """This method performs the cascading ensemble classification on the validation dataset."""
+    observation_no = read_position()  # Reads the row position to extract the observation to be classified.
 
     data = pd.read_csv(data_path, index_col=0)  # Read in the final test dataset
-    data = data.dropna(subset=['latitude', 'longitude', 'taxon_species_name'])
+    data = data.dropna(subset=['latitude', 'longitude', 'taxon_species_name'])  # Remove any null values
 
-    if observation_no > len(data):
+    if observation_no > len(data):  # All data has been classified.
         quit()
 
-    data = data.iloc[observation_no: observation_no + 1, :]
+    data = data.iloc[observation_no: observation_no + 1, :]  # Retrieve the observation row
 
-    for index, obs in data.iterrows():
+    for index, obs in data.iterrows():  # Performs the novel cascading ensemble classification on the observation
         predict(index, data)
 
-    update_position(observation_no)
-    os.execv(sys.executable, [sys.executable] + sys.argv)
+    update_position(observation_no)  # Update the position after classification
+    os.execv(sys.executable, [sys.executable] + sys.argv)  # Clear all memory to allow space for next observation models to be loaded.
 
 
 if __name__ == "__main__":
