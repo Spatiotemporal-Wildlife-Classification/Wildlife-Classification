@@ -398,9 +398,16 @@ def instantiate_save_file():
         dictwriter (DictWriter): A dictionary writer object enabling dictionaries to be written to file f.
         f (file_handle): The file handle of the file to which the prediction data is being stored.
     """
+    file_name = 'ensemble_results.csv'
     headings = ['id', 'taxonomic_level', 'joint_prediction', 'image_prediction', 'meta_prediction', 'true_label']
-    f = open(results_path + 'ensemble_results.csv', 'a')
-    dictwriter = DictWriter(f, fieldnames=headings)
+    if os.path.exists(results_path + file_name):
+        f = open(results_path + file_name, 'a')
+        dictwriter = DictWriter(f, fieldnames=headings)
+    else:
+        f = open(results_path + file_name, 'w', newline='')
+        dictwriter = DictWriter(f, fieldnames=headings)
+        dictwriter.writeheader()
+
     return dictwriter, f
 
 
