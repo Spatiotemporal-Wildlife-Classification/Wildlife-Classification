@@ -97,15 +97,15 @@ The data is saved in the: `notebooks/image_classification/taxon_image_classifica
 Automated wildlife classification is essential within ecological studies, wildlife conservation and management, 
 specifically fulfilling the roles of species population estimates, individual identification, and behavioural patterns.
 
-Observation metadata includes features such as location, time of observation, date, and multiple environmental features 
-gathered from [open-meteo](https://open-meteo.com/). For a full list of features please review: ..... 
+A novel dataset is created combining observations sourced from [iNaturalist](https://www.inaturalist.org/) and metadata 
+collected from the open-source historic weather data API at [open-meteo](https://open-meteo.com/). 
+The dataset is published and is publicly available at: [https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset](https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset).
 
-A novel approach combines metadata classification and existing wildlife classification methodologies, within the 
-taxonomic hierarchical structure, to accurate classify images down to the sub-species taxonomic level.
+A novel classification approach combines metadata classification and existing wildlife classification methodologies, within the 
+taxonomic hierarchical structure, to accurate classify images down to the subspecies taxonomic level. This methodology
+performs at 10 times the accuracy of traditional image classification when classifying wildlife to the species level. 
 
-
-More information on the proposed methods can be found within the [Methods](#methods) 
-section and [Thesis document](#external-links).
+For more information, please view the website: [https://trav-d13.github.io/spatiotemporal_wildlife_classification/](https://trav-d13.github.io/spatiotemporal_wildlife_classification/).
 
 ##### Proposed use-case
 A proposed use-case utilizes tourist's public social media postings in order to support wildlife park's population 
@@ -125,7 +125,7 @@ the taxonomic tree.
 
 #### Data Subject
 The data subject itself, wildlife species, make the classification process difficult, largely due to similar looking 
-species, and sub-species, in addition to sympatric species (species found in the same geographic area). 
+species, and subspecies, in addition to sympatric species (species found in the same geographic area). 
 `
 | ![](http://static.inaturalist.org/photos/88383/medium.jpg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/9581740/medium.jpg) |
 |------------------------------------------------------------|-------------------------------------------------------------------------------|
@@ -136,37 +136,45 @@ The training data is obtained from [iNaturalist](https://www.inaturalist.org/), 
 This thesis focuses exclusively on a subgroup of mammalian families, Elephantidae and Felids. 
 The below images serve as sample images from [iNaturalist](https://www.inaturalist.org/)
 
-The link to the used dataset is provided [here]() (inactive)
+The link to the used dataset is provided [here](https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset).
+Please review the notebooks available within the dataset, and within the `notebooks/exploratory_data_analysis` directory
+for dataset characteristics and EDA.
 
 | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254323960/large.jpeg) | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254318111/large.jpeg) |
 |---------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
 | ![](https://inaturalist-open-data.s3.amazonaws.com/photos/254306053/large.jpg)  | ![](https://static.inaturalist.org/photos/254074172/large.jpg)                  |
 
 
-### Data Characteristics
-##### Geographic Distribution
-![](resources/readme_resources/geographic_distribution.png)
-
-##### Example Precipitation Profile for Elephantidae Family
-![](resources/readme_resources/elephant_precipitation_profile.png)
-
-For a further look at basic exploratory dataset analysis please preview the available `notebooks`
 
 ## Methods
-The novel approach, makes use of a dual taxonomic tree approach. 
-The taxonomic trees will be specialized within image classification, and metadata classification respectively. 
-At each node of each tree, the node will contain a classifier, capable of classifying the children nodes, and restricted
-by its parent node. The nodes at each respective taxonomic level are capable of communicating, in order to effectively
-agree on a classification, leaning into their respective strengths.
+The cascading ensemble classifier capitalizes upon the determined trends within image and metadata classification 
+within wildlife's taxonomic structure. 
 
-![](resources/readme_resources/dual_dt.png)
+Specifically: 
+
+- Metadata classification performance increases with decreasing taxonomic level.
+
+- Image classification performance decreases with decreasing taxonomic level. 
+
+The below diagram visualizes the high level concept. 
+The concept makes use of a cascading selective classifier (classifier per parent node) for both the image and
+metadata classification components, resulting in dual, symmetrical cascading classification trees. 
+At each level of the cascade (parent node) the trees communicate, to make a joint decision leveraging or mitigating 
+their strengths or weaknesses to form a robust decision. 
+
+![CEC architecture](docs/images/cec_architecture.png)
 
 
 ## Results
-Still to be completed
+The below figure visualizes the performance comparison of the novel Cascading Ensemble classifier
+against baseline traditional image and metadata classifiers. 
+For more results on the individual experiments conducted and the discussion regarding the results, 
+please review the thesis report. The link can be found in the **[External links](#external-links)** section.
+
+![CEC comparative results](docs/images/global_baseline.png)
 
 ## External Links
-- **Thesis Document** (inactive)
-- [iNaturalist](https://www.inaturalist.org/)
+Thesis Document: https://trav-d13.github.io/spatiotemporal_wildlife_classification/thesis/
+Repository Documentation/ Website: https://trav-d13.github.io/spatiotemporal_wildlife_classification/
+Organization Website: https://spatiotemporal-wildlife-classification.github.io/
 
-### Scientific Papers
