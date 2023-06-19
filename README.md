@@ -9,7 +9,7 @@ This project provides alternative possibilities depending on the your needs.
 
 ### Conda Virtual Environment
 1. Navigate into your directory root from the terminal
-2. Execute the following command: `conda env create -f spatiotemp_class_env.yml`
+2. Execute the following command: `conda env create -f spatiotemp_classification_env.yml`
 3. Ensure that whichever IDE you are using, uses the virtual environment to execute any code. 
 
 ### Docker Image
@@ -18,17 +18,17 @@ GPUs in that instance.
 
 Please download the docker image be executing the following command: 
 ```angular2html
-docker pull ghcr.io/trav-d13/spatiotemporal_wildlife_classification/main:latest
+docker pull ghcr.io/spatiotemporal-wildlife-classification/wildlife_classification/main:0.1
 ```
 
 To execute a file please execute the following command from the terminal (at the root of the project):
 ```angular2html
-docker run -v "$(pwd)":/app -e PYTHONPATH=/app ghcr.io/trav-d13/spatiotemporal_wildlife_classification/main:latest python /app/src/script.py
+docker run -v "$(pwd)":/app -e PYTHONPATH=/app ghcr.io/spatiotemporal-wildlife-classification/wildlife_classification/main:0.1 python /app/src/script.py
 ```
 
 Here is an example to train the metadata models:
 ```angular2html
- docker run -v "$(pwd)":/app -e PYTHONPATH=/app ghcr.io/trav-d13/spatiotemporal_wildlife_classification/main:latest python /app/src/models/meta/model_training.py
+ docker run -v "$(pwd)":/app -e PYTHONPATH=/app ghcr.io/spatiotemporal-wildlife-classification/wildlife_classification/main:0.1 python /app/src/models/meta/model_training.py
 ```
 Please note, that only upon completed running will the printouts to the terminal be displayed.
 
@@ -108,8 +108,8 @@ copied into the container on execution. Any code changes are automatically picke
 ### Download Docker Images
 The docker images are packages in this repository, to download the latest train and validate packages execute the following: 
 ```angular2html
-docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classification/image_train:latest
-docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classification/image_validate:latest
+docker pull ghcr.io/spatiotemporal-wildlife-classification/wildlife_classification/train_image:0.1
+docker pull ghcr.io/spatiotemporal-wildlife-classification/wildlife_classification/validate_image:0.1
 ```
 
 ### Train New Model
@@ -118,7 +118,7 @@ docker pull docker.pkg.github.com/trav-d13/spatiotemporal_wildlife_classificatio
 2. In the terminal please execute the following command to train the CNN using an available GPU unit.
 
 ```angular2html
-docker run --gpus all -u $(id -u):$(id -g) -v "$(pwd)":/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/train_image:latest
+docker run --gpus all -u $(id -u):$(id -g) -v "$(pwd)":/app/ -w /app -t ghcr.io/spatiotemporal-wildlife-classification/wildlife_classification/train_image:0.1
 ```
 You will see information updating you on the training process printed to terminal/
 
@@ -127,7 +127,7 @@ You will see information updating you on the training process printed to termina
    - The documentation provides examples
 2. In the terminal please execute the following command to evaluate the CNN model using an available GPU unit
 ```angular2html
-docker run --gpus all -u $(id -u):$(id -g) -v "$(pwd)":/app/ -w /app -t ghcr.io/trav-d13/spatiotemporal_wildlife_classification/validate_image:latest
+docker run --gpus all -u $(id -u):$(id -g) -v "$(pwd)":/app/ -w /app -t ghcr.io/spatiotemporal-wildlife-classification/wildlife_classification/validate_image:0.1
 ```
 The classification report will be displayed on the terminal. 
 Both the image classification report metrics and the model balanced accuracy metric are automatically recorded.

@@ -1,4 +1,4 @@
-name: spatiotemp_class_env
+name: spatiotemp_classification_env
 channels:
   - defaults
 dependencies:
