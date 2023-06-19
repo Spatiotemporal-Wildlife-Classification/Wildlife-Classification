@@ -5,7 +5,7 @@ existing **wildlife image classification** processes.
 # Development
 ## Environments
 All processes make use of a virtual environment to ensure all dependencies are accounted for. 
-This project provides alternative possibilities depending on the your needs. 
+This project provides alternative possibilities depending on your needs. 
 
 ### Conda Virtual Environment
 1. Navigate into your directory root from the terminal
