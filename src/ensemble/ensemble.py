@@ -32,11 +32,12 @@
         hierarchy (dict): The taxonomic breakdown of the dataset.
         taxon_weighting (dict): The weighting of the metadata model predictions. The inverse presents the image classification predictions. These values are presented after observing the metadata and image classification taxonomic level experiment results.
 """
-import keras
+
 # Modelling
 import tensorflow as tf
 import xgboost as xgb
 from sklearn.cluster import KMeans
+import keras
 
 # Project
 from src.models.meta.pipelines import elevation_clean, day_night_calculation, season_calc, ohe_season, \
