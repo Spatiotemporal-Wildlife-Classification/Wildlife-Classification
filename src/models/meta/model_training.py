@@ -300,7 +300,7 @@ if __name__ == '__main__':
     The root flag when set to True will perform the root classifier training. Changing this to false, allows for the full taxonomic tree classification 
     training at each parent node (of the provided dataset).
     """
-    root = True
+    root = False
 
     if root:
         train_base_model('Xgboost', 'taxon_family_name')
