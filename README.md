@@ -41,6 +41,8 @@ Please perform the following steps:
 4. In your jupyter notebooks, there will be the new option when selecting the kernel of `spatiotemp_class_env`
 
 This kernel will provide the notebook with access to all dependencies of the virtual environment.
+Please note, the study data caches for all the notebooks can be accessed at this link: [https://drive.google.com/drive/folders/1r2ZQUl-fegTiXScPkns3a9-kr0yKYs7e?usp=sharing](https://drive.google.com/drive/folders/1r2ZQUl-fegTiXScPkns3a9-kr0yKYs7e?usp=sharing).
+
 
 ## Data
 The dataset is publicly provided and hosted on Kaggle at the following url: [https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset](https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset).
