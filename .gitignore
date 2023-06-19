@@ -142,8 +142,6 @@ dmypy.json
 # Removal of .idea/gitignore
 .idea/.gitignore
 
-notebooks/meta_modelling/model_comparison_cache
-
 models/checkpoints
 models/image
 models/k_clusters
