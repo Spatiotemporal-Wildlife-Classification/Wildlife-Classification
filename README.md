@@ -42,6 +42,51 @@ Please perform the following steps:
 
 This kernel will provide the notebook with access to all dependencies of the virtual environment.
 
+## Data
+The dataset is publicly provided and hosted on Kaggle at the following url: [https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset](https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset).
+Please download the dataset and place it within the `data` directory, so that the project data directory has the following structure:
+Please review the Kaggle documentation for more information on the purpose and contents of each directory.
+
+```angular2html
+data/
+    bonus/
+        metadata_mammalia_global.csv
+        observations_mammalia_global.csv
+    images/
+        species_train/
+        species_validate/
+        taxon_train/
+        taxon_validate/
+        validation/
+    obs_and_meta/
+        interim/
+        processed/
+        raw/
+```
+
+You may have to add the `obs_and_meta/interim` directory manually.
+
+## Models
+The models used in the novel Cascading Ensemble Classification method are hosted on an Object storage bucket.
+Please perform the following steps below to create the correct model directory structure. 
+This will enable you to reproduce the Cascading Ensemble Classification Results.
+
+1. Create a `models` directory at the project root. 
+2. From the command line, execute the following: `wget https://ce-models.eu-central-1.linodeobjects.com/models.zip`
+3. Extract the directories contained within the .zip file into the `models` directory.
+
+The `models` directory should contain the following structure: 
+```angular2html
+models/
+    global/
+    image/
+    k_clusters/
+    meta/
+```
+
+The `image`, `k_clusters`, and `meta` directories contain models used by the novel cascading classification method. 
+The `global` directory contains the image and metadata flat classification models trained to classify wildlife to the species level. 
+These are the baseline models against which the cascading ensemble classifier is compared.
 
 ## Metadata Classification
 The metadata classification process is located at `src/models/meta/model_training.py`. 
