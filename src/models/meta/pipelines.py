@@ -10,7 +10,7 @@
    Attributes:
        root_path (str): The path to the project root.
        data_path (str): The path to where the data is stored within the project
-       save_path (str): The path to where models and validation data (if created) is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`
+       save_path (str): The path to where models and validation data (if created) is saved. To train the models used in ensemble use `/models/meta/`. To metamodel notebook comparison use `/notebooks/meta_modelling/model_comparison_cache/`. For the notebook, please ensure the directory is made.
        validation_set_flag (bool): A boolean flag indicating whether a validation set should be created and saved. The validation set is saved to save_path. Each file will have suffixx `_validation.csv`
 """
 

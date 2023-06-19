@@ -91,6 +91,7 @@ These are the baseline models against which the cascading ensemble classifier is
 ## Metadata Classification
 The metadata classification process is located at `src/models/meta/model_training.py`. 
 The process is automated to perform all required model training at all taxonomic levels. 
+Within the `model_training.py` file, please alter the boolean value `root` on line 303 to perform the taxonomic root model training.
 Please review the documentation for more information. 
 
 The training process will make use of as many cores as available on the machine it is training on to 
