@@ -427,105 +427,165 @@ Adjust the hardcoded hierarchy if classifying wildlife on a different dataset.</
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to where the <code>validate.csv</code> dataset it. This is located in <code>data/obs_and_meta/processed/validation/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to where the <code>validate.csv</code> dataset it. This is located in <code>data/obs_and_meta/processed/validation/</code></p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>results_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to where the results are stored. The results are stored within <code>notebooks/ensemble_model/ensemble_cache/</code> for easy visualizaiton in the Notebook.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to where the results are stored. The results are stored within <code>notebooks/ensemble_model/ensemble_cache/</code> for easy visualizaiton in the Notebook.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>image_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the directory containing the validation images. The validation images and the data path sets are linked by observation id.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the directory containing the validation images. The validation images and the data path sets are linked by observation id.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>model_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the base directory containing image and metadata classification models.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the base directory containing image and metadata classification models.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>image_model_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The specific directory containing all image models (using <code>model_path</code> as the base path)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The specific directory containing all image models (using <code>model_path</code> as the base path)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>meta_model_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The specific directory containing all metadata models (using <code>model_path</code> as the base path)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The specific directory containing all metadata models (using <code>model_path</code> as the base path)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>cluster_model_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The specific directory containing all K-means model used to encode the observation locations. (using <code>model_path</code> as a base path)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The specific directory containing all K-means model used to encode the observation locations. (using <code>model_path</code> as a base path)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>base_image_classifier_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the base image classifier. (The root image classifier classifying Felidae and Elephantidae as child classes)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the base image classifier. (The root image classifier classifying Felidae and Elephantidae as child classes)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>base_meta_classifier_path</code></td>
           <td>
                 <code> (str</code>
           </td>
-          <td><p>The path to the base metadata classifier. (The root metadata classifier classifying Felidae and Elephantidae as child classes)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the base metadata classifier. (The root metadata classifier classifying Felidae and Elephantidae as child classes)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>base_cluster_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the base K-means cluster model. (The models encoding the Felidae and Elephantidae possitions at the Family taxon level)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the base K-means cluster model. (The models encoding the Felidae and Elephantidae possitions at the Family taxon level)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>multiple_detections_id</code></td>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of possible image suffixes due to multiple sub-images per observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of possible image suffixes due to multiple sub-images per observation.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>img_size</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The size of the input images to the image classifier (528, 528, 3)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The size of the input images to the image classifier (528, 528, 3)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>taxonomic_levels</code></td>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of taxonomic levels at which classification occurs in the dataset from family to subspecies in order.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of taxonomic levels at which classification occurs in the dataset from family to subspecies in order.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>hierarchy</code></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>The taxonomic breakdown of the dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxonomic breakdown of the dataset.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>taxon_weighting</code></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>The weighting of the metadata model predictions. The inverse presents the image classification predictions. These values are presented after observing the metadata and image classification taxonomic level experiment results.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The weighting of the metadata model predictions. The inverse presents the image classification predictions. These values are presented after observing the metadata and image classification taxonomic level experiment results.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -575,7 +635,11 @@ observation (original image).</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of sub-image paths of which predictions will be combined.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of sub-image paths of which predictions will be combined.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -585,7 +649,11 @@ observation (original image).</p>
           <td>
                 <code>keras.<span title="keras.Sequential">Sequential</span></code>
           </td>
-          <td><p>The image classification model to classify the sub-images as the correct taxonomic level.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The image classification model to classify the sub-images as the correct taxonomic level.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -606,15 +674,18 @@ observation (original image).</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A summed, averaged, and constrained softmax output to provide a single image classification per observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A summed, averaged, and constrained softmax output to provide a single image classification per observation.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">298</span>
-<span class="normal">299</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">299</span>
 <span class="normal">300</span>
 <span class="normal">301</span>
 <span class="normal">302</span>
@@ -640,7 +711,8 @@ observation (original image).</p>
 <span class="normal">322</span>
 <span class="normal">323</span>
 <span class="normal">324</span>
-<span class="normal">325</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">avg_multi_image_predictions</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+<span class="normal">325</span>
+<span class="normal">326</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">avg_multi_image_predictions</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This model averages the predictions of sub-images to produce a single prediction per observation.</span>
 
 <span class="sd">    This method combines the sub-image wildlife predictions together, averages them, and constrains them to a valid</span>
@@ -690,8 +762,7 @@ observation (original image).</p>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">567</span>
-<span class="normal">568</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">568</span>
 <span class="normal">569</span>
 <span class="normal">570</span>
 <span class="normal">571</span>
@@ -706,7 +777,8 @@ observation (original image).</p>
 <span class="normal">580</span>
 <span class="normal">581</span>
 <span class="normal">582</span>
-<span class="normal">583</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">ensemble_iteration</span><span class="p">():</span>
+<span class="normal">583</span>
+<span class="normal">584</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">ensemble_iteration</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method performs the cascading ensemble classification on the validation dataset.&quot;&quot;&quot;</span>
     <span class="n">observation_no</span> <span class="o">=</span> <span class="n">read_position</span><span class="p">()</span>  <span class="c1"># Reads the row position to extract the observation to be classified.</span>
 
@@ -759,7 +831,11 @@ observation (original image).</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The observation id providing the unique based identifier for sub-images of the original observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The observation id providing the unique based identifier for sub-images of the original observation.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -769,7 +845,11 @@ observation (original image).</p>
           <td>
                 <code>keras.<span title="keras.Sequential">Sequential</span></code>
           </td>
-          <td><p>The image classification model, for the current taxon parent node,</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The image classification model, for the current taxon parent node,</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -790,15 +870,18 @@ observation (original image).</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A summed, averaged, and constrained softmax output to provide a single image classification per observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A summed, averaged, and constrained softmax output to provide a single image classification per observation.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">431</span>
-<span class="normal">432</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">432</span>
 <span class="normal">433</span>
 <span class="normal">434</span>
 <span class="normal">435</span>
@@ -809,7 +892,8 @@ observation (original image).</p>
 <span class="normal">440</span>
 <span class="normal">441</span>
 <span class="normal">442</span>
-<span class="normal">443</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">image_prediction</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">image_model</span><span class="p">:</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">):</span>
+<span class="normal">443</span>
+<span class="normal">444</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">image_prediction</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">image_model</span><span class="p">:</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method handles the detection of sub-images and their mean image prediction.</span>
 
 <span class="sd">    Args:</span>
@@ -856,21 +940,28 @@ its components, and the true labels.</p>
 <td><code>dictwriter</code></td>          <td>
                 <code><span title="csv.DictWriter">DictWriter</span></code>
           </td>
-          <td><p>A dictionary writer object enabling dictionaries to be written to file f.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A dictionary writer object enabling dictionaries to be written to file f.</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>f</code></td>          <td>
                 <code>file_handle</code>
           </td>
-          <td><p>The file handle of the file to which the prediction data is being stored.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The file handle of the file to which the prediction data is being stored.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">393</span>
-<span class="normal">394</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">394</span>
 <span class="normal">395</span>
 <span class="normal">396</span>
 <span class="normal">397</span>
@@ -887,7 +978,8 @@ its components, and the true labels.</p>
 <span class="normal">408</span>
 <span class="normal">409</span>
 <span class="normal">410</span>
-<span class="normal">411</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">instantiate_save_file</span><span class="p">():</span>
+<span class="normal">411</span>
+<span class="normal">412</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">instantiate_save_file</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method instantiates the file saving and documenting the predictions of the ensemble model,</span>
 <span class="sd">    its components, and the true labels.</span>
 
@@ -942,7 +1034,11 @@ its components, and the true labels.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -963,15 +1059,18 @@ its components, and the true labels.</p>
           <td>
                 <code><span title="sklearn.cluster.KMeans">KMeans</span></code>
           </td>
-          <td><p>The pre-trained K-means model encoding the locations of the child nodes.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The pre-trained K-means model encoding the locations of the child nodes.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">351</span>
-<span class="normal">352</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">352</span>
 <span class="normal">353</span>
 <span class="normal">354</span>
 <span class="normal">355</span>
@@ -988,7 +1087,8 @@ its components, and the true labels.</p>
 <span class="normal">366</span>
 <span class="normal">367</span>
 <span class="normal">368</span>
-<span class="normal">369</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_next_cluster_model</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
+<span class="normal">369</span>
+<span class="normal">370</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_next_cluster_model</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method handles the loading of the correct K-means model, based on the decision</span>
 
 <span class="sd">    Args:</span>
@@ -1043,7 +1143,11 @@ its components, and the true labels.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1064,15 +1168,18 @@ its components, and the true labels.</p>
           <td>
                 <code>keras.<span title="keras.Sequential">Sequential</span></code>
           </td>
-          <td><p>The pre-trained EfficientNet-B6 model classifying the children of the provided decision.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The pre-trained EfficientNet-B6 model classifying the children of the provided decision.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">372</span>
-<span class="normal">373</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">373</span>
 <span class="normal">374</span>
 <span class="normal">375</span>
 <span class="normal">376</span>
@@ -1089,7 +1196,8 @@ its components, and the true labels.</p>
 <span class="normal">387</span>
 <span class="normal">388</span>
 <span class="normal">389</span>
-<span class="normal">390</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_next_image_model</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
+<span class="normal">390</span>
+<span class="normal">391</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_next_image_model</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method handles the loading of the correct image model, based on the provided decision</span>
 
 <span class="sd">    Args:</span>
@@ -1144,7 +1252,11 @@ its components, and the true labels.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1165,15 +1277,18 @@ its components, and the true labels.</p>
           <td>
                 <code>xgboost</code>
           </td>
-          <td><p>The pre-trained xgboost model classifying the children of the provided decision.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The pre-trained xgboost model classifying the children of the provided decision.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">328</span>
-<span class="normal">329</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">329</span>
 <span class="normal">330</span>
 <span class="normal">331</span>
 <span class="normal">332</span>
@@ -1192,7 +1307,8 @@ its components, and the true labels.</p>
 <span class="normal">345</span>
 <span class="normal">346</span>
 <span class="normal">347</span>
-<span class="normal">348</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_next_meta_model</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
+<span class="normal">348</span>
+<span class="normal">349</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_next_meta_model</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method handles the loading of the correct metadata model, based on the provided decision</span>
 
 <span class="sd">    Args:</span>
@@ -1249,7 +1365,11 @@ its components, and the true labels.</p>
           <td>
                 <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
           </td>
-          <td><p>The input features to the metadata model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The input features to the metadata model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1259,7 +1379,11 @@ its components, and the true labels.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The unique id of each observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The unique id of each observation.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1269,7 +1393,11 @@ its components, and the true labels.</p>
           <td>
                 <code><span title="xgboost">xgb</span></code>
           </td>
-          <td><p>The metadata model to predict the wildlife classes of the current taxon parent node.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The metadata model to predict the wildlife classes of the current taxon parent node.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1290,15 +1418,18 @@ its components, and the true labels.</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The metadata model softmax prediction.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The metadata model softmax prediction.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">446</span>
-<span class="normal">447</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">447</span>
 <span class="normal">448</span>
 <span class="normal">449</span>
 <span class="normal">450</span>
@@ -1311,7 +1442,8 @@ its components, and the true labels.</p>
 <span class="normal">457</span>
 <span class="normal">458</span>
 <span class="normal">459</span>
-<span class="normal">460</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">metadata_prediction</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">meta_model</span><span class="p">:</span> <span class="n">xgb</span><span class="p">):</span>
+<span class="normal">460</span>
+<span class="normal">461</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">metadata_prediction</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">meta_model</span><span class="p">:</span> <span class="n">xgb</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method handles the formatting of metadata and the model prediction</span>
 
 <span class="sd">    Args:</span>
@@ -1365,7 +1497,11 @@ Sub-images are structured in the following format: <code>&lt;id&gt;_&lt;alphabet
           <td>
                 <code>int</code>
           </td>
-          <td><p>This is the unique id value of each observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>This is the unique id value of each observation.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1386,15 +1522,18 @@ Sub-images are structured in the following format: <code>&lt;id&gt;_&lt;alphabet
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of file names leading to sub-images of the specified observation id (index)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of file names leading to sub-images of the specified observation id (index)</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">196</span>
-<span class="normal">197</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">197</span>
 <span class="normal">198</span>
 <span class="normal">199</span>
 <span class="normal">200</span>
@@ -1413,7 +1552,8 @@ Sub-images are structured in the following format: <code>&lt;id&gt;_&lt;alphabet
 <span class="normal">213</span>
 <span class="normal">214</span>
 <span class="normal">215</span>
-<span class="normal">216</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">multiple_image_detections</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+<span class="normal">216</span>
+<span class="normal">217</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">multiple_image_detections</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method gathers all sub-images per a single observation</span>
 
 <span class="sd">    Due to the image pre-processing multiple sub-images can occur. Each sub-image centers and focuses on a identified</span>
@@ -1473,7 +1613,11 @@ The cascading process halts, when a miss-classification occurs.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The unique id of the current observation to be classified.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The unique id of the current observation to be classified.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1483,7 +1627,11 @@ The cascading process halts, when a miss-classification occurs.</p>
           <td>
                 <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
           </td>
-          <td><p>The dataframe containing all observation and metadata.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe containing all observation and metadata.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1493,8 +1641,7 @@ The cascading process halts, when a miss-classification occurs.</p>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">463</span>
-<span class="normal">464</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">464</span>
 <span class="normal">465</span>
 <span class="normal">466</span>
 <span class="normal">467</span>
@@ -1571,7 +1718,8 @@ The cascading process halts, when a miss-classification occurs.</p>
 <span class="normal">538</span>
 <span class="normal">539</span>
 <span class="normal">540</span>
-<span class="normal">541</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="normal">541</span>
+<span class="normal">542</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method performs a cascading prediction for the specified observation.</span>
 
 <span class="sd">    This method cascades from the family taxon to the subspecies taxon if labels are provided to that depth.</span>
@@ -1691,7 +1839,11 @@ This pipeline formats the data into the required form for use.</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The dataframe to be processed into features and labels.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe to be processed into features and labels.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1701,7 +1853,11 @@ This pipeline formats the data into the required form for use.</p>
           <td>
                 <code><span title="sklearn.cluster.KMeans">KMeans</span></code>
           </td>
-          <td><p>The pre-trained location encoding model. This is trained based on the appropriate taxon parent node and taxon target, to be most effective within this dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The pre-trained location encoding model. This is trained based on the appropriate taxon parent node and taxon target, to be most effective within this dataset.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1711,7 +1867,11 @@ This pipeline formats the data into the required form for use.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1732,21 +1892,28 @@ This pipeline formats the data into the required form for use.</p>
 <td><code>X</code></td>          <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The dataframe of features to be used by the metadata models</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe of features to be used by the metadata models</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>y</code></td>          <td>
                 <code>Series</code>
           </td>
-          <td><p>The labels of each observation, extracted at the taxonomic target level.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The labels of each observation, extracted at the taxonomic target level.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">219</span>
-<span class="normal">220</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">220</span>
 <span class="normal">221</span>
 <span class="normal">222</span>
 <span class="normal">223</span>
@@ -1796,7 +1963,8 @@ This pipeline formats the data into the required form for use.</p>
 <span class="normal">267</span>
 <span class="normal">268</span>
 <span class="normal">269</span>
-<span class="normal">270</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">preprocess_meta_data</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">k_means</span><span class="p">:</span> <span class="n">KMeans</span><span class="p">,</span> <span class="n">taxon_target</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="normal">270</span>
+<span class="normal">271</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">preprocess_meta_data</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">k_means</span><span class="p">:</span> <span class="n">KMeans</span><span class="p">,</span> <span class="n">taxon_target</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method processes and formats the metadata for model prediction, based on the taxon target the</span>
 <span class="sd">    location encoding K-means model.</span>
 
@@ -1882,15 +2050,18 @@ currently on in the validation dataset.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The row location of the current observation to classify.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The row location of the current observation to classify.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">544</span>
-<span class="normal">545</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">545</span>
 <span class="normal">546</span>
 <span class="normal">547</span>
 <span class="normal">548</span>
@@ -1898,7 +2069,8 @@ currently on in the validation dataset.</p>
 <span class="normal">550</span>
 <span class="normal">551</span>
 <span class="normal">552</span>
-<span class="normal">553</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">read_position</span><span class="p">():</span>
+<span class="normal">553</span>
+<span class="normal">554</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">read_position</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method reads the position from the `position.csv` as a way of keeping track of which observation it is</span>
 <span class="sd">    currently on in the validation dataset.</span>
 
@@ -1946,7 +2118,11 @@ a single softmax output to correctly predict the wildlife taxon</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of metadata class probabilities. Note, the classes must match the image prediction</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of metadata class probabilities. Note, the classes must match the image prediction</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1956,7 +2132,11 @@ a single softmax output to correctly predict the wildlife taxon</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of image class probabilities. Note, the classes must match the meta prediction.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of image class probabilities. Note, the classes must match the meta prediction.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1966,7 +2146,11 @@ a single softmax output to correctly predict the wildlife taxon</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the taxon level, to specify the component weighting. (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the taxon level, to specify the component weighting. (taxon_family_name, taxon_genus_name, taxon_species_name, sub_species)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1987,15 +2171,18 @@ a single softmax output to correctly predict the wildlife taxon</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A constrained softmax output constructed from the weighted influence of the individual metadata and image prediction components.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A constrained softmax output constructed from the weighted influence of the individual metadata and image prediction components.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">273</span>
-<span class="normal">274</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">274</span>
 <span class="normal">275</span>
 <span class="normal">276</span>
 <span class="normal">277</span>
@@ -2016,7 +2203,8 @@ a single softmax output to correctly predict the wildlife taxon</p>
 <span class="normal">292</span>
 <span class="normal">293</span>
 <span class="normal">294</span>
-<span class="normal">295</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">taxon_weighted_decision</span><span class="p">(</span><span class="n">meta_prediction</span><span class="p">,</span> <span class="n">image_prediction</span><span class="p">,</span> <span class="n">taxon_level</span><span class="p">):</span>
+<span class="normal">295</span>
+<span class="normal">296</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">taxon_weighted_decision</span><span class="p">(</span><span class="n">meta_prediction</span><span class="p">,</span> <span class="n">image_prediction</span><span class="p">,</span> <span class="n">taxon_level</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method weights the metadata and image predictions based on the determined taxonomic weighting to produce</span>
 <span class="sd">    a single softmax output to correctly predict the wildlife taxon</span>
 
@@ -2075,7 +2263,11 @@ a single softmax output to correctly predict the wildlife taxon</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxon label instructing the method which model to load. This is ordinarily the name of the taxonomic child. However "base" loads the root model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2096,27 +2288,38 @@ a single softmax output to correctly predict the wildlife taxon</p>
 <td><code>meta_model</code></td>          <td>
                 <code><span title="sklearn.cluster.KMeans">KMeans</span></code>
           </td>
-          <td><p>The metadata classification model for the label taxon parent node.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The metadata classification model for the label taxon parent node.</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>image_model</code></td>          <td>
                 <code>keras.<span title="keras.Sequential">Sequential</span></code>
           </td>
-          <td><p>The image classification model for the label taxon parent node.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The image classification model for the label taxon parent node.</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>cluster_model</code></td>          <td>
                 <code><span title="sklearn.cluster.KMeans">KMeans</span></code>
           </td>
-          <td><p>The K-means encoding model for the children of the label taxon parent node.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The K-means encoding model for the children of the label taxon parent node.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">414</span>
-<span class="normal">415</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">415</span>
 <span class="normal">416</span>
 <span class="normal">417</span>
 <span class="normal">418</span>
@@ -2129,7 +2332,8 @@ a single softmax output to correctly predict the wildlife taxon</p>
 <span class="normal">425</span>
 <span class="normal">426</span>
 <span class="normal">427</span>
-<span class="normal">428</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_models</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="normal">428</span>
+<span class="normal">429</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_models</span><span class="p">(</span><span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method serves to update all three models, based on the provided taxon label</span>
 
 <span class="sd">    Args:</span>
@@ -2180,7 +2384,11 @@ a single softmax output to correctly predict the wildlife taxon</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The row location of the previous observation that has been classified.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The row location of the previous observation that has been classified.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2190,15 +2398,15 @@ a single softmax output to correctly predict the wildlife taxon</p>
 
       <details class="quote">
         <summary>Source code in <code>src/ensemble/ensemble.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">556</span>
-<span class="normal">557</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">557</span>
 <span class="normal">558</span>
 <span class="normal">559</span>
 <span class="normal">560</span>
 <span class="normal">561</span>
 <span class="normal">562</span>
 <span class="normal">563</span>
-<span class="normal">564</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_position</span><span class="p">(</span><span class="n">prev_position</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="normal">564</span>
+<span class="normal">565</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_position</span><span class="p">(</span><span class="n">prev_position</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This method updates the saved row location of the observation to point to the next observation from previous.</span>
 
 <span class="sd">    Args:</span>

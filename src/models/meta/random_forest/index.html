@@ -323,14 +323,22 @@ A best-model save policy is enforced, using the mean balanced accuracy as the ev
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the project root.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the project root.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>data_destination</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to where the decision tree model and its training accuracy is saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to where the decision tree model and its training accuracy is saved.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -379,7 +387,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The dataframe containing all data for each observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe containing all data for each observation.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -389,7 +401,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -399,7 +415,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the model type being trained. In this case 'Random Forest'.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the model type being trained. In this case 'Random Forest'.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -409,7 +429,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The filename of where the training data will be stored. This will have the same location as where the model is saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The filename of where the training data will be stored. This will have the same location as where the model is saved.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -419,7 +443,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the file where the validation data will be stored. Also informs the name of the saved models.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the file where the validation data will be stored. Also informs the name of the saved models.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -496,7 +524,11 @@ produce optimal classification models.</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The input features to the decision tree</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The input features to the decision tree</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -506,7 +538,11 @@ produce optimal classification models.</p>
           <td>
                 <code>Series</code>
           </td>
-          <td><p>The categorical taxonomic labels of the corresponding observations to the features.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The categorical taxonomic labels of the corresponding observations to the features.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -516,7 +552,11 @@ produce optimal classification models.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the model type being trained. In this case 'XGBoost'.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the model type being trained. In this case 'XGBoost'.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -526,7 +566,11 @@ produce optimal classification models.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The filename of where the training data will be stored.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The filename of where the training data will be stored.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>

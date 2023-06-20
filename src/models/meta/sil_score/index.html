@@ -338,28 +338,44 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>int</code>
           </td>
-          <td><p>The maximum number of centroids to be considered within the K-means algorithm performing location encoding.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The maximum number of centroids to be considered within the K-means algorithm performing location encoding.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>k_interval</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The centroid increasing interval so from k_init to k_max intervals of k_interval are used.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The centroid increasing interval so from k_init to k_max intervals of k_interval are used.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>k_init</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The initial number of centroids to be considered within the K-means algorithm performing location encoding</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The initial number of centroids to be considered within the K-means algorithm performing location encoding</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>save_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The directory in which K-means models are saved. The <code>models/k_clusters/</code> directory.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The directory in which K-means models are saved. The <code>models/k_clusters/</code> directory.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -406,7 +422,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>A  dataframe containing the latitude and longitude columns.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A  dataframe containing the latitude and longitude columns.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -426,7 +446,11 @@ For more information on the Silhouette score please read the documentation provi
         <tr>
           <td>
           </td>
-          <td><p>A list of Silhouette scores aligned with the range of centroids.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of Silhouette scores aligned with the range of centroids.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -506,7 +530,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code><span title="sklearn.cluster.KMeans">KMeans</span></code>
           </td>
-          <td><p>The trained K-means model to be saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The trained K-means model to be saved.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -516,7 +544,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the file in which the model will be saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the file in which the model will be saved.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -577,7 +609,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The dataframe containing each observation and its associated dataframe, including the latitude and longitude location.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe containing each observation and its associated dataframe, including the latitude and longitude location.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -587,7 +623,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the validation dataset file. This filename will be augmented to provide a name for the saved K-means model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the validation dataset file. This filename will be augmented to provide a name for the saved K-means model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -608,7 +648,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>K-means model</code>
           </td>
-          <td><p>Returns a trained K-means model with the optimal number of centroids determined by the Silhouette score.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Returns a trained K-means model with the optimal number of centroids determined by the Silhouette score.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -679,7 +723,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The dataframe containing all observation features including the latitude and longitude location.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe containing all observation features including the latitude and longitude location.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -700,7 +748,11 @@ For more information on the Silhouette score please read the documentation provi
           <td>
                 <code>K-means model</code>
           </td>
-          <td><p>The optimal trained K-means model as determined by the global maximum Silhouette score</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The optimal trained K-means model as determined by the global maximum Silhouette score</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>

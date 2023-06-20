@@ -375,42 +375,66 @@ to the API for storage.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The endpoint of the DSN API</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The endpoint of the DSN API</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>weather_endpoint</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The endpoint to access the Open-Meteo historical API</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The endpoint to access the Open-Meteo historical API</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>hourly_weather_var</code></td>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list specifying all of the hourly weather variables to be collected per observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list specifying all of the hourly weather variables to be collected per observation.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>daily_weather_var</code></td>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list specifying all of the daily weather variables to be collected per observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list specifying all of the daily weather variables to be collected per observation.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>job_limit</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>Specifying the number of observations to collect metadata for. The value is limited to 1000 per day. Please respect the Open-Meteo limits.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specifying the number of observations to collect metadata for. The value is limited to 1000 per day. Please respect the Open-Meteo limits.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>rate_limit</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>Specify the rate of requests to the Open-Meteo historical API</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specify the rate of requests to the Open-Meteo historical API</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -460,7 +484,11 @@ the date observed on.</p>
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The observation information critical to making the Open-Meteo API request in Json format as retrieved from the DSN API.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The observation information critical to making the Open-Meteo API request in Json format as retrieved from the DSN API.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -481,7 +509,11 @@ the date observed on.</p>
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The job with the start_date correct modified in the Json object to be equal to the observed on date.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The job with the start_date correct modified in the Json object to be equal to the observed on date.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -574,7 +606,11 @@ weather variables can be retrieved.</p>
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The Json of the collected weather data</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Json of the collected weather data</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -584,7 +620,11 @@ weather variables can be retrieved.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The date and time in which the observation occurred in the format "%Y-%m-%d %H:%M:%S%z"</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The date and time in which the observation occurred in the format "%Y-%m-%d %H:%M:%S%z"</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -663,7 +703,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The Json information describing critical information for the Open-Meteo request.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Json information describing critical information for the Open-Meteo request.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -684,7 +728,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>Json response</code>
           </td>
-          <td><p>The Open-Meteo response to the API request, containing the requested metadata values. If the request fails, None is returned.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Open-Meteo response to the API request, containing the requested metadata values. If the request fails, None is returned.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -789,7 +837,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>Request Json</code>
           </td>
-          <td><p>The contents of the request in data format if the GET request is successful. If it is not successful, None is returned and the stacktrace is printed.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The contents of the request in data format if the GET request is successful. If it is not successful, None is returned and the stacktrace is printed.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -857,7 +909,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The Json of the collected weather data</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Json of the collected weather data</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -867,7 +923,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The Json of the current job (observation) to collect weather data for</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Json of the current job (observation) to collect weather data for</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -877,7 +937,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>An string specifying the hour of weather data to be collected in the format %Y-%m-%dT%H:%M</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>An string specifying the hour of weather data to be collected in the format %Y-%m-%dT%H:%M</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -887,7 +951,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>An integer specifying the index of the weather hour in order to collect the correct hour of weather data from the hourly weather lists.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>An integer specifying the index of the weather hour in order to collect the correct hour of weather data from the hourly weather lists.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -908,7 +976,11 @@ the case the rate limit is increased by 20%</p>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>A dictionary containing the correctly formatted data to be POSTed to the DNS</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A dictionary containing the correctly formatted data to be POSTed to the DNS</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1095,7 +1167,11 @@ an error in formatting the data for posting due to missing or incorrect data and
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The Json weather data collected from the Open-Meteo request</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Json weather data collected from the Open-Meteo request</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1105,7 +1181,11 @@ an error in formatting the data for posting due to missing or incorrect data and
           <td>
                 <code>Json</code>
           </td>
-          <td><p>The Json information detailing the observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The Json information detailing the observation.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1196,7 +1276,11 @@ an error in formatting the data for posting due to missing or incorrect data and
           <td>
                 <code><span title="datetime.datetime">datetime</span></code>
           </td>
-          <td><p>The date and time at which the scraping was started</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The date and time at which the scraping was started</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1206,7 +1290,11 @@ an error in formatting the data for posting due to missing or incorrect data and
           <td>
                 <code>int</code>
           </td>
-          <td><p>The number of jobs iterated through in this execution of the scraping node.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of jobs iterated through in this execution of the scraping node.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>

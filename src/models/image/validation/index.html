@@ -380,42 +380,66 @@ and <code>global_image_classification_accuracy.csv</code></p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The specified image size as input to the EfficientNet-B6 model (528)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The specified image size as input to the EfficientNet-B6 model (528)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>model_name</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the CNN model to evaluate against a validation set.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the CNN model to evaluate against a validation set.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>test_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the validation set of images to use to validate the model</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the validation set of images to use to validate the model</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>model_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the location of the model. Always <code>models/image/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the location of the model. Always <code>models/image/</code></p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>report_path</code></td>
           <td>
                 <code>os.<span title="os.path">path</span></code>
           </td>
-          <td><p>The path to the csv file collecting all model classification reports. Please review notebook <code>notebook/image_classification/image_classification_visualization</code> for the data visualized.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the csv file collecting all model classification reports. Please review notebook <code>notebook/image_classification/image_classification_visualization</code> for the data visualized.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>accuracy_path</code></td>
           <td>
                 <code>os.<span title="os.path">path</span></code>
           </td>
-          <td><p>The path to the csv file collecting all model balanced accuracy values. Please review notebook <code>notebook/image_classification/image_classification_visualization</code> for the data visualized.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the csv file collecting all model balanced accuracy values. Please review notebook <code>notebook/image_classification/image_classification_visualization</code> for the data visualized.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -463,7 +487,11 @@ further visualization and analysis.</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of True labels</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of True labels</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -473,7 +501,11 @@ further visualization and analysis.</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of predicted labels'</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of predicted labels'</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -483,7 +515,11 @@ further visualization and analysis.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxonomic target level.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxonomic target level.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -493,7 +529,11 @@ further visualization and analysis.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The standardized name of the taxonomic parent node for which the classifier is built</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The standardized name of the taxonomic parent node for which the classifier is built</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -587,7 +627,11 @@ required manual removal.</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of True labels</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of True labels</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -597,7 +641,11 @@ required manual removal.</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of predicted labels'</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of predicted labels'</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -607,7 +655,11 @@ required manual removal.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxonomic target level.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxonomic target level.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -617,7 +669,11 @@ required manual removal.</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of classes (alphabetical order) over which the model was trained.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of classes (alphabetical order) over which the model was trained.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -712,7 +768,11 @@ The shuffle parameter is set to False in order to maintain the dataset order to 
           <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>The validation dataset used to produced validation metrics for the produced model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The validation dataset used to produced validation metrics for the produced model.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -782,7 +842,11 @@ The shuffle parameter is set to False in order to maintain the dataset order to 
           <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>The training dataset over which the model was trained.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The training dataset over which the model was trained.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -857,7 +921,11 @@ The shuffle parameter is set to False in order to maintain the dataset order to 
           <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>The validation dataset</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The validation dataset</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -867,7 +935,11 @@ The shuffle parameter is set to False in order to maintain the dataset order to 
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of the class labels (alphabetically ordered). This is sourced from the original training dataset</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of the class labels (alphabetically ordered). This is sourced from the original training dataset</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -888,7 +960,11 @@ The shuffle parameter is set to False in order to maintain the dataset order to 
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of labels in the provided dataset, in the same order as specified in the dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of labels in the provided dataset, in the same order as specified in the dataset.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -971,7 +1047,11 @@ into a single prediction for each image</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of file paths for each image in the dataset. Read main file documentation for additional info. The code to generate the filenames is <code>file_paths = test_ds.file_paths</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of file paths for each image in the dataset. Read main file documentation for additional info. The code to generate the filenames is <code>file_paths = test_ds.file_paths</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -981,7 +1061,11 @@ into a single prediction for each image</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of predicted labels for all sub-images</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of predicted labels for all sub-images</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -991,7 +1075,11 @@ into a single prediction for each image</p>
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of true labels for all sub-images. They are in the same order.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of true labels for all sub-images. They are in the same order.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1012,13 +1100,21 @@ into a single prediction for each image</p>
 <td><code>mean_predictions</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>The summed, averaged, and normalized predictions for a single image (not a sub-image).</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The summed, averaged, and normalized predictions for a single image (not a sub-image).</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>individual_file_label</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>The list of true labels for each image. Of the same size and order as the mean_predictions.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of true labels for each image. Of the same size and order as the mean_predictions.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1132,7 +1228,11 @@ into a single prediction for each image</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the model to validate. Must adhere to naming conventions of taxonomic modelling. Example: <code>elephantidae_taxon_classifier</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the model to validate. Must adhere to naming conventions of taxonomic modelling. Example: <code>elephantidae_taxon_classifier</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1142,7 +1242,11 @@ into a single prediction for each image</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the validation directory. This is the path within <code>taxon_validate</code> to the correct directory. Example: <code>elephantidae/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the validation directory. This is the path within <code>taxon_validate</code> to the correct directory. Example: <code>elephantidae/</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1214,7 +1318,11 @@ simple specification of the model name and dataset path.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the model to validate. Must adhere to naming conventions of taxonomic modelling. Example: <code>elephantidae_taxon_classifier</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the model to validate. Must adhere to naming conventions of taxonomic modelling. Example: <code>elephantidae_taxon_classifier</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1224,7 +1332,11 @@ simple specification of the model name and dataset path.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the validation directory. This is the path within <code>taxon_validate</code> to the correct directory. Example: <code>elephantidae/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the validation directory. This is the path within <code>taxon_validate</code> to the correct directory. Example: <code>elephantidae/</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1234,7 +1346,11 @@ simple specification of the model name and dataset path.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxonomic level at which classification takes place (Family, Genus, Species, Subspecies). This is the level of the taxonomic children being classified.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxonomic level at which classification takes place (Family, Genus, Species, Subspecies). This is the level of the taxonomic children being classified.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1244,7 +1360,11 @@ simple specification of the model name and dataset path.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>A boolean value indicating whether the Confusion matrix of the model validation should be created and saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A boolean value indicating whether the Confusion matrix of the model validation should be created and saved.</p>
+            </div>
+          </td>
           <td>
                 <code>False</code>
           </td>

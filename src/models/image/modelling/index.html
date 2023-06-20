@@ -360,42 +360,66 @@ For easy access here is the command to run the model training:</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The saved name of the model. The file name must have the following format. taxonomic name + _taxon_classifier. Example: <code>lynx_lynx_taxon_classifier</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The saved name of the model. The file name must have the following format. taxonomic name + _taxon_classifier. Example: <code>lynx_lynx_taxon_classifier</code></p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>img_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the taxonomic parent node within the <code>taxon_train</code> directory. Example" <code>felidae/lynx/lynx_lynx/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the taxonomic parent node within the <code>taxon_train</code> directory. Example" <code>felidae/lynx/lynx_lynx/</code></p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>save_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to where the model will be saved. In this case the <code>models/image/</code> directory</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to where the model will be saved. In this case the <code>models/image/</code> directory</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>img_size</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The specified image size as input to the EfficientNet-B6 model (528)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The specified image size as input to the EfficientNet-B6 model (528)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>batch_size</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The number of images within a single batch (32)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of images within a single batch (32)</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>epochs</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The number of epochs in model training (25)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of epochs in model training (25)</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -445,7 +469,11 @@ by a densely connected softmax layer classifying the specified number of classes
           <td>
                 <code>int</code>
           </td>
-          <td><p>Integer specifying the number of classes to be classified. Instructs the size of the softmax output layer.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Integer specifying the number of classes to be classified. Instructs the size of the softmax output layer.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -466,7 +494,11 @@ by a densely connected softmax layer classifying the specified number of classes
           <td>
                 <code><span title="keras.Model">Model</span></code>
           </td>
-          <td><p>The complete model ready to be trained.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The complete model ready to be trained.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -578,7 +610,11 @@ by a densely connected softmax layer classifying the specified number of classes
           <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>Either the train or test dataset which labels must be generated for.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Either the train or test dataset which labels must be generated for.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -588,7 +624,11 @@ by a densely connected softmax layer classifying the specified number of classes
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of the class labels (alphabetically ordered).</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of the class labels (alphabetically ordered).</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -609,7 +649,11 @@ by a densely connected softmax layer classifying the specified number of classes
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of labels in the provided dataset, in the same order as specified in the dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of labels in the provided dataset, in the same order as specified in the dataset.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -692,7 +736,11 @@ Additionally, the class names are displayed when this method is called.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path from the <code>taxon_train/</code> (including) directory. Example: <code>taxon_train/felidae/lynx/lynx_lynx/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path from the <code>taxon_train/</code> (including) directory. Example: <code>taxon_train/felidae/lynx/lynx_lynx/</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -713,13 +761,21 @@ Additionally, the class names are displayed when this method is called.</p>
 <td><code>train_ds</code></td>          <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>The training dataset which will be used to train the model</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The training dataset which will be used to train the model</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>val_ds</code></td>          <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>The testing dataset used to test the trained model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The testing dataset used to test the trained model.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -831,7 +887,11 @@ Additionally, the class names are displayed when this method is called.</p>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>A dictionary containing the training accuracy and testing accuracies per epoch</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A dictionary containing the training accuracy and testing accuracies per epoch</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -915,7 +975,11 @@ Additionally, the class names are displayed when this method is called.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The file name must have the following format. taxonomic name + _taxon_classifier. Example: <code>lynx_lynx_taxon_classifier</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The file name must have the following format. taxonomic name + _taxon_classifier. Example: <code>lynx_lynx_taxon_classifier</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -925,7 +989,11 @@ Additionally, the class names are displayed when this method is called.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the taxonomic parent node within the <code>taxon_train</code> directory. Example" <code>felidae/lynx/lynx_lynx/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the taxonomic parent node within the <code>taxon_train</code> directory. Example" <code>felidae/lynx/lynx_lynx/</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -996,7 +1064,11 @@ Additionally, the class names are displayed when this method is called.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The file name must have the following format. taxonomic name + _taxon_classifier. Example: <code>lynx_lynx_taxon_classifier</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The file name must have the following format. taxonomic name + _taxon_classifier. Example: <code>lynx_lynx_taxon_classifier</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1006,7 +1078,11 @@ Additionally, the class names are displayed when this method is called.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the taxonomic parent node within the <code>taxon_train</code> directory. Example" <code>felidae/lynx/lynx_lynx/</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the taxonomic parent node within the <code>taxon_train</code> directory. Example" <code>felidae/lynx/lynx_lynx/</code></p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1016,7 +1092,11 @@ Additionally, the class names are displayed when this method is called.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>A boolean value indicating whether the training and testing over the number of epochs should be visualized and saved in a figure.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A boolean value indicating whether the training and testing over the number of epochs should be visualized and saved in a figure.</p>
+            </div>
+          </td>
           <td>
                 <code>False</code>
           </td>
@@ -1114,7 +1194,11 @@ A best model save policy is created so only the best model from the training epo
           <td>
                 <code><span title="keras.Model">Model</span></code>
           </td>
-          <td><p>The crated and prepared EfficientNet-B6 model with all but the top layers frozen, for training on the provided dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The crated and prepared EfficientNet-B6 model with all but the top layers frozen, for training on the provided dataset.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1124,7 +1208,11 @@ A best model save policy is created so only the best model from the training epo
           <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>The image training dataset</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The image training dataset</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1134,7 +1222,11 @@ A best model save policy is created so only the best model from the training epo
           <td>
                 <code><span title="tensorflow">tf</span>.<span title="tensorflow.data">data</span>.<span title="tensorflow.data.Dataset">Dataset</span></code>
           </td>
-          <td><p>The image test dataset</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The image test dataset</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1155,13 +1247,21 @@ A best model save policy is created so only the best model from the training epo
 <td><code>model</code></td>          <td>
                 <code><span title="keras.Model">Model</span></code>
           </td>
-          <td><p>The trained model</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The trained model</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>hist</code></td>          <td>
                 <code>dict</code>
           </td>
-          <td><p>The history of the model training process.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The history of the model training process.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>

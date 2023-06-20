@@ -364,21 +364,33 @@ as a metadata classifier.</p>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>A dictionary containing the names of the classification models as keys, and their abbreviations as values.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A dictionary containing the names of the classification models as keys, and their abbreviations as values.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>model_save_types</code></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>A dictionary containing the names of the classification models as keys, and their relevant file types when saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A dictionary containing the names of the classification models as keys, and their relevant file types when saved.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>file_name_taxon</code></td>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>A dictionary containing the taxonomic level indicators in the dataset, and their relevant abbreviations to be used in file naming.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A dictionary containing the taxonomic level indicators in the dataset, and their relevant abbreviations to be used in file naming.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -428,7 +440,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the observation files within the <code>data/processed/</code> directory.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the observation files within the <code>data/processed/</code> directory.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -438,7 +454,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the metadata files within the <code>data/processed/</code> directory. Note they must coincide with the order of the observation files.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the metadata files within the <code>data/processed/</code> directory. Note they must coincide with the order of the observation files.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -522,7 +542,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>The label of the taxonomic parent node (restriction)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The label of the taxonomic parent node (restriction)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -543,7 +567,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>A standardized form of the restriction.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A standardized form of the restriction.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -611,7 +639,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>The processed iNaturalist observations dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The processed iNaturalist observations dataset.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -621,7 +653,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>The corresponding metadata for the observation file.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The corresponding metadata for the observation file.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -642,25 +678,41 @@ For more information, please review the <code>model_comparison</code> notebook.<
 <td><code>models</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>The list of all models iterated over.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of all models iterated over.</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>model_name_collection</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>The list of all model names produced during the iteration of the dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of all model names produced during the iteration of the dataset.</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>taxon_target_collection</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>The list of all taxonomic targets iterated through within this dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of all taxonomic targets iterated through within this dataset.</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>abbreviations_collection</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>A list of the corresponding model abbreviations</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of the corresponding model abbreviations</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -766,7 +818,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the model to be used to classify the taxonomic child nodes.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the model to be used to classify the taxonomic child nodes.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -776,7 +832,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -786,7 +846,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -796,7 +860,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>The complete model name (parent taxon label and model abbreviation make the combined name unique)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The complete model name (parent taxon label and model abbreviation make the combined name unique)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -806,7 +874,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>File name at which to save the model training history.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>File name at which to save the model training history.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -816,7 +888,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>str</code>
           </td>
-          <td><p>File name at which to save the validation dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>File name at which to save the validation dataset.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -837,7 +913,11 @@ For more information, please review the <code>model_comparison</code> notebook.<
           <td>
                 <code>None</code>
           </td>
-          <td><p>This method returns nothing. The return statement was used to ensure case stopping.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>This method returns nothing. The return statement was used to ensure case stopping.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -948,7 +1028,11 @@ testing, and saving for the specified model and dataset</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The combined observation and metadata dataframe with the taxonomic parent node restriction applied. Only taxonomic child labels are present in df.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -958,7 +1042,11 @@ testing, and saving for the specified model and dataset</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the model to be used to classify the taxonomic child nodes.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the model to be used to classify the taxonomic child nodes.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -968,7 +1056,11 @@ testing, and saving for the specified model and dataset</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -978,7 +1070,11 @@ testing, and saving for the specified model and dataset</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the model file type/ model suffix.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the model file type/ model suffix.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -988,7 +1084,11 @@ testing, and saving for the specified model and dataset</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The standardized taxon parent node label which will be used to construct a unique file name for the trained model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The standardized taxon parent node label which will be used to construct a unique file name for the trained model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1079,7 +1179,11 @@ testing, and saving for the specified model and dataset</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The dataframe containing the unrestricted observations and metadata to perform a taxonomic breakdown of the entire dataset</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe containing the unrestricted observations and metadata to perform a taxonomic breakdown of the entire dataset</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1100,7 +1204,11 @@ testing, and saving for the specified model and dataset</p>
           <td>
                 <code>dict</code>
           </td>
-          <td><p>Keys specify the taxonomic level and the values are a list containing all unique labels in the dataset, forming a taxonomic breakdown</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Keys specify the taxonomic level and the values are a list containing all unique labels in the dataset, forming a taxonomic breakdown</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1176,7 +1284,11 @@ such that only the taxonomic children of the parent node are within the dataset.
           <td>
                 <code>str</code>
           </td>
-          <td><p>The processed iNaturalist observations dataset.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The processed iNaturalist observations dataset.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1186,7 +1298,11 @@ such that only the taxonomic children of the parent node are within the dataset.
           <td>
                 <code>str</code>
           </td>
-          <td><p>The corresponding metadata for the observation file.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The corresponding metadata for the observation file.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1196,7 +1312,11 @@ such that only the taxonomic children of the parent node are within the dataset.
           <td>
                 <code>str</code>
           </td>
-          <td><p>String specification of the model to be trained ane evaluated.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>String specification of the model to be trained ane evaluated.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1217,13 +1337,21 @@ such that only the taxonomic children of the parent node are within the dataset.
 <td><code>models</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>A list of file names, where the file name specified the taxonomic parent node (model classifies the taxonomic children)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of file names, where the file name specified the taxonomic parent node (model classifies the taxonomic children)</p>
+            </div>
+          </td>
         </tr>
         <tr>
 <td><code>taxon_targets</code></td>          <td>
                 <code>list</code>
           </td>
-          <td><p>Species the list of the taxonomic target levels in the same order as the models list.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Species the list of the taxonomic target levels in the same order as the models list.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1409,7 +1537,11 @@ Note, this method can be used to train a metadata global classifier by specifyin
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the model to be used to classify the taxonomic child nodes.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the model to be used to classify the taxonomic child nodes.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1419,7 +1551,11 @@ Note, this method can be used to train a metadata global classifier by specifyin
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the taxonomic level of the taxon child nodes (not the taxonomic level of the parent node)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1429,7 +1565,11 @@ Note, this method can be used to train a metadata global classifier by specifyin
           <td>
                 <code>str</code>
           </td>
-          <td><p>The file name of the root classification model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The file name of the root classification model.</p>
+            </div>
+          </td>
           <td>
                 <code>&#39;base_meta&#39;</code>
           </td>

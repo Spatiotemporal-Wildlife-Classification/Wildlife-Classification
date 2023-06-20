@@ -336,14 +336,22 @@ A best-model save policy is enforced using the mean accuracy across the 5-folds.
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to the project root.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the project root.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>data_destination</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The path to where the neural network model and its training accuracy is saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to where the neural network model and its training accuracy is saved.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -394,7 +402,11 @@ Finally, a softmax output layer.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The number of input features to the neural network</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of input features to the neural network</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -404,7 +416,11 @@ Finally, a softmax output layer.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>The number of classes that should be classified in the output layer.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of classes that should be classified in the output layer.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -425,7 +441,11 @@ Finally, a softmax output layer.</p>
           <td>
                 <code><span title="tensorflow.keras">keras</span>.<span title="tensorflow.keras.Sequential">Sequential</span></code>
           </td>
-          <td><p>The model constructed in the specified architecture, with appropriate input and output dimensions.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The model constructed in the specified architecture, with appropriate input and output dimensions.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -511,7 +531,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The dataframe containing all data for each observation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The dataframe containing all data for each observation.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -521,7 +545,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The taxonomic target level, to extract the correct labels (taxon_family_name, taxon_genus_name, taxon_species_name, subspecies)</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -531,7 +559,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the model type being trained. In this case 'Neural network'.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the model type being trained. In this case 'Neural network'.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -541,7 +573,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The filename of where the training data will be stored. This will have the same location as where the model is saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The filename of where the training data will be stored. This will have the same location as where the model is saved.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -551,7 +587,11 @@ Then, calls the training process to use the data.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the file where the validation data will be stored. Also informs the name of the saved models.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the file where the validation data will be stored. Also informs the name of the saved models.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -630,7 +670,11 @@ This process makes use of a best-model save policy based on the mean categorical
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The input features to the decision tree</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The input features to the decision tree</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -640,7 +684,11 @@ This process makes use of a best-model save policy based on the mean categorical
           <td>
                 <code>Series</code>
           </td>
-          <td><p>The categorical taxonomic labels of the corresponding observations to the features.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The categorical taxonomic labels of the corresponding observations to the features.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -650,7 +698,11 @@ This process makes use of a best-model save policy based on the mean categorical
           <td>
                 <code>int</code>
           </td>
-          <td><p>The number of unique classes for the model to classify</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of unique classes for the model to classify</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -660,7 +712,11 @@ This process makes use of a best-model save policy based on the mean categorical
           <td>
                 <code>str</code>
           </td>
-          <td><p>The name of the model type being trained. In this case 'Neural network'.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the model type being trained. In this case 'Neural network'.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -670,7 +726,11 @@ This process makes use of a best-model save policy based on the mean categorical
           <td>
                 <code>str</code>
           </td>
-          <td><p>The filename of where the training data will be stored.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The filename of where the training data will be stored.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -869,7 +929,11 @@ This is written for each learning rate used, serving as hyperparameter tuning.</
           <td>
                 <code>str</code>
           </td>
-          <td><p>The filename, where the training data will be saved.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The filename, where the training data will be saved.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -879,7 +943,11 @@ This is written for each learning rate used, serving as hyperparameter tuning.</
           <td>
                 <code>str</code>
           </td>
-          <td><p>The mean 5-fold categorical accuracy for each epoch of training for all models trained.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The mean 5-fold categorical accuracy for each epoch of training for all models trained.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -889,7 +957,11 @@ This is written for each learning rate used, serving as hyperparameter tuning.</
           <td>
                 <code>str</code>
           </td>
-          <td><p>The learning rate applied to the trained and evaluated model.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The learning rate applied to the trained and evaluated model.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>

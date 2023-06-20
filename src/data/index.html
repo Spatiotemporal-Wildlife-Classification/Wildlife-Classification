@@ -484,91 +484,143 @@
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>Contains all aggregated observations</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Contains all aggregated observations</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>df</code></td>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>Dataframe containing the current batch of observations</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Dataframe containing the current batch of observations</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>datasets</code></td>
           <td>
                 <code>list</code>
           </td>
-          <td><p>A list of individual observation csv files to be aggregated as raw data</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of individual observation csv files to be aggregated as raw data</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>resource_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Path to raw data resources, from project root directory</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Path to raw data resources, from project root directory</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>write_path</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Path to interim data resources, from project root directory</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Path to interim data resources, from project root directory</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>interim_exists</code></td>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>A flag representing if an existing interim_data.csv file exists in the project.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A flag representing if an existing interim_data.csv file exists in the project.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>row_sum</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>Contains the sum of aggregate observations. Value only initialized after dataset aggregation.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Contains the sum of aggregate observations. Value only initialized after dataset aggregation.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>start_time</code></td>
           <td>
                 <code>DateTime</code>
           </td>
-          <td><p>Records the start time of pipeline processing</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Records the start time of pipeline processing</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>TEST</code></td>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>A flag indicating values should be initialized for testing purposes.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A flag indicating values should be initialized for testing purposes.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>test_df</code></td>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>A direct dataframe insert for pipeline testing purposes</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>A direct dataframe insert for pipeline testing purposes</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>interim_file</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the file to write data to after cleaning process. The naming convention is <code>&lt;taxon_parent_name&gt;_interim.csv</code></p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the file to write data to after cleaning process. The naming convention is <code>&lt;taxon_parent_name&gt;_interim.csv</code></p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>bad_file</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>Specification of the file to write identified potentially bad observation images to.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Specification of the file to write identified potentially bad observation images to.</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><code>batch_size</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>Size of individual batches that aggregate observations are broken down into.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Size of individual batches that aggregate observations are broken down into.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1275,7 +1327,11 @@
           <td>
                 <code>list</code>
           </td>
-          <td><p>The list of datasets to process. The list should contain csv file names pointing to the dataset files.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of datasets to process. The list should contain csv file names pointing to the dataset files.</p>
+            </div>
+          </td>
           <td>
                 <code>[&#39;observations_sample.csv&#39;]</code>
           </td>
@@ -1285,7 +1341,11 @@
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The capability to pass a pre-generated dataframe for pipeline testing purposes</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The capability to pass a pre-generated dataframe for pipeline testing purposes</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -1520,13 +1580,21 @@ Each batch once generated is removed from df_whole until this dataframe is empty
           <td>
                 <code>bool</code>
           </td>
-          <td><p>Method returns a boolean value. True if there are still observations to be batched and processes. False if df_whole is empty</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>Method returns a boolean value. True if there are still observations to be batched and processes. False if df_whole is empty</p>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>indicating the batching process has concluded.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>indicating the batching process has concluded.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -1625,7 +1693,11 @@ current cleaning proces.</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>This dataframe is None during Pipeline cleaning process, however it allows for the creation of an interim dataframe for testing purposes (Not running the entire pipeline.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>This dataframe is None during Pipeline cleaning process, however it allows for the creation of an interim dataframe for testing purposes (Not running the entire pipeline.</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -1635,7 +1707,11 @@ current cleaning proces.</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>This dataframe is None during the Pipeline process cleaning process, however is allows for the creation of a test_bad_df for testing purposes.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>This dataframe is None during the Pipeline process cleaning process, however is allows for the creation of a test_bad_df for testing purposes.</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -1856,7 +1932,11 @@ Due to rate limiting of 1 request per second, a rate limiter has been introduced
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>DataFrame containing all bad observations filtered from df</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>DataFrame containing all bad observations filtered from df</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -1877,7 +1957,11 @@ Due to rate limiting of 1 request per second, a rate limiter has been introduced
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The method returns a DataFrame containing only the id, image_url, and image_quality columns (bad_data.csv format)</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The method returns a DataFrame containing only the id, image_url, and image_quality columns (bad_data.csv format)</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2054,7 +2138,11 @@ Keywords list is created based on inspection of observation images and the descr
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>The method returns a DataFrame containing the identified potentially bad observations from within the current batch.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The method returns a DataFrame containing the identified potentially bad observations from within the current batch.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2144,7 +2232,11 @@ Method inspiration: Inspiration: https://www.geeksforgeeks.org/progress-bars-in-
           <td>
                 <code>int</code>
           </td>
-          <td><p>The number of rows remaining to be processed in the df_whole DataFrame.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of rows remaining to be processed in the df_whole DataFrame.</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2352,7 +2444,11 @@ This timezone overwrites the "time_zone" column</p>
           <td>
                 <code>DataFrame</code>
           </td>
-          <td><p>DataFrame containing the sub-dataframe of only id, image_url, and image_quality columns</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>DataFrame containing the sub-dataframe of only id, image_url, and image_quality columns</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
