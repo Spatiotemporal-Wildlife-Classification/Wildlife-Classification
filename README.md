@@ -223,6 +223,6 @@ please review the thesis report. The link can be found in the **[External links]
 
 ## External Links
 Thesis Document: https://trav-d13.github.io/spatiotemporal_wildlife_classification/thesis/
-Repository Documentation/ Website: https://trav-d13.github.io/spatiotemporal_wildlife_classification/
+Repository Documentation/ Website: https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/
 Organization Website: https://spatiotemporal-wildlife-classification.github.io/
 
