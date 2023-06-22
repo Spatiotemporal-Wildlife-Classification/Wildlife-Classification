@@ -143,10 +143,7 @@ dmypy.json
 .idea/.gitignore
 
 models/checkpoints
-models/image
-models/k_clusters
-models/meta
-models/global
+
 
 # Images should not be tracked
 *.jpg
