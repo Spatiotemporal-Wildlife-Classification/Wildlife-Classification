@@ -143,7 +143,9 @@ dmypy.json
 .idea/.gitignore
 
 models/checkpoints
-
+*.pb
+*.data-00000-of-00001
+*.index
 
 # Images should not be tracked
 *.jpg
