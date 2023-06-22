@@ -222,9 +222,9 @@ please review the thesis report. The link can be found in the **[External links]
 ![CEC comparative results](docs/images/global_baseline.png)
 
 ## External Links
-Thesis Document: https://trav-d13.github.io/spatiotemporal_wildlife_classification/thesis/
+Thesis Document: [https://trav-d13.github.io/spatiotemporal_wildlife_classification/thesis/](https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/thesis/)
 
-Repository Documentation/ Website: https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/
+Repository Documentation/ Website: [https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/](https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/)
 
-Organization Website: https://spatiotemporal-wildlife-classification.github.io/
+Organization Website: [https://spatiotemporal-wildlife-classification.github.io/](https://spatiotemporal-wildlife-classification.github.io/)
 
