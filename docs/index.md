@@ -1,4 +1,4 @@
-# Bolstering Wildlife Classification using Spatiotemporal Metadata
+# Bolstering Wildlife Classification Using Spatiotemporal Metadata
 
 ### Introduction
 The global extent of social media, camera traps, and citizen science has the potential to provide 
