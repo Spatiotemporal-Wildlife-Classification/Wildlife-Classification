@@ -153,7 +153,7 @@ A novel classification approach combines metadata classification and existing wi
 taxonomic hierarchical structure, to accurate classify images down to the subspecies taxonomic level. This methodology
 performs at 10 times the accuracy of traditional image classification when classifying wildlife to the species level. 
 
-For more information, please view the website: [https://trav-d13.github.io/spatiotemporal_wildlife_classification/](https://trav-d13.github.io/spatiotemporal_wildlife_classification/).
+For more information, please view the website: [https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/](https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/).
 
 ##### Proposed use-case
 A proposed use-case utilizes tourist's public social media postings in order to support wildlife park's population 
